@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 import com.implementation.JournalApp.exception.custom.InternalServerErrorException;
 import com.implementation.JournalApp.exception.custom.ResourceNotFoundException;
@@ -33,10 +34,16 @@ public class GlobalExceptionHandler {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        @ExceptionHandler({ InvalidSessionException.class, UnauthorizedRequestException.class })
+        @ExceptionHandler({ InvalidSessionException.class })
         public ResponseEntity<ApiResponse<Object>> handleInvalidSessionException(InvalidSessionException ex) {
                 ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+        }
+
+        @ExceptionHandler(UnauthorizedRequestException.class)
+        public ResponseEntity<ApiResponse<Object>> handleUnauthorizedFilterException(UnauthorizedRequestException ex) {
+                ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
         }
 
 }
