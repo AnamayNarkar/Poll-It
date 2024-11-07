@@ -66,12 +66,23 @@ public class SessionUtils {
 
         public void saveUserSession(HttpServletResponse response, UserEntity userEntity) {
                 String sessionId = generateSessionId();
-                SessionValueEntity sessionValueEntity = new SessionValueEntity(userEntity.getId(),
-                                userEntity.getUsername(),
-                                userEntity.getRoles());
+                SessionValueEntity sessionValueEntity = new SessionValueEntity(userEntity.getId(), userEntity.getUsername(), userEntity.getRoles());
                 setSessionIdCookie(response, sessionId);
                 saveSessionValueInRedis(sessionId, sessionValueEntity);
         }
+
+        // public boolean isUserSessionValid(HttpServletRequest request) {
+        // String sessionId = getSessionIdFromRequest(request);
+        // if (sessionId != null) {
+        // SessionValueEntity sessionValueEntity = getSessionValueFromRedis(sessionId);
+        // return sessionValueEntity != null;
+        // }
+        // return false;
+        // }
+
+        // instead of validating the session, we can just get the session value if it
+        // exists
+        // if it does not exist, we can return null
 
         public SessionValueEntity getUserSession(HttpServletRequest request) {
                 String sessionId = getSessionIdFromRequest(request);

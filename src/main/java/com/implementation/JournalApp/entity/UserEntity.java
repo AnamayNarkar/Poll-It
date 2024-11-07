@@ -22,13 +22,13 @@ public class UserEntity {
 
         private String password;
 
-        private String[] roles;
+        private Vector<String> roles;
 
         private Date date;
 
         private Vector<JournalEntryEntity> journalEntries;
 
-        public UserEntity(String username, String password, String[] roles) {
+        public UserEntity(String username, String password, Vector<String> roles) {
                 this.username = username;
                 this.password = password;
                 this.roles = roles;

@@ -1,5 +1,8 @@
 package com.implementation.JournalApp.service;
 
+import java.util.Arrays;
+import java.util.Vector;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.implementation.JournalApp.repository.UserRepository;
@@ -16,8 +19,7 @@ public class UserService {
 
         public UserEntity createUser(UserDto userDto) {
                 try {
-                        UserEntity userEntity = new UserEntity(userDto.getUsername(), userDto.getPassword(),
-                                        new String[] { "USER" });
+                        UserEntity userEntity = new UserEntity(userDto.getUsername(), userDto.getPassword(), new Vector<>(Arrays.asList("USER")));
                         userEntity = userRepository.save(userEntity);
                         return userEntity;
                 } catch (Exception e) {
@@ -86,7 +88,7 @@ public class UserService {
                 }
         }
 
-        public String[] getRoles(String username) {
+        public Vector<String> getRoles(String username) {
                 try {
                         UserEntity userEntity = userRepository.findByusername(username);
                         if (userEntity != null) {

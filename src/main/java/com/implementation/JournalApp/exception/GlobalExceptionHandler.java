@@ -9,6 +9,8 @@ import com.implementation.JournalApp.exception.custom.InternalServerErrorExcepti
 import com.implementation.JournalApp.exception.custom.ResourceNotFoundException;
 import com.implementation.JournalApp.util.ApiResponse;
 import com.implementation.JournalApp.exception.custom.ValidationException;
+import com.implementation.JournalApp.exception.custom.InvalidSessionException;
+import com.implementation.JournalApp.exception.custom.UnauthorizedRequestException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -29,6 +31,12 @@ public class GlobalExceptionHandler {
         public ResponseEntity<ApiResponse<Object>> handleValidationException(ValidationException ex) {
                 ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        @ExceptionHandler({ InvalidSessionException.class, UnauthorizedRequestException.class })
+        public ResponseEntity<ApiResponse<Object>> handleInvalidSessionException(InvalidSessionException ex) {
+                ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
 
 }
