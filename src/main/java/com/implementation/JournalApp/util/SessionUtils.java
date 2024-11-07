@@ -31,7 +31,7 @@ public class SessionUtils {
                 response.addCookie(cookie);
         }
 
-        private String getSessionIfFromCookie(Cookie[] cookies) {
+        private String getSessionIdFromCookie(Cookie[] cookies) {
                 if (cookies != null) {
                         for (Cookie cookie : cookies) {
                                 if (cookie.getName().equals("SESSION_ID")) {
@@ -47,7 +47,7 @@ public class SessionUtils {
         }
 
         private String getSessionIdFromRequest(HttpServletRequest request) {
-                return getSessionIfFromCookie(getCookiesFromRequest(request));
+                return getSessionIdFromCookie(getCookiesFromRequest(request));
         }
 
         private void saveSessionValueInRedis(String sessionId, SessionValueEntity sessionValueEntity) {
