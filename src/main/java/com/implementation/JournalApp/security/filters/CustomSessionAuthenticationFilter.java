@@ -22,20 +22,16 @@ public class CustomSessionAuthenticationFilter extends OncePerRequestFilter {
         private CustomSessionAuthenticationManager manager;
 
         @Override
-        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                        FilterChain filterChain) throws ServletException, IOException {
 
                 var authObject = new CustomSessionAuthenticationObject(request);
 
                 var responsehehe = manager.authenticate(authObject);
 
                 if (responsehehe.isAuthenticated()) {
-                        System.out.println(responsehehe);
                         SecurityContextHolder.getContext().setAuthentication(responsehehe);
-                        System.out.println(SecurityContextHolder.getContext().getAuthentication());
                 }
-
-                System.out.println(SecurityContextHolder.getContext().getAuthentication());
-
                 filterChain.doFilter(request, response);
         }
 }
