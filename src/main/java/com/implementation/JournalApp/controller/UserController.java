@@ -28,8 +28,7 @@ public class UserController {
         public SessionUtils sessionUtils;
 
         @PostMapping("/register")
-        public ResponseEntity<ApiResponse<UserEntity>> registerUser(
-                        @RequestBody UserDto userDto, HttpServletResponse response) {
+        public ResponseEntity<ApiResponse<UserEntity>> registerUser(@RequestBody UserDto userDto, HttpServletResponse response) {
                 UserEntity userEntity = userService.createUser(userDto);
                 sessionUtils.saveUserSession(response, userEntity);
                 ApiResponse<UserEntity> apiResponse = new ApiResponse<>(userEntity, "User created successfully");
@@ -37,8 +36,7 @@ public class UserController {
         }
 
         @PostMapping("/login")
-        public ResponseEntity<ApiResponse<UserEntity>> loginUser(
-                        @RequestBody UserDto userDto, HttpServletResponse response) {
+        public ResponseEntity<ApiResponse<UserEntity>> loginUser(@RequestBody UserDto userDto, HttpServletResponse response) {
                 UserEntity userEntity = userService.loginUser(userDto);
                 sessionUtils.saveUserSession(response, userEntity);
                 ApiResponse<UserEntity> apiresponse = new ApiResponse<>(userEntity, "User logged in successfully");
@@ -46,8 +44,7 @@ public class UserController {
         }
 
         @PostMapping("/logout")
-        public ResponseEntity<ApiResponse<String>> logoutUser(HttpServletResponse response,
-                        HttpServletRequest request) {
+        public ResponseEntity<ApiResponse<String>> logoutUser(HttpServletResponse response, HttpServletRequest request) {
                 sessionUtils.clearUserSessionAndRemoveCookie(response, request);
                 ApiResponse<String> apiResponse = new ApiResponse<>(null, "User logged out successfully");
                 return ResponseEntity.ok(apiResponse);

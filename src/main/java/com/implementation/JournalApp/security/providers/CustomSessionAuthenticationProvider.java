@@ -20,17 +20,14 @@ public class CustomSessionAuthenticationProvider implements AuthenticationProvid
         public Authentication authenticate(Authentication authentication) throws AuthenticationException {
                 CustomSessionAuthenticationObject ca = (CustomSessionAuthenticationObject) authentication;
 
-                // Retrieve session based on request object
                 SessionValueEntity sve = sessionUtils.getUserSession(ca.getRequest());
 
-                // If session is invalid or null, mark the authentication as failed
                 if (sve == null) {
                         CustomSessionAuthenticationObject failedAuth = new CustomSessionAuthenticationObject(null, null, null, null);
                         failedAuth.setAuthenticated(false);
                         return failedAuth;
                 }
 
-                // Otherwise, set authenticated to true and return an authenticated object
                 CustomSessionAuthenticationObject authenticatedObject = new CustomSessionAuthenticationObject(ca.getRequest(), sve.getId(), sve.getUsername(), sve.getRoles());
                 authenticatedObject.setAuthenticated(true);
                 return authenticatedObject;

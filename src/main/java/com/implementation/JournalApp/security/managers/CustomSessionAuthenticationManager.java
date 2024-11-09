@@ -21,7 +21,8 @@ public class CustomSessionAuthenticationManager implements AuthenticationManager
         @Override
         public Authentication authenticate(Authentication authentication) throws AuthenticationException {
                 if (provider.supports(authentication.getClass())) {
-                        return provider.authenticate(authentication);
+                        var testvar = provider.authenticate(authentication);
+                        return testvar;
                 }
 
                 throw new BadCredentialsException("Oh No!");

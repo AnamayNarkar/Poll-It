@@ -10,7 +10,7 @@ import com.implementation.JournalApp.util.ApiResponse;
 public class HealthCheckController {
 
         @GetMapping("/")
-        public ResponseEntity<ApiResponse<Object>> healthCheckRequest(){
+        public ResponseEntity<ApiResponse<Object>> healthCheckRequest() {
                 ApiResponse<Object> response = new ApiResponse<>(null, "Journal App is up and running");
                 return ResponseEntity.ok(response);
         }

@@ -13,8 +13,7 @@ import com.implementation.JournalApp.entity.SessionValueEntity;
 public class RedisConfig {
 
         @Bean
-        public RedisTemplate<String, SessionValueEntity> sessionRedisTemplate(
-                        RedisConnectionFactory connectionFactory) {
+        public RedisTemplate<String, SessionValueEntity> sessionRedisTemplate(RedisConnectionFactory connectionFactory) {
                 RedisTemplate<String, SessionValueEntity> template = new RedisTemplate<>();
                 template.setConnectionFactory(connectionFactory);
 

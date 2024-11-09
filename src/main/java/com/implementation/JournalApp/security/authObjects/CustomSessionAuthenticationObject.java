@@ -1,6 +1,7 @@
 package com.implementation.JournalApp.security.authObjects;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,13 +12,14 @@ import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.net.http.HttpRequest;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
 
 @AllArgsConstructor
 @Setter
 @Getter
+@Data
 public class CustomSessionAuthenticationObject implements Authentication {
 
         private boolean authentication;
@@ -45,6 +47,10 @@ public class CustomSessionAuthenticationObject implements Authentication {
                 this.roles = roles;
         }
 
+        public HttpServletRequest getRequest() {
+                return request;
+        }
+
         @Override
         public boolean isAuthenticated() {
                 return authentication;
@@ -55,9 +61,8 @@ public class CustomSessionAuthenticationObject implements Authentication {
                 this.authentication = isAuthenticated;
         }
 
-        @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-                return null;
+                return new ArrayList<>(); // Or return null
         }
 
         // not needed for now
