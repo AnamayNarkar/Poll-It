@@ -25,13 +25,14 @@ public class CustomSessionAuthenticationFilter extends OncePerRequestFilter {
         protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                         FilterChain filterChain) throws ServletException, IOException {
 
-                var authObject = new CustomSessionAuthenticationObject(request);
+                var authenticationObject = new CustomSessionAuthenticationObject(request);
 
-                var responsehehe = manager.authenticate(authObject);
+                var authenticationResult = manager.authenticate(authenticationObject);
 
-                if (responsehehe.isAuthenticated()) {
-                        SecurityContextHolder.getContext().setAuthentication(responsehehe);
+                if (authenticationResult.isAuthenticated()) {
+                        SecurityContextHolder.getContext().setAuthentication(authenticationResult);
                 }
+
                 filterChain.doFilter(request, response);
         }
 }
