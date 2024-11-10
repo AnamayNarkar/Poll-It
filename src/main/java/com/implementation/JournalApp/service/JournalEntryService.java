@@ -2,6 +2,7 @@ package com.implementation.JournalApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.implementation.JournalApp.dto.JournalEntryDTO;
 import com.implementation.JournalApp.entity.JournalEntryEntity;
@@ -21,6 +22,7 @@ public class JournalEntryService {
         @Autowired
         private UserRepository userRepository;
 
+        @Transactional
         public JournalEntryEntity createJournalEntry(JournalEntryDTO journalEntryDTO, String username) {
                 try {
                         if (journalEntryDTO == null || username == null || username.isEmpty()) {
@@ -40,7 +42,9 @@ public class JournalEntryService {
 
                         return savedObject;
 
-                } catch (ResourceNotFoundException | ValidationException e) {
+                } catch (ResourceNotFoundException e) {
+                        throw e;
+                } catch (ValidationException e) {
                         throw e;
                 } catch (Exception e) {
                         throw new InternalServerErrorException("An error occurred while creating a journal entry");
