@@ -37,12 +37,8 @@ public class SecurityConfig {
                                 .csrf(csrf -> csrf.disable()) // comment for formatting
                                 .httpBasic(withDefaults()) // comment for formatting
                                 .logout(logout -> logout.disable()) // comment for formatting
-                                .sessionManagement(sessionManagement -> sessionManagement
-                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // comment for
-                                                                                                         // formatting
-                                .addFilterBefore(customSessionAuthenticationFilter, BasicAuthenticationFilter.class) // comment
-                                                                                                                     // for
-                                                                                                                     // formatting
+                                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // comment for formatting
+                                .addFilterBefore(customSessionAuthenticationFilter, BasicAuthenticationFilter.class) // comment for formatting
                                 .build(); // comment for formatting
         }
 
