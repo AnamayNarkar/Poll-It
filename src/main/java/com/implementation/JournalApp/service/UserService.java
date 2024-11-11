@@ -29,7 +29,7 @@ public class UserService {
 
         public UserEntity loginUser(UserDto userDto) {
                 try {
-                        UserEntity userEntity = userRepository.findByusername(userDto.getUsername());
+                        UserEntity userEntity = userRepository.findByUsername(userDto.getUsername());
                         if (userEntity != null && userEntity.getPassword().equals(userDto.getPassword())) {
                                 return userEntity;
                         } else {
@@ -44,7 +44,7 @@ public class UserService {
 
         public UserEntity getUser(String username) {
                 try {
-                        UserEntity userEntity = userRepository.findByusername(username);
+                        UserEntity userEntity = userRepository.findByUsername(username);
                         if (userEntity != null) {
                                 return userEntity;
                         } else {
@@ -59,7 +59,7 @@ public class UserService {
 
         public void deleteUser(String username) {
                 try {
-                        UserEntity userEntity = userRepository.findByusername(username);
+                        UserEntity userEntity = userRepository.findByUsername(username);
                         if (userEntity != null) {
                                 userRepository.delete(userEntity);
                         } else {
@@ -74,7 +74,7 @@ public class UserService {
 
         public void updateUser(UserDto userDto) {
                 try {
-                        UserEntity userEntity = userRepository.findByusername(userDto.getUsername());
+                        UserEntity userEntity = userRepository.findByUsername(userDto.getUsername());
                         if (userEntity != null) {
                                 userEntity.setPassword(userDto.getPassword());
                                 userRepository.save(userEntity);
@@ -90,7 +90,7 @@ public class UserService {
 
         public Vector<String> getRoles(String username) {
                 try {
-                        UserEntity userEntity = userRepository.findByusername(username);
+                        UserEntity userEntity = userRepository.findByUsername(username);
                         if (userEntity != null) {
                                 return userEntity.getRoles();
                         } else {

@@ -29,7 +29,7 @@ public class JournalEntryService {
                                 throw new ValidationException("Invalid input: journal entry data or username is missing");
                         }
 
-                        UserEntity userEntity = userRepository.findByusername(username);
+                        UserEntity userEntity = userRepository.findByUsername(username);
                         if (userEntity == null) {
                                 throw new ResourceNotFoundException("User with username " + username + " not found");
                         }
@@ -47,6 +47,7 @@ public class JournalEntryService {
                 } catch (ValidationException e) {
                         throw e;
                 } catch (Exception e) {
+                        System.out.println(e.getMessage());
                         throw new InternalServerErrorException("An error occurred while creating a journal entry");
                 }
         }

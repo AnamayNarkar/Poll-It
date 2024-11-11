@@ -22,8 +22,7 @@ public class CustomSessionAuthenticationFilter extends OncePerRequestFilter {
         private CustomSessionAuthenticationManager manager;
 
         @Override
-        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                        FilterChain filterChain) throws ServletException, IOException {
+        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
                 var authenticationObject = new CustomSessionAuthenticationObject(request);
 

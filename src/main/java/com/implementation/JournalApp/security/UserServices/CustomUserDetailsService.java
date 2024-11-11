@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import com.implementation.JournalApp.entity.UserEntity;
 import com.implementation.JournalApp.repository.UserRepository;
 
-// import com.implementation.JournalApp.security.UserServices.CustomUserDetails;
-
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -19,7 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                UserEntity userEntity = userRepository.findByusername(username);
+                UserEntity userEntity = userRepository.findByUsername(username);
                 if (userEntity == null) {
                         throw new UsernameNotFoundException("User not found");
                 }
