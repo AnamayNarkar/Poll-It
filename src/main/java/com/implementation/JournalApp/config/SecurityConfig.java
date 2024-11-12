@@ -39,6 +39,7 @@ public class SecurityConfig {
                                 .csrf(csrf -> csrf.disable()) // For formatting
                                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // For formatting
                                 .addFilterAt(customSessionAuthenticationFilter, BasicAuthenticationFilter.class) // For formatting
+                                .httpBasic(basic -> basic.disable()) // For formatting
                                 .build(); // For formatting
         }
 }

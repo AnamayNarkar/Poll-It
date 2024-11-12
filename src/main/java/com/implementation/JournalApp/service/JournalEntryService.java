@@ -1,5 +1,7 @@
 package com.implementation.JournalApp.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 // import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +27,7 @@ public class JournalEntryService {
         // @Transactional
         public JournalEntryEntity createJournalEntry(JournalEntryDTO journalEntryDTO, String username) {
                 try {
-                        if (journalEntryDTO == null || username == null || username.isEmpty()) {
+                        if (journalEntryDTO == null || username == null || username.isEmpty() || journalEntryDTO.getTitle() == null || journalEntryDTO.getTitle().isEmpty() || journalEntryDTO.getContent() == null || journalEntryDTO.getContent().isEmpty()) {
                                 throw new ValidationException("Invalid input: journal entry data or username is missing");
                         }
 
@@ -52,4 +54,26 @@ public class JournalEntryService {
                 }
         }
 
+        public List<JournalEntryEntity> getJournalEntriesForUser(String username) {
+                try {
+                        if (username == null || username.isEmpty()) {
+                                throw new ValidationException("Invalid input: username is missing");
+                        }
+
+                        UserEntity userEntity = userRepository.findByUsername(username);
+                        if (userEntity == null) {
+                                throw new ResourceNotFoundException("User with username " + username + " not found");
+                        }
+
+                        return userEntity.getJournalEntries();
+
+                } catch (ResourceNotFoundException e) {
+                        throw e;
+                } catch (ValidationException e) {
+                        throw e;
+                } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        throw new InternalServerErrorException("An error occurred while fetching journal entries");
+                }
+        }
 }

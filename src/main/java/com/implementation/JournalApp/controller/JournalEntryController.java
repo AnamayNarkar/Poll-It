@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.List;
 
 import com.implementation.JournalApp.dto.JournalEntryDTO;
 import com.implementation.JournalApp.entity.JournalEntryEntity;
@@ -32,8 +33,9 @@ public class JournalEntryController {
         }
 
         @GetMapping("/getJournalEntriesForUser")
-        public String getJournalEntriesForUser() {
-                return "Journal Entries for user ";
+        public ResponseEntity<ApiResponse<List<JournalEntryEntity>>> getJournalEntriesForUser() {
+                CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
+                return ResponseEntity.ok(new ApiResponse<List<JournalEntryEntity>>(journalEntryService.getJournalEntriesForUser(authentication.getUsername()), "Journal Entries retrieved successfully"));
         }
 
         @PutMapping("/updateJournalEntry")
