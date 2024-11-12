@@ -45,7 +45,8 @@ public class JournalEntryController {
 
         @GetMapping("/getJournalEntryById/{entryId}")
         public ResponseEntity<ApiResponse<JournalEntryEntity>> getJournalEntryById(@PathVariable String entryId) {
-                return ResponseEntity.ok(new ApiResponse<JournalEntryEntity>(journalEntryService.getJournalEntryById(entryId), "Journal Entry retrieved successfully"));
+                CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
+                return ResponseEntity.ok(new ApiResponse<JournalEntryEntity>(journalEntryService.getJournalEntryById(entryId, authentication.getId()), "Journal Entry retrieved successfully"));
         }
 
         @DeleteMapping("/deleteJournalEntryById/{entryId}")

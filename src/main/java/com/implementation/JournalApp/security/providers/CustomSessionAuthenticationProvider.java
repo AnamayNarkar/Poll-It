@@ -28,8 +28,6 @@ public class CustomSessionAuthenticationProvider implements AuthenticationProvid
                         return failedAuth;
                 }
 
-                System.out.println(sve + "\n");
-
                 CustomSessionAuthenticationObject authenticatedObject = new CustomSessionAuthenticationObject(ca.getRequest(), sve.getId(), sve.getUsername(), sve.getRoles());
 
                 if (authenticatedObject.getRoles().contains("USER")) {
@@ -37,8 +35,6 @@ public class CustomSessionAuthenticationProvider implements AuthenticationProvid
                 } else {
                         authenticatedObject.setAuthenticated(false);
                 }
-
-                System.out.println(authenticatedObject);
 
                 return authenticatedObject;
         }

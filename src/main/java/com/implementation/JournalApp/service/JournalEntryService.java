@@ -12,6 +12,7 @@ import com.implementation.JournalApp.entity.JournalEntryEntity;
 import com.implementation.JournalApp.entity.UserEntity;
 import com.implementation.JournalApp.exception.custom.InternalServerErrorException;
 import com.implementation.JournalApp.exception.custom.ResourceNotFoundException;
+import com.implementation.JournalApp.exception.custom.UnauthorizedRequestException;
 import com.implementation.JournalApp.exception.custom.ValidationException;
 import com.implementation.JournalApp.repository.JournalEntryRepository;
 import com.implementation.JournalApp.repository.UserRepository;
@@ -37,7 +38,7 @@ public class JournalEntryService {
                                 throw new ResourceNotFoundException("User with username " + username + " not found");
                         }
 
-                        JournalEntryEntity journalEntryEntity = new JournalEntryEntity(journalEntryDTO.getTitle(), journalEntryDTO.getContent());
+                        JournalEntryEntity journalEntryEntity = new JournalEntryEntity(journalEntryDTO.getTitle(), journalEntryDTO.getContent(), new ObjectId(userEntity.getId()));
                         JournalEntryEntity savedObject = journalEntryRepository.save(journalEntryEntity);
 
                         userEntity.getJournalEntries().add(savedObject);
@@ -78,10 +79,10 @@ public class JournalEntryService {
                 }
         }
 
-        public JournalEntryEntity getJournalEntryById(String id) {
+        public JournalEntryEntity getJournalEntryById(String id, String userId) {
                 try {
-                        if (id == null) {
-                                throw new ValidationException("Invalid input: journal entry id is missing");
+                        if (id == null || id.isEmpty() || userId == null || userId.isEmpty()) {
+                                throw new ValidationException("Invalid input: journal entry id or user id is missing");
                         }
 
                         ObjectId objectId = new ObjectId(id);
@@ -92,14 +93,23 @@ public class JournalEntryService {
                                 throw new ResourceNotFoundException("Journal entry with id " + id + " not found");
                         }
 
+                        if (journalEntryEntity.getUserId() == null) {
+                                throw new InternalServerErrorException("User id is null");
+                        }
+
+                        if (!journalEntryEntity.getUserId().equals(userId)) {
+                                throw new UnauthorizedRequestException("User with id " + userId + " is not authorized to access journal entry with id " + id);
+                        }
+
                         return journalEntryEntity;
 
                 } catch (ResourceNotFoundException e) {
                         throw e;
                 } catch (ValidationException e) {
                         throw e;
+                } catch (UnauthorizedRequestException e) {
+                        throw e;
                 } catch (Exception e) {
-                        System.out.println(e.getMessage());
                         throw new InternalServerErrorException("An error occurred while fetching journal entry");
                 }
         }

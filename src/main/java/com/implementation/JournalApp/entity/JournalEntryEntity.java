@@ -17,14 +17,20 @@ public class JournalEntryEntity {
         private String title;
         private String content;
         private Date date;
+        private ObjectId userId;
 
-        public JournalEntryEntity(String title, String content) {
+        public JournalEntryEntity(String title, String content, ObjectId userId) {
                 this.title = title;
                 this.content = content;
                 this.date = new Date();
+                this.userId = userId;
         }
 
         public String getId() {
                 return id.toHexString();
+        }
+
+        public String getUserId() {
+                return userId.toHexString();
         }
 }

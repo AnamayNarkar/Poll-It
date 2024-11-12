@@ -12,6 +12,7 @@ import com.implementation.JournalApp.util.ApiResponse;
 import com.implementation.JournalApp.exception.custom.ValidationException;
 import com.implementation.JournalApp.exception.custom.InvalidSessionException;
 import com.implementation.JournalApp.exception.custom.UnauthorizedRequestException;
+import com.implementation.JournalApp.exception.custom.ForbiddenRequestException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -42,6 +43,12 @@ public class GlobalExceptionHandler {
 
         @ExceptionHandler(UnauthorizedRequestException.class)
         public ResponseEntity<ApiResponse<Object>> handleUnauthorizedFilterException(UnauthorizedRequestException ex) {
+                ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        }
+
+        @ExceptionHandler(ForbiddenRequestException.class)
+        public ResponseEntity<ApiResponse<Object>> handleForbiddenRequestException(ForbiddenRequestException ex) {
                 ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
         }
