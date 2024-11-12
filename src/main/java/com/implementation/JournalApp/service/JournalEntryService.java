@@ -2,6 +2,7 @@ package com.implementation.JournalApp.service;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 // import org.springframework.transaction.annotation.Transactional;
@@ -74,6 +75,32 @@ public class JournalEntryService {
                 } catch (Exception e) {
                         System.out.println(e.getMessage());
                         throw new InternalServerErrorException("An error occurred while fetching journal entries");
+                }
+        }
+
+        public JournalEntryEntity getJournalEntryById(String id) {
+                try {
+                        if (id == null) {
+                                throw new ValidationException("Invalid input: journal entry id is missing");
+                        }
+
+                        ObjectId objectId = new ObjectId(id);
+
+                        JournalEntryEntity journalEntryEntity = journalEntryRepository.findById(objectId).orElse(null);
+
+                        if (journalEntryEntity == null) {
+                                throw new ResourceNotFoundException("Journal entry with id " + id + " not found");
+                        }
+
+                        return journalEntryEntity;
+
+                } catch (ResourceNotFoundException e) {
+                        throw e;
+                } catch (ValidationException e) {
+                        throw e;
+                } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                        throw new InternalServerErrorException("An error occurred while fetching journal entry");
                 }
         }
 }

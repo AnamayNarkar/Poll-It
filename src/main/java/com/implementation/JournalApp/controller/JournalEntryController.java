@@ -44,8 +44,8 @@ public class JournalEntryController {
         }
 
         @GetMapping("/getJournalEntryById/{entryId}")
-        public String getJournalEntryById(@PathVariable Long entryId) {
-                return "Journal Entry with ID: " + entryId;
+        public ResponseEntity<ApiResponse<JournalEntryEntity>> getJournalEntryById(@PathVariable String entryId) {
+                return ResponseEntity.ok(new ApiResponse<JournalEntryEntity>(journalEntryService.getJournalEntryById(entryId), "Journal Entry retrieved successfully"));
         }
 
         @DeleteMapping("/deleteJournalEntryById/{entryId}")
