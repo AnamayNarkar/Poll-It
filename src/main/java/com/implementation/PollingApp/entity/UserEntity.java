@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
+// import java.util.List;
 import java.util.Vector;
 
 @Document(collection = "users")
@@ -29,14 +30,14 @@ public class UserEntity {
         private Date joinDate;
 
         @DBRef
-        private Vector<JournalEntryEntity> journalEntries;
+        private Vector<PollEntity> polls;
 
         public UserEntity(String username, String password, Vector<String> roles) {
                 this.username = username;
                 this.password = password;
                 this.roles = roles;
                 this.joinDate = new Date();
-                this.journalEntries = new Vector<>();
+                this.polls = new Vector<>();
         }
 
         public String getId() {
