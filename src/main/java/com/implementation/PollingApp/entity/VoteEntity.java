@@ -1,47 +1,43 @@
 package com.implementation.PollingApp.entity;
 
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "votes")
 public class VoteEntity {
 
         @Id
         private ObjectId id;
 
-        private ObjectId pollId;
-
         private ObjectId optionId;
 
-        private ObjectId userId;
+        private String username;
 
-        VoteEntity(String pollId, String optionId, String userId) {
+        private Date creationDateTime;
+
+        public VoteEntity(String optionId, String username) {
                 this.id = new ObjectId();
-                this.pollId = new ObjectId(pollId);
                 this.optionId = new ObjectId(optionId);
-                this.userId = new ObjectId(userId);
+                this.username = username;
+                this.creationDateTime = new Date();
         }
 
         public String getId() {
                 return id.toHexString();
         }
 
-        public String getPollId() {
-                return pollId.toHexString();
-        }
-
         public String getOptionId() {
                 return optionId.toHexString();
-        }
-
-        public String getUserId() {
-                return userId.toHexString();
         }
 
 }

@@ -11,6 +11,7 @@ import com.implementation.PollingApp.exception.custom.ResourceNotFoundException;
 import com.implementation.PollingApp.util.ApiResponse;
 import com.implementation.PollingApp.exception.custom.ValidationException;
 import com.implementation.PollingApp.exception.custom.InvalidSessionException;
+import com.implementation.PollingApp.exception.custom.PollExpirationException;
 import com.implementation.PollingApp.exception.custom.UnauthorizedRequestException;
 import com.implementation.PollingApp.exception.custom.ForbiddenRequestException;
 
@@ -45,6 +46,12 @@ public class GlobalExceptionHandler {
         public ResponseEntity<ApiResponse<Object>> handleUnauthorizedFilterException(UnauthorizedRequestException ex) {
                 ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        }
+
+        @ExceptionHandler(PollExpirationException.class)
+        public ResponseEntity<ApiResponse<Object>> handlePollExpirationException(PollExpirationException ex) {
+                ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
         @ExceptionHandler(ForbiddenRequestException.class)

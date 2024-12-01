@@ -25,13 +25,13 @@ public class OptionEntity {
         private int voteCount;
 
         @JsonIgnore
-        Vector<ObjectId> votedUserIds;
+        Vector<ObjectId> votes;
 
         public OptionEntity(String option) {
                 this.id = new ObjectId();
                 this.option = option;
                 this.voteCount = 0;
-                this.votedUserIds = new Vector<>();
+                this.votes = new Vector<>();
         }
 
         public String getId() {
@@ -39,6 +39,6 @@ public class OptionEntity {
         }
 
         public List<String> getVotedUserIds() {
-                return votedUserIds.stream().map(ObjectId::toHexString).toList();
+                return this.votes.stream().map(ObjectId::toHexString).toList();
         }
 }

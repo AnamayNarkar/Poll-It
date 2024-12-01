@@ -43,4 +43,10 @@ public class PollController {
                 return ResponseEntity.ok(new ApiResponse<List<PollEntity>>(pollService.getAllPollsFromUser(((CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication()).getUsername()), "Polls fetched successfully"));
         }
 
+        @PostMapping("/vote/{pollId}/{optionId}")
+        public ResponseEntity<ApiResponse<String>> vote(@PathVariable String pollId, @PathVariable String optionId) {
+                CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
+                return ResponseEntity.ok(new ApiResponse<String>(pollService.vote(pollId, optionId, authentication.getUsername()), "Voted successfully"));
+        }
+
 }

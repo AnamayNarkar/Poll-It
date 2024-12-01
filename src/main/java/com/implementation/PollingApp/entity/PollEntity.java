@@ -24,15 +24,18 @@ public class PollEntity {
 
         private Date creationDateTime;
 
+        private Date expirationDateTime;
+
         @DBRef
         private Vector<OptionEntity> options;
 
-        public PollEntity(String question, String createdBy, Vector<OptionEntity> options) {
+        public PollEntity(String question, String createdBy, Vector<OptionEntity> options, Date expirationDateTime) {
                 this.id = new ObjectId();
                 this.question = question;
                 this.createdBy = createdBy;
                 this.options = options;
                 this.creationDateTime = new Date();
+                this.expirationDateTime = expirationDateTime;
         }
 
         public String getId() {
