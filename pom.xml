@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.implementation</groupId>
-    <artifactId>JournalApp</artifactId>
+    <artifactId>PollingApp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Journal App</name>
     <description>Implementation of Journal App</description>
