@@ -6,11 +6,15 @@ import java.util.Vector;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "options")
 public class OptionEntity {
 
@@ -20,6 +24,7 @@ public class OptionEntity {
 
         private int voteCount;
 
+        @JsonIgnore
         Vector<ObjectId> votedUserIds;
 
         public OptionEntity(String option) {

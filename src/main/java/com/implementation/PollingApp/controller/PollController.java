@@ -1,5 +1,7 @@
 package com.implementation.PollingApp.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 // import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 // import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +16,9 @@ import com.implementation.PollingApp.service.PollService;
 import com.implementation.PollingApp.util.ApiResponse;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+
 // import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,4 +37,10 @@ public class PollController {
                 CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
                 return ResponseEntity.ok(new ApiResponse<PollEntity>(pollService.createPoll(pollEntryDTO, authentication.getUsername()), "Poll created successfully"));
         }
+
+        @GetMapping("/getAllPollsFromUser")
+        public ResponseEntity<ApiResponse<List<PollEntity>>> getAllPollsFromUser() {
+                return ResponseEntity.ok(new ApiResponse<List<PollEntity>>(pollService.getAllPollsFromUser(((CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication()).getUsername()), "Polls fetched successfully"));
+        }
+
 }
