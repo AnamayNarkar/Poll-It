@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Vector;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+// import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
@@ -26,10 +26,10 @@ public class PollEntity {
 
         private Date expirationDateTime;
 
-        @DBRef
-        private Vector<OptionEntity> options;
+        // @DBRef
+        private Vector<ObjectId> options;
 
-        public PollEntity(String question, String createdBy, Vector<OptionEntity> options, Date expirationDateTime) {
+        public PollEntity(String question, String createdBy, Vector<ObjectId> options, Date expirationDateTime) {
                 this.id = new ObjectId();
                 this.question = question;
                 this.createdBy = createdBy;
@@ -37,9 +37,4 @@ public class PollEntity {
                 this.creationDateTime = new Date();
                 this.expirationDateTime = expirationDateTime;
         }
-
-        public String getId() {
-                return this.id.toHexString();
-        }
-
 }

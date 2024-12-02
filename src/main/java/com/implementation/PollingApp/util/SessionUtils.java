@@ -66,7 +66,7 @@ public class SessionUtils {
 
         public void saveUserSession(HttpServletResponse response, UserEntity userEntity) {
                 String sessionId = generateSessionId();
-                SessionValueEntity sessionValueEntity = new SessionValueEntity(userEntity.getId(), userEntity.getUsername(), userEntity.getRoles());
+                SessionValueEntity sessionValueEntity = new SessionValueEntity(userEntity.getId().toHexString(), userEntity.getUsername(), userEntity.getRoles());
                 setSessionIdCookie(response, sessionId);
                 saveSessionValueInRedis(sessionId, sessionValueEntity);
         }

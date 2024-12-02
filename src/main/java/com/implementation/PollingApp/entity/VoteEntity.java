@@ -25,19 +25,11 @@ public class VoteEntity {
 
         private Date creationDateTime;
 
-        public VoteEntity(String optionId, String username) {
+        public VoteEntity(ObjectId optionId, String username) {
                 this.id = new ObjectId();
-                this.optionId = new ObjectId(optionId);
+                this.optionId = optionId;
                 this.username = username;
                 this.creationDateTime = new Date();
-        }
-
-        public String getId() {
-                return id.toHexString();
-        }
-
-        public String getOptionId() {
-                return optionId.toHexString();
         }
 
 }

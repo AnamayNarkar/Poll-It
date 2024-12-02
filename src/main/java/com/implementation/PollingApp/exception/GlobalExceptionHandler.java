@@ -13,6 +13,7 @@ import com.implementation.PollingApp.exception.custom.ValidationException;
 import com.implementation.PollingApp.exception.custom.InvalidSessionException;
 import com.implementation.PollingApp.exception.custom.PollExpirationException;
 import com.implementation.PollingApp.exception.custom.UnauthorizedRequestException;
+import com.implementation.PollingApp.exception.custom.CannotVoteException;
 import com.implementation.PollingApp.exception.custom.ForbiddenRequestException;
 
 @ControllerAdvice
@@ -36,7 +37,7 @@ public class GlobalExceptionHandler {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        @ExceptionHandler({ InvalidSessionException.class })
+        @ExceptionHandler(InvalidSessionException.class)
         public ResponseEntity<ApiResponse<Object>> handleInvalidSessionException(InvalidSessionException ex) {
                 ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
@@ -50,6 +51,12 @@ public class GlobalExceptionHandler {
 
         @ExceptionHandler(PollExpirationException.class)
         public ResponseEntity<ApiResponse<Object>> handlePollExpirationException(PollExpirationException ex) {
+                ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        @ExceptionHandler(CannotVoteException.class)
+        public ResponseEntity<ApiResponse<Object>> handleAlreadyVotedException(CannotVoteException ex) {
                 ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }

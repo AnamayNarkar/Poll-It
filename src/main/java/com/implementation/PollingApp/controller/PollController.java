@@ -4,13 +4,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 // import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.PutMapping;
-// import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.implementation.PollingApp.dto.OptionResponseDTO;
 import com.implementation.PollingApp.dto.PollEntryDTO;
-import com.implementation.PollingApp.entity.PollEntity;
+import com.implementation.PollingApp.dto.PollResponseDTO;
 import com.implementation.PollingApp.security.authObjects.CustomSessionAuthenticationObject;
 import com.implementation.PollingApp.service.PollService;
 import com.implementation.PollingApp.util.ApiResponse;
@@ -33,20 +32,20 @@ public class PollController {
         private PollService pollService;
 
         @PostMapping("/createPoll")
-        public ResponseEntity<ApiResponse<PollEntity>> createPoll(@RequestBody PollEntryDTO pollEntryDTO) {
+        public ResponseEntity<ApiResponse<PollResponseDTO>> createPoll(@RequestBody PollEntryDTO pollEntryDTO) {
                 CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
-                return ResponseEntity.ok(new ApiResponse<PollEntity>(pollService.createPoll(pollEntryDTO, authentication.getUsername()), "Poll created successfully"));
+                return ResponseEntity.ok(new ApiResponse<PollResponseDTO>(pollService.createPoll(pollEntryDTO, authentication.getUsername()), "Poll created successfully"));
         }
 
         @GetMapping("/getAllPollsFromUser")
-        public ResponseEntity<ApiResponse<List<PollEntity>>> getAllPollsFromUser() {
-                return ResponseEntity.ok(new ApiResponse<List<PollEntity>>(pollService.getAllPollsFromUser(((CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication()).getUsername()), "Polls fetched successfully"));
+        public ResponseEntity<ApiResponse<List<PollResponseDTO>>> getAllPollsFromUser() {
+                return ResponseEntity.ok(new ApiResponse<List<PollResponseDTO>>(pollService.getAllPollsFromUser(((CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication()).getUsername()), "Polls fetched successfully"));
         }
 
         @PostMapping("/vote/{pollId}/{optionId}")
-        public ResponseEntity<ApiResponse<String>> vote(@PathVariable String pollId, @PathVariable String optionId) {
+        public ResponseEntity<ApiResponse<OptionResponseDTO>> vote(@PathVariable String pollId, @PathVariable String optionId) {
                 CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
-                return ResponseEntity.ok(new ApiResponse<String>(pollService.vote(pollId, optionId, authentication.getUsername()), "Voted successfully"));
+                return ResponseEntity.ok(new ApiResponse<OptionResponseDTO>(pollService.vote(pollId, optionId, authentication.getUsername()), "Voted successfully"));
         }
 
 }

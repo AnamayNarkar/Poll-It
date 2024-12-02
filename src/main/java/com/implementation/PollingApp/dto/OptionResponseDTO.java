@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class JournalEntryDTO {
+public class OptionResponseDTO {
+        String id;
 
-        private String title;
-        private String content;
+        private String option;
 
+        private int voteCount;
 }
