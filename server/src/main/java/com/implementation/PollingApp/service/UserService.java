@@ -9,7 +9,8 @@ import com.implementation.PollingApp.repository.UserRepository;
 import com.implementation.PollingApp.entity.UserEntity;
 import com.implementation.PollingApp.exception.custom.InternalServerErrorException;
 import com.implementation.PollingApp.exception.custom.ValidationException;
-import com.implementation.PollingApp.dto.UserDto;
+import com.implementation.PollingApp.dto.UserLoginDTO;
+import com.implementation.PollingApp.dto.UserRegistrationDto;
 
 @Service
 public class UserService {
@@ -17,17 +18,32 @@ public class UserService {
         @Autowired
         private UserRepository userRepository;
 
-        public UserEntity createUser(UserDto userDto) {
+        public UserEntity createUser(UserRegistrationDto userDto) {
                 try {
-                        UserEntity userEntity = new UserEntity(userDto.getUsername(), userDto.getPassword(), new Vector<>(Arrays.asList("USER")));
+
+                        System.out.println("Creating user: " + userDto.getUsername());
+
+                        if (userRepository.findByUsername(userDto.getUsername()) != null) {
+                                throw new ValidationException("Username already exists");
+                        }
+
+                        if (userRepository.findByEmail(userDto.getEmail()) != null) {
+                                throw new ValidationException("Email already exists");
+                        }
+
+                        UserEntity userEntity = new UserEntity(userDto.getUsername(), userDto.getEmail(), userDto.getPassword(), new Vector<>(Arrays.asList("USER")));
+
                         userEntity = userRepository.save(userEntity);
+
+                        System.out.println("User created successfully");
+
                         return userEntity;
                 } catch (Exception e) {
                         throw new InternalServerErrorException("Error creating user: " + e.getMessage());
                 }
         }
 
-        public UserEntity loginUser(UserDto userDto) {
+        public UserEntity loginUser(UserLoginDTO userDto) {
                 try {
                         UserEntity userEntity = userRepository.findByUsername(userDto.getUsername());
                         if (userEntity != null && userEntity.getPassword().equals(userDto.getPassword())) {
@@ -73,7 +89,7 @@ public class UserService {
                 }
         }
 
-        public void updateUser(UserDto userDto) {
+        public void updateUser(UserLoginDTO userDto) {
                 try {
                         UserEntity userEntity = userRepository.findByUsername(userDto.getUsername());
                         if (userEntity != null) {

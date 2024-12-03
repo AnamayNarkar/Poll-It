@@ -11,12 +11,14 @@ const ProtectedRouteForUser = ({ element }) => {
     useEffect(() => {
         const checkUser = async () => {
             try {
-                const response = await axios.get("/api/user/verifyUser");
+                const response = await axios.get("http://localhost:3000/api/user/verifyUser", { withCredentials: true });
+                console.log(response);
                 if (response.status >= 200 && response.status < 300) {
                     setIsAuthenticated(true);
                 }
             } catch (error) {
                 if (error.response && error.response.status === 401) {
+                    console.log("User is not authenticated");
                     navigate("/auth");
                 } else {
                     console.error("Error verifying user:", error);

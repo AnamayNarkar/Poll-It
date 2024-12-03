@@ -21,12 +21,11 @@ const LoginForm = ({ setIsLoginFormCustom }) => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.post('/api/user/login', loginForm);
+        const response = await axios.post('http://localhost:3000/api/user/login', loginForm, { withCredentials: true });
         if (response.status >= 200 && response.status < 300) {
-
             navigate('/home');
         } else {
-            window.alert('Invalid credentials');
+            window.alert(response.data.message);
             console.log(response);
             loginForm.username = '';
             loginForm.password = '';

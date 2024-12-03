@@ -7,4 +7,6 @@ import com.implementation.PollingApp.entity.UserEntity;
 
 public interface UserRepository extends MongoRepository<UserEntity, ObjectId> {
         UserEntity findByUsername(String username);
+
+        UserEntity findByEmail(String email);
 }

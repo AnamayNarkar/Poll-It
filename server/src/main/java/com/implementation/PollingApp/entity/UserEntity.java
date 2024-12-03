@@ -2,6 +2,8 @@ package com.implementation.PollingApp.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+// import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import lombok.Data;
@@ -22,6 +24,10 @@ public class UserEntity {
         @Indexed(unique = true)
         private String username;
 
+        @Indexed(unique = true)
+        private String email;
+
+        // @JsonIgnore
         private String password;
 
         private Vector<String> roles;
@@ -32,9 +38,10 @@ public class UserEntity {
 
         private Vector<ObjectId> votedPolls;
 
-        public UserEntity(String username, String password, Vector<String> roles) {
+        public UserEntity(String username, String email, String password, Vector<String> roles) {
                 this.username = username;
                 this.password = password;
+                this.email = email;
                 this.roles = roles;
                 this.joinDate = new Date();
                 this.createdPolls = new Vector<>();

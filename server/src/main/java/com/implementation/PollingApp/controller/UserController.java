@@ -1,6 +1,7 @@
 package com.implementation.PollingApp.controller;
 
-import com.implementation.PollingApp.dto.UserDto;
+import com.implementation.PollingApp.dto.UserLoginDTO;
+import com.implementation.PollingApp.dto.UserRegistrationDto;
 import com.implementation.PollingApp.entity.SessionValueEntity;
 import com.implementation.PollingApp.entity.UserEntity;
 import com.implementation.PollingApp.service.UserService;
@@ -10,7 +11,7 @@ import com.implementation.PollingApp.util.SessionUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.servlet.http.HttpServletRequest;
 
-@Controller
 @RestController
 @RequestMapping("/api/user/")
+@CrossOrigin(origins = "http://localhost:5173")
 public class UserController {
 
         @Autowired
@@ -32,16 +33,19 @@ public class UserController {
         @GetMapping("/verifyUser")
         public ResponseEntity<ApiResponse<String>> verifyUser(HttpServletRequest request) {
                 SessionValueEntity sessionValueEntity = sessionUtils.getUserSession(request);
+                System.out.println("SessionValueEntity: " + sessionValueEntity);
                 if (sessionValueEntity == null) {
+                        System.out.println("User verification failed");
                         ApiResponse<String> apiResponse = new ApiResponse<>(null, "User verification failed");
                         return ResponseEntity.status(401).body(apiResponse);
                 }
+                System.out.println("User verified successfully");
                 ApiResponse<String> apiResponse = new ApiResponse<>(null, "User verified successfully");
                 return ResponseEntity.ok(apiResponse);
         }
 
         @PostMapping("/register")
-        public ResponseEntity<ApiResponse<UserEntity>> registerUser(@RequestBody UserDto userDto, HttpServletResponse response) {
+        public ResponseEntity<ApiResponse<UserEntity>> registerUser(@RequestBody UserRegistrationDto userDto, HttpServletResponse response) {
                 UserEntity userEntity = userService.createUser(userDto);
                 sessionUtils.saveUserSession(response, userEntity);
                 ApiResponse<UserEntity> apiResponse = new ApiResponse<>(userEntity, "User created successfully");
@@ -49,9 +53,11 @@ public class UserController {
         }
 
         @PostMapping("/login")
-        public ResponseEntity<ApiResponse<UserEntity>> loginUser(@RequestBody UserDto userDto, HttpServletResponse response) {
+        public ResponseEntity<ApiResponse<UserEntity>> loginUser(@RequestBody UserLoginDTO userDto, HttpServletResponse response) {
+                System.out.println("Logging in user: " + userDto.getUsername());
                 UserEntity userEntity = userService.loginUser(userDto);
                 sessionUtils.saveUserSession(response, userEntity);
+                System.out.println(userDto.getUsername() + "logged in sussceessfully");
                 ApiResponse<UserEntity> apiresponse = new ApiResponse<>(userEntity, "User logged in successfully");
                 return ResponseEntity.ok(apiresponse);
         }
