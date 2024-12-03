@@ -33,6 +33,7 @@ public class UserService {
                         if (userEntity != null && userEntity.getPassword().equals(userDto.getPassword())) {
                                 return userEntity;
                         } else {
+                                System.out.println("Invalid username or password");
                                 throw new ValidationException("Invalid username or password");
                         }
                 } catch (ValidationException ve) {

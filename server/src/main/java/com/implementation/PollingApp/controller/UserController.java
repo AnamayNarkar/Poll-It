@@ -33,10 +33,10 @@ public class UserController {
         public ResponseEntity<ApiResponse<String>> verifyUser(HttpServletRequest request) {
                 SessionValueEntity sessionValueEntity = sessionUtils.getUserSession(request);
                 if (sessionValueEntity == null) {
-                        ApiResponse<String> apiResponse = new ApiResponse<>(null, "User not logged in");
+                        ApiResponse<String> apiResponse = new ApiResponse<>(null, "User verification failed");
                         return ResponseEntity.status(401).body(apiResponse);
                 }
-                ApiResponse<String> apiResponse = new ApiResponse<>(null, "User logged in");
+                ApiResponse<String> apiResponse = new ApiResponse<>(null, "User verified successfully");
                 return ResponseEntity.ok(apiResponse);
         }
 

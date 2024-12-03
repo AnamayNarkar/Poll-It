@@ -12,7 +12,7 @@ function App() {
       element: <div>Test</div>
     },
     {
-      path: "/important",
+      path: "/home",
       element: <ProtectedRouteForUser element={<div>Important</div>} />
     },
     {
