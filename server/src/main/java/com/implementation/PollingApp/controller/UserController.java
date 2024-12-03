@@ -1,6 +1,7 @@
 package com.implementation.PollingApp.controller;
 
 import com.implementation.PollingApp.dto.UserDto;
+import com.implementation.PollingApp.entity.SessionValueEntity;
 import com.implementation.PollingApp.entity.UserEntity;
 import com.implementation.PollingApp.service.UserService;
 import com.implementation.PollingApp.util.ApiResponse;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,17 @@ public class UserController {
 
         @Autowired
         public SessionUtils sessionUtils;
+
+        @GetMapping("/verifyUser")
+        public ResponseEntity<ApiResponse<String>> verifyUser(HttpServletRequest request) {
+                SessionValueEntity sessionValueEntity = sessionUtils.getUserSession(request);
+                if (sessionValueEntity == null) {
+                        ApiResponse<String> apiResponse = new ApiResponse<>(null, "User not logged in");
+                        return ResponseEntity.status(401).body(apiResponse);
+                }
+                ApiResponse<String> apiResponse = new ApiResponse<>(null, "User logged in");
+                return ResponseEntity.ok(apiResponse);
+        }
 
         @PostMapping("/register")
         public ResponseEntity<ApiResponse<UserEntity>> registerUser(@RequestBody UserDto userDto, HttpServletResponse response) {

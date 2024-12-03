@@ -48,4 +48,6 @@ public class PollController {
                 return ResponseEntity.ok(new ApiResponse<OptionResponseDTO>(pollService.vote(pollId, optionId, authentication.getUsername()), "Voted successfully"));
         }
 
+        // @GetMapping("/")
+
 }

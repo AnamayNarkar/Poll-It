@@ -26,7 +26,7 @@ public class SecurityConfig {
         @Bean
         @Order(1)
         public SecurityFilterChain publicSecurityFilterChain(HttpSecurity http) throws Exception { // For formatting
-                return http.securityMatcher("/api/user/login", "/api/user/register", "/api/user/logout") // For formatting
+                return http.securityMatcher("/api/user/login", "/api/user/register", "/api/user/logout", "/api/user/verifyUser") // For formatting
                                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests.anyRequest().permitAll()) // For formatting
                                 .csrf(csrf -> csrf.disable()) // For formatting
                                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // For formatting

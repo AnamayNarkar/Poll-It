@@ -1,0 +1,11 @@
+.formContaniner {
+  height: 75%;
+  width: 28%;
+  border-radius: 10px;
+  border: 2px solid orange;
+  background: rgba(255, 255, 255, 0.03);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
