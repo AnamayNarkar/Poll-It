@@ -87,11 +87,6 @@ const SideBar = () => {
                     }
                 </div>
             </div>
-            <div className='aboutFieldContainer'>
-                <div className='oneMoreContainerForHoverEffect'>
-                    <h4>About</h4>
-                </div>
-            </div>
         </div>
     )
 }

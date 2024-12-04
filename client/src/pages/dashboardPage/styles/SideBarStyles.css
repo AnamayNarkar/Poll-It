@@ -1,6 +1,6 @@
 .sideBarContainer {
   height: 100%;
-  width: 15%;
+  width: 17%;
   display: flex;
   flex-direction: column;
   border-right: 1px solid grey;
@@ -38,7 +38,7 @@
 }
 
 .tagsYouFollow {
-  height: 70%;
+  height: 80%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -99,32 +99,4 @@
 
 .tagYouFollowIndividual:hover {
   background-color: rgb(54, 50, 50);
-}
-
-.aboutFieldContainer {
-  height: 10%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.oneMoreContainerForHoverEffect {
-  height: 80%;
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-}
-
-.oneMoreContainerForHoverEffect:hover {
-  background-color: rgb(54, 50, 50);
-}
-
-.oneMoreContainerForHoverEffect > h4 {
-  color: white;
-  font-family: "Parkinsans", sans-serif;
-  margin: 0%;
-  padding: 0%;
 }

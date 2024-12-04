@@ -1,0 +1,75 @@
+.sideBarRightContainer {
+  height: 100%;
+  width: 17%;
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.createPollContainer {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.createPollContainer > .createPollButton {
+  height: 80%;
+  width: 90%;
+  background-color: azure;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.createPollButton > h4 {
+  color: black;
+  font-family: "Lato", sans-serif;
+  margin: 0%;
+  padding: 0%;
+  user-select: none;
+}
+
+.aboutAndLogoutContainer {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aboutFieldContainer,
+.logoutFieldContainer {
+  height: 45%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.oneMoreContainerForHoverEffect {
+  height: 80%;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.oneMoreContainerForHoverEffect:hover {
+  background-color: rgb(54, 50, 50);
+}
+
+.oneMoreContainerForHoverEffect > h4 {
+  color: white;
+  font-family: "Parkinsans", sans-serif;
+  margin: 0%;
+  padding: 0%;
+}

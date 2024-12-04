@@ -1,0 +1,146 @@
+.createPollComponentContainer {
+  height: 100%;
+  width: 66%;
+  border-right: 1px solid grey;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.createPollComponentBody {
+  height: fit-content;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 2%;
+}
+
+.createPollComponentBodyQuestion {
+  min-height: 70px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.createPollComponentBodyQuestion > h3 {
+  color: white;
+  font-family: "Lato", sans-serif;
+  margin: 0%;
+  padding: 0%;
+}
+
+.createPollComponentBodyQuestion > input {
+  width: 100%;
+  height: 50%;
+  border-radius: 15px;
+  border: 1px solid grey;
+  padding-left: 5px;
+  text-indent: 5px;
+  background-color: rgb(79, 74, 74);
+  color: white;
+}
+
+.howManyOptionsDropdown {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.howManyOptionsDropdown > h3 {
+  font-family: "Lato", sans-serif;
+  margin: 0%;
+  padding: 0%;
+}
+
+.howManyOptionsDropdown > select {
+  position: relative;
+  left: 3%;
+  width: 10%;
+  height: 60%;
+  border-radius: 2px;
+  border: 1px solid grey;
+  background-color: rgb(79, 74, 74);
+  color: white;
+}
+
+.OptionsTheWord {
+  color: white;
+  font-family: "Lato", sans-serif;
+  margin: 0%;
+  padding: 0%;
+  margin-bottom: 1%;
+}
+
+.optionsFieldArrayParent {
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.createPollComponentBodySubmitButtonContainer {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 0.7%;
+}
+
+.createPollComponentBodySubmitButtonContainer > button {
+  width: 20%;
+  height: 90%;
+  background-color: azure;
+  border-radius: 15px;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-family: "Lato", sans-serif;
+}
+
+.createPollComponentBodyAddTags {
+  height: 100px;
+  width: 100%;
+}
+
+.createPollComponentBodyAddTagsHeader {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: beige; */
+}
+
+.createPollComponentBodyAddTagsHeader > h3 {
+  color: white;
+  font-family: "Lato", sans-serif;
+  margin: 0%;
+  padding: 0%;
+}
+
+.createPollComponentBodyAddTagsHeader > img {
+  height: 100%;
+  width: auto;
+}
+
+.addedTags {
+  min-height: 50%;
+  max-height: 50%;
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
