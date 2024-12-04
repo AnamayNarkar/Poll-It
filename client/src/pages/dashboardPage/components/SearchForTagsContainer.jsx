@@ -3,19 +3,25 @@ import '../styles/SearchForTagsContainerStyles.css';
 import axios from 'axios';
 import AddedTagComponent from './AddedTagComponent';
 import SearchedUpTagComponent from './SearchedUpTagComponent';
+import { useNavigate } from 'react-router-dom';
 
 const SearchForTagsContainer = ({ addedTags, setAddedTags }) => {
     const [searchString, setSearchString] = useState('');
     const [tags, setTags] = useState([]);
     const [typingTimeout, setTypingTimeout] = useState(null);
+    const navigate = useNavigate(); // Place this here so it can be used in the component
 
     const fetchTags = async (searchQuery) => {
         try {
             const response = await axios.get(`http://localhost:3000/api/tag/getTagsLike/${searchQuery}`, {
                 withCredentials: true
             });
-            console.log(response.data.data);
-            setTags(response.data.data);
+            if (response.status >= 200 && response.status < 300) {
+                setTags(response.data.data);
+            } else if (response.status === 403) {
+                window.alert('Your session has expired. Please log in again.');
+                navigate('/auth');
+            }
         } catch (error) {
             console.error('Error fetching tags:', error);
         }
@@ -36,7 +42,6 @@ const SearchForTagsContainer = ({ addedTags, setAddedTags }) => {
         return () => clearTimeout(typingTimeout); // Cleanup timeout on component unmount or searchString change
     }, [searchString]);
 
-
     return (
         <>
             <div className="searchForTagsContainer">
@@ -52,13 +57,11 @@ const SearchForTagsContainer = ({ addedTags, setAddedTags }) => {
                         tags.map((tag) => (
                             <SearchedUpTagComponent key={tag.id} tag={tag} addedTags={addedTags} setAddedTags={setAddedTags} />
                         ))
-                    ) : searchString.length > 0 ? (<div className="searchForTagsNoSuggestions">No suggestions</div>) : null
-                    }
+                    ) : searchString.length > 0 ? (
+                        <div className="searchForTagsNoSuggestions">No suggestions</div>
+                    ) : null}
                 </div>
-
             </div>
-
-
         </>
     );
 };
