@@ -3,6 +3,7 @@ import LoginPage from './pages/loginPage/LoginPage'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ProtectedRoute from './services/ProtectedRouteForUser';
 import ProtectedRouteForUser from './services/ProtectedRouteForUser';
+import DashboardPage from './pages/dashboardPage/DashboardPage';
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
     },
     {
       path: "/home",
-      element: <ProtectedRouteForUser element={<div>Important</div>} />
+      element: <ProtectedRouteForUser element={<DashboardPage />} />
     },
     {
       path: "/auth",

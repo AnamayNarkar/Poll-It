@@ -12,13 +12,11 @@ const ProtectedRouteForUser = ({ element }) => {
         const checkUser = async () => {
             try {
                 const response = await axios.get("http://localhost:3000/api/user/verifyUser", { withCredentials: true });
-                console.log(response);
                 if (response.status >= 200 && response.status < 300) {
                     setIsAuthenticated(true);
                 }
             } catch (error) {
                 if (error.response && error.response.status === 401) {
-                    console.log("User is not authenticated");
                     navigate("/auth");
                 } else {
                     console.error("Error verifying user:", error);
@@ -32,7 +30,7 @@ const ProtectedRouteForUser = ({ element }) => {
     }, [navigate]);
 
     if (isLoading) {
-        return <div style={{ backgroundColor: '#242424', color: '#fff', textAlign: 'center', padding: '20px' }}>Loading...</div>;
+        return <div style={{ backgroundColor: '#242424', color: '#fff', textAlign: 'center', padding: '20px' }}></div>;
     }
 
     return isAuthenticated ? element : null;

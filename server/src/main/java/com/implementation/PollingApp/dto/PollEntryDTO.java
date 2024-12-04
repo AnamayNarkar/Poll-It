@@ -3,6 +3,8 @@ package com.implementation.PollingApp.dto;
 import java.util.Date;
 import java.util.Vector;
 
+import org.bson.types.ObjectId;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,5 +15,6 @@ public class PollEntryDTO {
         String question;
         Vector<String> options;
         Date expirationDateTime;
-
+        Vector<ObjectId> existingTags;
+        Vector<String> newTags;
 }

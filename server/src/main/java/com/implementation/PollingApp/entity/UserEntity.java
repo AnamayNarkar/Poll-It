@@ -38,6 +38,8 @@ public class UserEntity {
 
         private Vector<ObjectId> votedPolls;
 
+        private Vector<ObjectId> followedTags;
+
         public UserEntity(String username, String email, String password, Vector<String> roles) {
                 this.username = username;
                 this.password = password;
@@ -46,5 +48,6 @@ public class UserEntity {
                 this.joinDate = new Date();
                 this.createdPolls = new Vector<>();
                 this.votedPolls = new Vector<>();
+                this.followedTags = new Vector<>();
         }
 }

@@ -1,0 +1,64 @@
+.dashboardHeaderContainer {
+  height: 10%;
+  width: 100%;
+  border-bottom: 1px solid orange;
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logoAndName {
+  height: 100%;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboardHeaderContainer > .logoAndName > .dashboardHeaderLogo {
+  padding: 0%;
+  margin: 0%;
+  height: 50%;
+  width: auto;
+}
+
+.dashboardHeaderContainer > .logoAndName > h2 {
+  color: white;
+  font-family: "Parkinsans", sans-serif;
+  margin: 0%;
+  padding: 0%;
+}
+
+.dashboardHeaderContainer > .searchBar {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBar > input {
+  width: 100%;
+  height: 50%;
+  border-radius: 15px;
+  border: 1px solid grey;
+  padding-left: 5px;
+  text-indent: 5px;
+  background-color: rgb(79, 74, 74);
+  color: white;
+}
+
+.profileIcon {
+  height: 100%;
+  width: 10%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profileIcon > img {
+  height: 100%;
+  width: auto;
+}

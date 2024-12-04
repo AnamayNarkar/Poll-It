@@ -26,10 +26,16 @@ public class PollEntity {
 
         private Date expirationDateTime;
 
-        // @DBRef
         private Vector<ObjectId> options;
 
-        public PollEntity(String question, String createdBy, Vector<ObjectId> options, Date expirationDateTime) {
+        private Vector<ObjectId> tags;
+
+        public PollEntity(String question, String createdBy, Vector<ObjectId> options, Date expirationDateTime, Vector<ObjectId> tags) {
+
+                if (tags.size() == 0 || tags.size() > 3) {
+                        throw new IllegalArgumentException("Tags should be between 1 and 3");
+                }
+
                 this.id = new ObjectId();
                 this.question = question;
                 this.createdBy = createdBy;
