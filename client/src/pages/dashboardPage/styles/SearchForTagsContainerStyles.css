@@ -1,0 +1,34 @@
+.searchForTagsContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.searchForTagsInput {
+  height: 15%;
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+  border-radius: 15px;
+  background-color: rgb(79, 74, 74);
+  border: none;
+  color: white;
+  text-indent: 10px;
+}
+
+.searchResultsForTagsContainer {
+  height: fit-content;
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}

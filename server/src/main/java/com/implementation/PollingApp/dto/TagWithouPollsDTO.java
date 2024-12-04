@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TagWithouPollsDTO {
 
-    private ObjectId id;
+    private String id;
     private String name;
 
 }

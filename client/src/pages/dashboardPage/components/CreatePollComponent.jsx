@@ -37,7 +37,7 @@ const CreatePollComponent = () => {
         <div className='createPollComponentContainer'>
             {isSearchTagsComponentVisible && (
                 <div ref={searchTagsRef}>
-                    <SearchAndCreateTagsComponent />
+                    <SearchAndCreateTagsComponent addedTags={addedTags} setAddedTags={setAddedTags} />
                 </div>
             )}
             <div className='createPollComponentBody'>
@@ -63,7 +63,7 @@ const CreatePollComponent = () => {
 
                 <div className='optionsFieldArrayParent'>
                     {Array.from({ length: numberOfOptions }).map((_, i) => (
-                        <OptionsFieldInCreatePollComponent key={i} />
+                        <OptionsFieldInCreatePollComponent key={i} id={i} />
                     ))}
                 </div>
 

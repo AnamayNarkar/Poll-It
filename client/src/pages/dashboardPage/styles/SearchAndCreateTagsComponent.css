@@ -1,11 +1,65 @@
 .searchAndCreateTagsComponentContainer {
-  height: 80%;
+  height: 45%;
   width: 90%;
-  background-color: rgb(45, 42, 42);
+  background-color: rgb(54, 50, 50);
   position: absolute;
-  /* center it  */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+  border-radius: 15px;
+  border: 1px solid grey;
+}
+
+.searchAndCreateTagsComponentSearchContainerHeader {
+  height: 16%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  display: flex;
+}
+
+.searchAndCreateTagsComponentSearchContainerHeader > h3 {
+  color: azure;
+  font-family: "Parkinsans", sans-serif;
+}
+
+.searchAndCreateTagsComponentSearchHeaderTitle,
+.searchAndCreateTagsComponentCreateHeaderTitle {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(45, 42, 42);
+  cursor: pointer;
+}
+
+.searchAndCreateTagsComponentSearchHeaderTitle {
+  border-top-left-radius: 15px;
+}
+
+.searchAndCreateTagsComponentCreateHeaderTitle {
+  border-top-right-radius: 15px;
+}
+
+.searchAndCreateTagsComponentSearchHeaderTitle:hover {
+  background-color: rgb(54, 50, 50);
+  border-top-left-radius: 15px;
+}
+
+.searchAndCreateTagsComponentCreateHeaderTitle:hover {
+  background-color: rgb(54, 50, 50);
+  border-top-right-radius: 15px;
+}
+
+.searchAndCreateTagsComponentMain {
+  height: 88%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

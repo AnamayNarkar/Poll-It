@@ -1,6 +1,5 @@
 package com.implementation.PollingApp.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 // import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +26,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 @RequestMapping("/api/poll")
-@CrossOrigin(origins = "http://localhost:5173")
 public class PollController {
 
         @Autowired
@@ -49,7 +47,5 @@ public class PollController {
                 CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
                 return ResponseEntity.ok(new ApiResponse<OptionResponseDTO>(pollService.vote(pollId, optionId, authentication.getUsername()), "Voted successfully"));
         }
-
-        // @GetMapping("/")
 
 }

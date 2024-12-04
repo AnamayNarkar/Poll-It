@@ -1,9 +1,9 @@
 import React from 'react'
 import '../styles/OptionsFieldInCreatePollComponentStyles.css'
 
-const OptionsFieldInCreatePollComponent = ({ key }) => {
+const OptionsFieldInCreatePollComponent = ({ id }) => {
     return (
-        <input type='text' placeholder={`Option ${key}`} className='optionsFieldInCreatePollComponent' key={key} />
+        <input type='text' placeholder={`Option ${id + 1}`} className='optionsFieldInCreatePollComponent' />
     )
 }
 
