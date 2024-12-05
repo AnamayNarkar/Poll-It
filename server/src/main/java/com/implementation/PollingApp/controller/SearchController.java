@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.implementation.PollingApp.dto.TagWithouPollsDTO;
+import com.implementation.PollingApp.dto.UserForDisplayingSearchResultsDTO;
 import com.implementation.PollingApp.service.SearchService;
 import com.implementation.PollingApp.util.ApiResponse;
 
@@ -23,6 +24,11 @@ public class SearchController {
         @GetMapping("/getTagsLike/{name}")
         ResponseEntity<ApiResponse<List<TagWithouPollsDTO>>> getTagsLike(@PathVariable String name) {
                 return ResponseEntity.ok(new ApiResponse<List<TagWithouPollsDTO>>(searchService.getTagsLike(name), "Tags fetched successfully"));
+        }
+
+        @GetMapping("/getUsersLike/{name}")
+        ResponseEntity<ApiResponse<List<UserForDisplayingSearchResultsDTO>>> getUsersLike(@PathVariable String name) {
+                return ResponseEntity.ok(new ApiResponse<List<UserForDisplayingSearchResultsDTO>>(searchService.getUsersLike(name), "Users fetched successfully"));
         }
 
 }

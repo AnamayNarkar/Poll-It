@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import '../styles/DashboardHeaderStyles.css';
 import TopSearchBarResultComponent from './TopSearchBarResultComponent';
 import searchForTagsRequest from '../../../services/ApiRequests/searchForTagsRequest';
+import searchForUsersRequest from '../../../services/ApiRequests/searchForUsersRequest';
 
 const DashboardHeader = () => {
     const [areSearchResultsVisible, setAreSearchResultsVisible] = useState(false);
@@ -20,12 +21,14 @@ const DashboardHeader = () => {
         }
     };
 
-    const sampleResultsWhenSearchingForUsers = [
-        { name: 'John Doe', id: '1' },
-        { name: 'Jane Doe', id: '2' },
-        { name: 'John Smith', id: '3' },
-        { name: 'Jane Smith', id: '4' },
-    ];
+    const fetchUsers = async (searchQuery) => {
+        try {
+            const response = await searchForUsersRequest(searchQuery);
+            setSearchResults(response.data);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
 
     const handleInputChange = (e) => {
         const value = e.target.value;
@@ -46,8 +49,8 @@ const DashboardHeader = () => {
         if (debouncedSearchString.startsWith('t/') && debouncedSearchString.length > 2) {
             fetchTags(debouncedSearchString.slice(2));
             setAreSearchResultsVisible(true);
-        } else if (debouncedSearchString.startsWith('u/')) {
-            setSearchResults(sampleResultsWhenSearchingForUsers);
+        } else if (debouncedSearchString.startsWith('u/') && debouncedSearchString.length > 2) {
+            fetchUsers(debouncedSearchString.slice(2));
             setAreSearchResultsVisible(true);
         } else {
             setAreSearchResultsVisible(false);

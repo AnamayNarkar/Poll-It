@@ -5,7 +5,7 @@ const TopSearchBarResultComponent = ({ result, typeOfSearch }) => {
     return (
         <div className='singularSearchResultContainer' >
             <div className='searchResultName' >
-                {typeOfSearch === 'tag' ? "t/" + result.name : typeOfSearch === 'user' ? "u/" + result.name : result.name}
+                {typeOfSearch === 'tag' ? "t/" + result.name : typeOfSearch === 'user' ? "u/" + result.username : result.name}
             </div>
         </div >
     )
