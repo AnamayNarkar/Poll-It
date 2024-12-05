@@ -22,7 +22,11 @@ const LoginForm = ({ setIsLoginFormCustom }) => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        await loginRequest(loginForm);
+
+        loginForm.username = loginForm.username.trim();
+        loginForm.password = loginForm.password.trim();
+
+        const response = await loginRequest(loginForm);
         navigate('/home');
     }
 
@@ -31,12 +35,9 @@ const LoginForm = ({ setIsLoginFormCustom }) => {
             <h1 className='loginFormTitle'>Login</h1>
 
             <form className='loginForm'>
-
-                <input type='text' name='username' placeholder='Username' value={loginForm.username} onChange={handleInputChange} className='loginFormInput' />
-                <input type='password' name='password' placeholder='Password' value={loginForm.password} onChange={handleInputChange} className='loginFormInput' />
-
+                <input type='text' name='username' placeholder='Username' value={loginForm.username} onChange={handleInputChange} className='loginFormInput' maxLength='20' />
+                <input type='password' name='password' placeholder='Password' value={loginForm.password} onChange={handleInputChange} className='loginFormInput' maxLength='20' />
                 <button type='submit' className='loginFormButton' onClick={handleFormSubmit}>Login</button>
-
             </form>
 
             <h3 className='loginFormSwitchForm' onClick={setIsLoginFormCustom} style={{ cursor: 'pointer', color: 'white', fontFamily: '"Parkinsans", sans-serif' }}>

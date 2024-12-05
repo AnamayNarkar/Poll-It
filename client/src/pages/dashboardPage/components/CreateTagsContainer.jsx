@@ -1,34 +1,24 @@
 import React, { useState } from 'react';
 import '../styles/CreateTagsContainerStyles.css';
-import axios from 'axios';
+import createTagRequest from '../../../services/ApiRequests/createTagRequest';
 
 const CreateTagsContainer = () => {
     const [tagName, setTagName] = useState('');
     const [statusMessage, setStatusMessage] = useState('');
 
     const handleCreateTag = async () => {
-        if (!tagName) {
-            setStatusMessage('Please enter a tag name.');
-            return;
-        }
-
-        tagName = tagName.trim();
-
-        const response = await axios.post(`http://localhost:3000/api/tag/createTag/${tagName}`, {
-
-        },
-            { withCredentials: true },
-            { headers: { 'Content-Type': 'application/json' } }
-        );
-
-        console.log('Response:', response.data);
+        const response = await createTagRequest(tagName);
 
         if (response.status >= 200 && response.status < 300) {
-            setStatusMessage(response.data.message);
-            setTagName('');
+            setStatusMessage('Tag created successfully');
         } else {
-            setStatusMessage(response.data.message);
+            setStatusMessage(response.data.message || 'An error occurred');
         }
+
+        setTimeout(() => {
+            setStatusMessage('');
+        }, 3000);
+
     };
 
     return (
@@ -45,7 +35,7 @@ const CreateTagsContainer = () => {
                     Create
                 </button>
             </div>
-            {statusMessage && <div className='statusMessage'>{statusMessage}</div>}
+            {statusMessage && statusMessage === 'Tag created successfully' ? (<div className='statusMessageForCreateTags' style={{ color: 'green' }}>{statusMessage}</div>) : (<div className='statusMessageForCreateTags' style={{ color: 'red' }}>{statusMessage}</div>)}
         </div>
     );
 };

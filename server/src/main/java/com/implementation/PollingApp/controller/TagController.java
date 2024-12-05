@@ -23,7 +23,6 @@ public class TagController {
 
         @PostMapping("/createTag/{name}")
         ResponseEntity<ApiResponse<TagWithouPollsDTO>> createTag(@PathVariable String name) {
-                System.out.println("Creating tag with name: " + name);
                 return ResponseEntity.ok(new ApiResponse<TagWithouPollsDTO>(tagService.createTag(name), "Tag created successfully"));
         }
 }

@@ -23,6 +23,17 @@ const RegistrationForm = ({ setIsLoginFormCustom }) => {
 
     const handleRegistrationFormSubmit = async (e) => {
         e.preventDefault();
+
+        registrationFormData.username = registrationFormData.username.trim();
+        registrationFormData.email = registrationFormData.email.trim();
+        registrationFormData.password = registrationFormData.password.trim();
+
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailRegex.test(registrationFormData.email)) {
+            alert('Invalid email address');
+            return;
+        }
+
         const response = await registrationRequest(registrationFormData);
         navigate('/home');
     }
@@ -33,9 +44,9 @@ const RegistrationForm = ({ setIsLoginFormCustom }) => {
             <h1 className='registrationFormTitle'>Register</h1>
 
             <form className='registrationForm'>
-                <input type='email' name='email' placeholder='Email' className='registrationFormInput' onChange={handleRegistrationFormChange} />
-                <input type='text' name='username' placeholder='Username' className='registrationFormInput' onChange={handleRegistrationFormChange} />
-                <input type='password' name='password' placeholder='Password' className='registrationFormInput' onChange={handleRegistrationFormChange} />
+                <input type='email' name='email' placeholder='Email' className='registrationFormInput' onChange={handleRegistrationFormChange} maxLength='50' />
+                <input type='text' name='username' placeholder='Username' className='registrationFormInput' onChange={handleRegistrationFormChange} maxLength='20' />
+                <input type='password' name='password' placeholder='Password' className='registrationFormInput' onChange={handleRegistrationFormChange} maxLength='20' />
                 <button type='submit' className='registrationFormButton' onClick={handleRegistrationFormSubmit}>Register</button>
             </form>
 

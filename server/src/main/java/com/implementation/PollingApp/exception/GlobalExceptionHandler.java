@@ -15,6 +15,7 @@ import com.implementation.PollingApp.exception.custom.PollExpirationException;
 import com.implementation.PollingApp.exception.custom.UnauthorizedRequestException;
 import com.implementation.PollingApp.exception.custom.CannotVoteException;
 import com.implementation.PollingApp.exception.custom.ForbiddenRequestException;
+import com.implementation.PollingApp.exception.custom.TagException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -67,6 +68,12 @@ public class GlobalExceptionHandler {
         public ResponseEntity<ApiResponse<Object>> handleForbiddenRequestException(ForbiddenRequestException ex) {
                 ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+        }
+
+        @ExceptionHandler(TagException.class)
+        public ResponseEntity<ApiResponse<Object>> handleTagException(TagException ex) {
+                ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
 }
