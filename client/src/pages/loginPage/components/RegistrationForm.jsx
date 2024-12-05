@@ -33,11 +33,9 @@ const RegistrationForm = ({ setIsLoginFormCustom }) => {
             <h1 className='registrationFormTitle'>Register</h1>
 
             <form className='registrationForm'>
-
-                <input type='text' name='username' placeholder='Username' className='registrationFormInput' onChange={handleRegistrationFormChange} />
                 <input type='email' name='email' placeholder='Email' className='registrationFormInput' onChange={handleRegistrationFormChange} />
+                <input type='text' name='username' placeholder='Username' className='registrationFormInput' onChange={handleRegistrationFormChange} />
                 <input type='password' name='password' placeholder='Password' className='registrationFormInput' onChange={handleRegistrationFormChange} />
-
                 <button type='submit' className='registrationFormButton' onClick={handleRegistrationFormSubmit}>Register</button>
             </form>
 

@@ -7,7 +7,7 @@ import CreatePollComponent from './CreatePollComponent'
 
 const MainContent = () => {
 
-    const [feedOverCreatePoll, setFeedOverCreatePoll] = React.useState(false);
+    const [feedOverCreatePoll, setFeedOverCreatePoll] = React.useState(true);
 
     return (
         <div className='mainContentContainer' style={{ display: 'flex', flexDirection: 'row', height: '90%', width: '100%', padding: '0', margin: '0' }}>

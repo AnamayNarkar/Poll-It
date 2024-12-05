@@ -1,12 +1,11 @@
 .contentFeedContainer {
   height: 100%;
   width: 66%;
-  /* background-color: aqua; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 20px;
   border-right: 1px solid grey;
-  background-color: antiquewhite;
+  /* background-color: antiquewhite; */
 }

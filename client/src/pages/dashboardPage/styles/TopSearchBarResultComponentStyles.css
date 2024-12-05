@@ -1,0 +1,6 @@
+.singularSearchResultContainer {
+  height: 25px;
+  background-color: aqua;
+  width: 50%;
+  cursor: pointer;
+}
