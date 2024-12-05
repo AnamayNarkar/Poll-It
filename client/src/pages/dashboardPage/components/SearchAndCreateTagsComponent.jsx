@@ -3,7 +3,7 @@ import '../styles/SearchAndCreateTagsComponent.css'
 import SearchForTagsContainer from './SearchForTagsContainer';
 import CreateTagsContainer from './CreateTagsContainer';
 
-const SearchAndCreateTagsComponent = ({ addedTags, setAddedTags }) => {
+const SearchAndCreateTagsComponent = ({ addTags }) => {
 
     const [isSearchOverCreate, setIsSearchOverCreate] = useState(true);
 
@@ -24,7 +24,7 @@ const SearchAndCreateTagsComponent = ({ addedTags, setAddedTags }) => {
             </div>
 
             <div className='searchAndCreateTagsComponentMain'>
-                {isSearchOverCreate ? <SearchForTagsContainer addedTags={addedTags} setAddedTags={setAddedTags} />
+                {isSearchOverCreate ? <SearchForTagsContainer addTags={addTags} />
                     : <CreateTagsContainer />}
             </div>
 

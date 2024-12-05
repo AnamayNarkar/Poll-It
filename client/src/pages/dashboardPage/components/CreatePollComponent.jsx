@@ -3,19 +3,19 @@ import '../styles/CreatePollComponentStyles.css';
 import OptionsFieldInCreatePollComponent from './OptionsFieldInCreatePollComponent';
 import AddedTagComponent from './AddedTagComponent';
 import SearchAndCreateTagsComponent from './SearchAndCreateTagsComponent';
+import axios from 'axios';
 
 const CreatePollComponent = () => {
     const [numberOfOptions, setNumberOfOptions] = React.useState(2);
-
-    const [addedTags, setAddedTags] = React.useState([
-        { name: 'tag1tatatatat', id: 1 },
-        { name: 'tag2', id: 2 },
-        { name: 'tag3', id: 3 }
-    ]);
-
     const [isSearchTagsComponentVisible, setIsSearchTagsComponentVisible] = React.useState(false);
-
     const searchTagsRef = useRef(null);
+
+    const [createPollFormState, setCreatePollFormState] = React.useState({
+        question: '',
+        options: Array(2).fill(''),
+        tags: [],
+        expirationDateTime: '',
+    });
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -33,23 +33,87 @@ const CreatePollComponent = () => {
         };
     }, []);
 
+    const handleOptionChange = (index, value) => {
+        const updatedOptions = [...createPollFormState.options];
+        updatedOptions[index] = value;
+        setCreatePollFormState((prevState) => ({
+            ...prevState,
+            options: updatedOptions,
+        }));
+        console.log(createPollFormState);
+    };
+
+    const handleNumberOfOptionsChange = (value) => {
+        const newNumberOfOptions = Number(value);
+        setNumberOfOptions(newNumberOfOptions);
+        setCreatePollFormState((prevState) => ({
+            ...prevState,
+            options: Array(newNumberOfOptions)
+                .fill('')
+                .map((_, i) => prevState.options[i] || ''),
+        }));
+    };
+    async function handleCreatePollFormSubmit() {
+        console.log(createPollFormState);
+
+        // Example axios call
+        const response = await axios.post(
+            'http://localhost:3000/api/poll/createPoll',
+            createPollFormState,
+            { withCredentials: true }
+        );
+        console.log(response.data);
+    }
+
+
+    function addTags(tag) {
+
+        if (createPollFormState.tags.find((addedTag) => addedTag.id === tag.id)) {
+            window.alert('Tag already added');
+        } else if (createPollFormState.tags.length >= 3) {
+            window.alert('Maximum 3 tags allowed');
+        } else {
+            setCreatePollFormState((prevState) => ({
+                ...prevState,
+                tags: [...prevState.tags, tag],
+            }));
+        }
+
+    }
+
+    function removeTag(tag) {
+        setCreatePollFormState({
+            ...createPollFormState,
+            tags: createPollFormState.tags.filter((addedTag) => addedTag.id !== tag.id),
+        });
+    }
+
     return (
         <div className='createPollComponentContainer'>
             {isSearchTagsComponentVisible && (
                 <div ref={searchTagsRef}>
-                    <SearchAndCreateTagsComponent addedTags={addedTags} setAddedTags={setAddedTags} />
+                    <SearchAndCreateTagsComponent addTags={addTags} />
                 </div>
             )}
             <div className='createPollComponentBody'>
                 <div className='createPollComponentBodyQuestion'>
                     <h3>Question</h3>
-                    <input type='text' />
+                    <input
+                        type='text'
+                        onChange={(e) =>
+                            setCreatePollFormState({
+                                ...createPollFormState,
+                                question: e.target.value,
+                            })
+                        }
+                        value={createPollFormState.question}
+                    />
                 </div>
 
                 <div className='howManyOptionsDropdown'>
                     <h3>How many options?</h3>
                     <select
-                        onChange={(e) => setNumberOfOptions(Number(e.target.value))}
+                        onChange={(e) => handleNumberOfOptionsChange(e.target.value)}
                         value={numberOfOptions}
                     >
                         <option>2</option>
@@ -62,8 +126,13 @@ const CreatePollComponent = () => {
                 <h3 className='OptionsTheWord'>Options</h3>
 
                 <div className='optionsFieldArrayParent'>
-                    {Array.from({ length: numberOfOptions }).map((_, i) => (
-                        <OptionsFieldInCreatePollComponent key={i} id={i} />
+                    {createPollFormState.options.map((option, i) => (
+                        <OptionsFieldInCreatePollComponent
+                            key={i}
+                            id={i}
+                            value={option}
+                            onChange={(value) => handleOptionChange(i, value)}
+                        />
                     ))}
                 </div>
 
@@ -79,19 +148,34 @@ const CreatePollComponent = () => {
                         />
                     </div>
                     <div className='addedTags'>
-                        {addedTags.map((tag) => (
+                        {createPollFormState.tags.map((tag) => (
                             <AddedTagComponent
                                 key={tag.id}
                                 tag={tag}
-                                allTagsArray={addedTags}
-                                setAllTagsArray={setAddedTags}
+                                removeTag={removeTag}
                             />
                         ))}
                     </div>
                 </div>
 
+                <div className='createPollComponentBodyExpirationDate'>
+                    <h3>Expiration Date (optional)</h3>
+                    <input
+                        type='date'
+                        onChange={(e) =>
+                            createPollFormState.expirationDateTime = `${e.target.value}T23:59:59.999Z`
+                        }
+                        value={createPollFormState.expirationDateTime.split('T')[0]}
+                    />
+                </div>
+
                 <div className='createPollComponentBodySubmitButtonContainer'>
-                    <button>Submit</button>
+                    <button
+                        onClick={handleCreatePollFormSubmit}
+                        className='createPollComponentBodySubmitButton'
+                    >
+                        Submit
+                    </button>
                 </div>
             </div>
         </div>

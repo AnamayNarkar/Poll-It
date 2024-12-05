@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/AddedTagComponentStyles.css'
 
-const AddedTagComponent = ({ tag, allTagsArray, setAllTagsArray }) => {
+const AddedTagComponent = ({ removeTag, tag }) => {
 
     function deleteTag() {
         let newAllTagsArray = allTagsArray.filter((tagFromArray) => tagFromArray !== tag);
@@ -12,7 +12,7 @@ const AddedTagComponent = ({ tag, allTagsArray, setAllTagsArray }) => {
         <div className='addedTagIndividual'>
             <p className='addedTagText'>
                 {tag.name}</p>
-            <img src='https://github.com/user-attachments/assets/f43e643f-143f-4974-8c62-d1373f3976cd' alt='delete' className='deleteAddedTagIcon' onClick={deleteTag} />
+            <img src='https://github.com/user-attachments/assets/f43e643f-143f-4974-8c62-d1373f3976cd' alt='delete' className='deleteAddedTagIcon' onClick={removeTag} />
         </div>
     )
 }

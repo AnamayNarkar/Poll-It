@@ -1,10 +1,15 @@
 import React from 'react'
 import '../styles/OptionsFieldInCreatePollComponentStyles.css'
-
-const OptionsFieldInCreatePollComponent = ({ id }) => {
+const OptionsFieldInCreatePollComponent = ({ id, value, onChange }) => {
     return (
-        <input type='text' placeholder={`Option ${id + 1}`} className='optionsFieldInCreatePollComponent' />
-    )
-}
+        <input
+            type='text'
+            placeholder={`Option ${id + 1}`}
+            className='optionsFieldInCreatePollComponent'
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+        />
+    );
+};
 
-export default OptionsFieldInCreatePollComponent
+export default OptionsFieldInCreatePollComponent;

@@ -5,7 +5,7 @@ import AddedTagComponent from './AddedTagComponent';
 import SearchedUpTagComponent from './SearchedUpTagComponent';
 import { useNavigate } from 'react-router-dom';
 
-const SearchForTagsContainer = ({ addedTags, setAddedTags }) => {
+const SearchForTagsContainer = ({ addTags }) => {
     const [searchString, setSearchString] = useState('');
     const [tags, setTags] = useState([]);
     const [typingTimeout, setTypingTimeout] = useState(null);
@@ -55,7 +55,7 @@ const SearchForTagsContainer = ({ addedTags, setAddedTags }) => {
                 <div className='searchResultsForTagsContainer'>
                     {tags.length > 0 ? (
                         tags.map((tag) => (
-                            <SearchedUpTagComponent key={tag.id} tag={tag} addedTags={addedTags} setAddedTags={setAddedTags} />
+                            <SearchedUpTagComponent key={tag.id} tag={tag} addTags={addTags} />
                         ))
                     ) : searchString.length > 0 ? (
                         <div className="searchForTagsNoSuggestions">No suggestions</div>
