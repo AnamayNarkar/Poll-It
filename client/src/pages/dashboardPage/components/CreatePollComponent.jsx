@@ -61,6 +61,11 @@ const CreatePollComponent = () => {
             return false;
         }
 
+        if (createPollFormState.question.trim().length > 200) {
+            window.alert('Question is too long. Maximum 200 characters allowed.');
+            return false;
+        }
+
         if (createPollFormState.options.some((option) => option.trim().length === 0)) {
             window.alert('Please fill in all options.');
             return false;
@@ -89,6 +94,10 @@ const CreatePollComponent = () => {
         if (!validateFormStateBeforeSubmit()) {
             return;
         }
+
+        createPollFormState.question = createPollFormState.question.trim();
+        createPollFormState.options = createPollFormState.options.map((option) => option.trim());
+        createPollFormState.expirationDateTime = createPollFormState.expirationDateTime.trim();
 
         const response = await createPollRequest(createPollFormState);
 

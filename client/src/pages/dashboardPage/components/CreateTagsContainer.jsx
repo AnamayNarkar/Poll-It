@@ -12,7 +12,7 @@ const CreateTagsContainer = () => {
             return;
         }
 
-        console.log('Creating tag:', tagName);
+        tagName = tagName.trim();
 
         const response = await axios.post(`http://localhost:3000/api/tag/createTag/${tagName}`, {
 

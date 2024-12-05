@@ -49,6 +49,10 @@ public class PollService {
         public PollResponseDTO createPoll(PollEntryDTO pollEntryDTO, String username) {
                 try {
 
+                        if (pollEntryDTO.getQuestion().length() < 1 || pollEntryDTO.getQuestion().length() > 200) {
+                                throw new IllegalArgumentException("Question should be between 1 and 200 characters");
+                        }
+
                         if (pollEntryDTO.getTags().size() < 1 || pollEntryDTO.getTags().size() > 3) {
                                 throw new IllegalArgumentException("Tags should be between 1 and 3");
                         }
