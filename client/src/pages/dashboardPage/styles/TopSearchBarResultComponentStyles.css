@@ -1,6 +1,18 @@
 .singularSearchResultContainer {
-  height: 25px;
-  background-color: aqua;
-  width: 50%;
+  height: 30px;
+  width: 100%;
   cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.singularSearchResultContainer:hover {
+  background-color: #3f3c3c;
+}
+
+.searchResultName {
+  color: rgb(222, 212, 212);
+  font-family: "lato", sans-serif;
+  margin-left: 10px;
 }

@@ -110,6 +110,7 @@ const DashboardHeader = () => {
                             <TopSearchBarResultComponent
                                 key={result.id}
                                 result={result}
+                                typeOfSearch={debouncedSearchString.startsWith('t/') ? 'tag' : debouncedSearchString.startsWith('u/') ? 'user' : ''}
                             />
                         ))}
                     </div>

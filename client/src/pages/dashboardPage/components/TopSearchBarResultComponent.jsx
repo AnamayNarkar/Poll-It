@@ -1,11 +1,11 @@
 import React from 'react'
 import '../styles/TopSearchBarResultComponentStyles.css'
 
-const TopSearchBarResultComponent = ({ result }) => {
+const TopSearchBarResultComponent = ({ result, typeOfSearch }) => {
     return (
         <div className='singularSearchResultContainer' >
             <div className='searchResultName' >
-                {result.name}
+                {typeOfSearch === 'tag' ? "t/" + result.name : typeOfSearch === 'user' ? "u/" + result.name : result.name}
             </div>
         </div >
     )
