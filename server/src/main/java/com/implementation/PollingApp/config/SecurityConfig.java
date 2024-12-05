@@ -16,8 +16,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 // import com.implementation.JournalApp.security.UserServices.CustomUserDetailsService;
 import com.implementation.PollingApp.security.filters.CustomSessionAuthenticationFilter;
 
-import java.util.List;
-
 // import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.http.SessionCreationPolicy;
