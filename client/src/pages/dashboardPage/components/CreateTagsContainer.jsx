@@ -9,6 +9,8 @@ const CreateTagsContainer = () => {
     const handleCreateTag = async () => {
         const response = await createTagRequest(tagName);
 
+        setTagName('');
+
         if (response.status >= 200 && response.status < 300) {
             setStatusMessage('Tag created successfully');
         } else {
@@ -35,7 +37,14 @@ const CreateTagsContainer = () => {
                     Create
                 </button>
             </div>
-            {statusMessage && statusMessage === 'Tag created successfully' ? (<div className='statusMessageForCreateTags' style={{ color: 'green' }}>{statusMessage}</div>) : (<div className='statusMessageForCreateTags' style={{ color: 'red' }}>{statusMessage}</div>)}
+            {statusMessage && statusMessage === 'Tag created successfully' ? (<h2 className='statusMessageForCreateTags' style={{
+                color: 'rgb(42, 228, 42)',
+                fontFamily: 'Parkinsans , sans-serif'
+
+            }}>{statusMessage}</h2>) : (<h2 className='statusMessageForCreateTags' style={{
+                color: 'red', fontFamily: 'Parkinsans , sans-serif'
+
+            }}>{statusMessage}</h2>)}
         </div>
     );
 };

@@ -27,7 +27,7 @@ public class TagService {
         public TagWithouPollsDTO createTag(String name) {
                 TagWithouPollsDTO tag = tagRepository.findTagByNameWithoutPollIds(name);
                 if (tag != null) {
-                        throw new TagException("Tag with name " + name + " already exists");
+                        throw new TagException("Tag with name '" + name + "' already exists");
                 }
                 TagEntity tagEntity = new TagEntity(name);
                 tagRepository.save(tagEntity);
