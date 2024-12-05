@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import '../styles/RegistrationForm.css'
+import registrationRequest from '../../../services/ApiRequests/registrationRequest';
+import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = ({ setIsLoginFormCustom }) => {
+
+    const navigate = useNavigate();
 
     const [registrationFormData, setRegistrationFormData] = React.useState({
         username: '',
@@ -19,12 +23,8 @@ const RegistrationForm = ({ setIsLoginFormCustom }) => {
 
     const handleRegistrationFormSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.post('http://localhost:3000/api/user/register', registrationFormData, { withCredentials: true });
-        if (response.status >= 200 && response.status < 300) {
-            navigate('/home');
-        } else {
-            window.alert(response.data.message);
-        }
+        const response = await registrationRequest(registrationFormData);
+        navigate('/home');
     }
 
     return (

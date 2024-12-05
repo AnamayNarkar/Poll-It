@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../styles/LoginForm.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import loginRequest from '../../../services/ApiRequests/loginRequest';
 
 const LoginForm = ({ setIsLoginFormCustom }) => {
 
@@ -21,15 +22,8 @@ const LoginForm = ({ setIsLoginFormCustom }) => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const response = await axios.post('http://localhost:3000/api/user/login', loginForm, { withCredentials: true });
-        if (response.status >= 200 && response.status < 300) {
-            navigate('/home');
-        } else {
-            window.alert(response.data.message);
-            console.log(response);
-            loginForm.username = '';
-            loginForm.password = '';
-        }
+        await loginRequest(loginForm);
+        navigate('/home');
     }
 
     return (

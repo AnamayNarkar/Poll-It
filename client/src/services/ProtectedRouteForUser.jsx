@@ -16,7 +16,7 @@ const ProtectedRouteForUser = ({ element }) => {
                     setIsAuthenticated(true);
                 }
             } catch (error) {
-                if (error.response && error.response.status === 401) {
+                if (error.response && (error.response.status === 401 || error.response.status === 403)) {
                     navigate("/auth");
                 } else {
                     console.error("Error verifying user:", error);

@@ -4,24 +4,17 @@ import axios from 'axios';
 import AddedTagComponent from './AddedTagComponent';
 import SearchedUpTagComponent from './SearchedUpTagComponent';
 import { useNavigate } from 'react-router-dom';
+import searchForTagsRequest from '../../../services/ApiRequests/searchForTagsRequest';
 
 const SearchForTagsContainer = ({ addTags }) => {
     const [searchString, setSearchString] = useState('');
     const [tags, setTags] = useState([]);
     const [typingTimeout, setTypingTimeout] = useState(null);
-    const navigate = useNavigate(); // Place this here so it can be used in the component
 
     const fetchTags = async (searchQuery) => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/tag/getTagsLike/${searchQuery}`, {
-                withCredentials: true
-            });
-            if (response.status >= 200 && response.status < 300) {
-                setTags(response.data.data);
-            } else if (response.status === 403) {
-                window.alert('Your session has expired. Please log in again.');
-                navigate('/auth');
-            }
+            const response = await searchForTagsRequest(searchQuery);
+            setTags(response.data);
         } catch (error) {
             console.error('Error fetching tags:', error);
         }
@@ -33,13 +26,13 @@ const SearchForTagsContainer = ({ addTags }) => {
 
             const timeout = setTimeout(() => {
                 fetchTags(searchString);
-            }, 300); // Fetch after 300ms of inactivity
+            }, 300);
             setTypingTimeout(timeout);
         } else {
-            setTags([]); // Clear suggestions if input is empty
+            setTags([]);
         }
 
-        return () => clearTimeout(typingTimeout); // Cleanup timeout on component unmount or searchString change
+        return () => clearTimeout(typingTimeout);
     }, [searchString]);
 
     return (

@@ -6,24 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.implementation.PollingApp.dto.TagWithouPollsDTO;
-import com.implementation.PollingApp.service.TagService;
+import com.implementation.PollingApp.service.SearchService;
 import com.implementation.PollingApp.util.ApiResponse;
 
 @RestController
-@RequestMapping("/api/tag")
-public class TagController {
+@RequestMapping("/api/search/")
+public class SearchController {
 
         @Autowired
-        private TagService tagService;
+        private SearchService searchService;
 
-        @PostMapping("/createTag/{name}")
-        ResponseEntity<ApiResponse<TagWithouPollsDTO>> createTag(@PathVariable String name) {
-                System.out.println("Creating tag with name: " + name);
-                return ResponseEntity.ok(new ApiResponse<TagWithouPollsDTO>(tagService.createTag(name), "Tag created successfully"));
+        @GetMapping("/getTagsLike/{name}")
+        ResponseEntity<ApiResponse<List<TagWithouPollsDTO>>> getTagsLike(@PathVariable String name) {
+                return ResponseEntity.ok(new ApiResponse<List<TagWithouPollsDTO>>(searchService.getTagsLike(name), "Tags fetched successfully"));
         }
+
 }

@@ -4,6 +4,7 @@ import OptionsFieldInCreatePollComponent from './OptionsFieldInCreatePollCompone
 import AddedTagComponent from './AddedTagComponent';
 import SearchAndCreateTagsComponent from './SearchAndCreateTagsComponent';
 import axios from 'axios';
+import createPollRequest from '../../../services/ApiRequests/createPollRequest';
 
 const CreatePollComponent = () => {
     const [numberOfOptions, setNumberOfOptions] = React.useState(2);
@@ -54,15 +55,21 @@ const CreatePollComponent = () => {
         }));
     };
     async function handleCreatePollFormSubmit() {
-        console.log(createPollFormState);
 
-        // Example axios call
-        const response = await axios.post(
-            'http://localhost:3000/api/poll/createPoll',
-            createPollFormState,
-            { withCredentials: true }
-        );
-        console.log(response.data);
+        const response = await createPollRequest(createPollFormState);
+
+        window.alert(response.message);
+
+        // clear form
+        setCreatePollFormState({
+            question: '',
+            options: Array(numberOfOptions).fill(''),
+            tags: [],
+            expirationDateTime: '',
+        });
+
+
+
     }
 
 

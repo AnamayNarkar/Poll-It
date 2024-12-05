@@ -27,12 +27,4 @@ public class TagService {
         tagRepository.save(tagEntity);
         return new TagWithouPollsDTO(tagEntity.getId().toHexString(), name);
     }
-
-    public List<TagWithouPollsDTO> getTagsLike(String searchString) {
-        String regex = "^" + searchString;
-
-        List<TagWithouPollsDTO> tags = tagRepository.findByNameLike(regex, PageRequest.of(0, 5));
-
-        return tags.stream().sorted((t1, t2) -> Integer.compare(t1.getName().length(), t2.getName().length())).collect(Collectors.toList());
-    }
 }
