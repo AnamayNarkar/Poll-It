@@ -54,21 +54,52 @@ const CreatePollComponent = () => {
                 .map((_, i) => prevState.options[i] || ''),
         }));
     };
+
+    function validateFormStateBeforeSubmit() {
+        if (createPollFormState.question.trim().length === 0) {
+            window.alert('Please provide a question.');
+            return false;
+        }
+
+        if (createPollFormState.options.some((option) => option.trim().length === 0)) {
+            window.alert('Please fill in all options.');
+            return false;
+        }
+
+        if (createPollFormState.tags.length === 0) {
+            window.alert('Please add at least one tag.');
+            return false;
+        }
+
+        if (createPollFormState.expirationDateTime) {
+            const expirationDate = new Date(createPollFormState.expirationDateTime);
+            const minAllowedDate = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
+            if (expirationDate < minAllowedDate) {
+                window.alert('Expiration date must be at least 2 days from now.');
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
     async function handleCreatePollFormSubmit() {
+
+        if (!validateFormStateBeforeSubmit()) {
+            return;
+        }
 
         const response = await createPollRequest(createPollFormState);
 
         window.alert(response.message);
 
-        // clear form
         setCreatePollFormState({
             question: '',
             options: Array(numberOfOptions).fill(''),
             tags: [],
             expirationDateTime: '',
         });
-
-
 
     }
 
