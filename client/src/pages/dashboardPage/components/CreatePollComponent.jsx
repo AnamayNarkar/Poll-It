@@ -131,7 +131,7 @@ const CreatePollComponent = () => {
     function removeTag(tag) {
         setCreatePollFormState({
             ...createPollFormState,
-            tags: createPollFormState.tags.filter((addedTag) => addedTag.id !== tag.id),
+            tags: createPollFormState.tags.filter((addedTag) => addedTag.id === tag.id),
         });
     }
 

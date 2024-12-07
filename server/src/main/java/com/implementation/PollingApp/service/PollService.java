@@ -1,8 +1,6 @@
 package com.implementation.PollingApp.service;
 
 import java.util.Date;
-import java.util.Collections;
-import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
@@ -25,7 +23,7 @@ import com.implementation.PollingApp.repository.OptionRepository;
 import com.implementation.PollingApp.repository.PollRepository;
 import com.implementation.PollingApp.repository.TagRepository;
 import com.implementation.PollingApp.repository.UserRepository;
-import com.implementation.PollingApp.repository.VoteRepository;
+// import com.implementation.PollingApp.repository.VoteRepository;
 
 @Service
 public class PollService {
@@ -39,8 +37,8 @@ public class PollService {
         @Autowired
         private UserRepository userRepository;
 
-        @Autowired
-        private VoteRepository voteRepository;
+        // @Autowired
+        // private VoteRepository voteRepository;
 
         @Autowired
         private TagRepository tagRepository;
