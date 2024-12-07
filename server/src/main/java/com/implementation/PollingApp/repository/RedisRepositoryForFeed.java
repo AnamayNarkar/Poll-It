@@ -42,7 +42,8 @@ public class RedisRepositoryForFeed {
         }
 
         public void updateValue(String key, FeedValueEntity value) {
-                redisTemplate.opsForValue().set(key, value, redisTemplate.getExpire(key), TimeUnit.MINUTES);
+                Long timeout = redisTemplate.getExpire(key);
+                redisTemplate.opsForValue().set(key, value, TimeUnit.SECONDS.toMinutes(timeout), TimeUnit.MINUTES);
         }
 
 }

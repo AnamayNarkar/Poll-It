@@ -24,15 +24,36 @@ public class PollResponseDTO {
 
         private Date expirationDateTime;
 
+        private List<TagWithoutPollsDTO> tags;
+
         private List<OptionResponseDTO> options;
 
-        public PollResponseDTO(PollEntity pollEntity, List<OptionResponseDTO> optionResponseDTO) {
+        private Boolean hasUserVotedForThisPoll;
+
+        private String optionIdVotedFor;
+
+        public PollResponseDTO(PollEntity pollEntity, List<OptionResponseDTO> optionResponseDTO, List<TagWithoutPollsDTO> tags) {
                 this.id = pollEntity.getId().toHexString();
                 this.question = pollEntity.getQuestion();
                 this.createdBy = pollEntity.getCreatedBy();
                 this.creationDateTime = pollEntity.getCreationDateTime();
                 this.expirationDateTime = pollEntity.getExpirationDateTime();
+                this.tags = tags;
                 this.options = optionResponseDTO;
+                this.hasUserVotedForThisPoll = false;
+                this.optionIdVotedFor = null;
+        }
+
+        public PollResponseDTO(PollEntity pollEntity, List<OptionResponseDTO> optionResponseDTO, List<TagWithoutPollsDTO> tags, Boolean hasUserVotedForThisPoll, String optionIdVotedFor) {
+                this.id = pollEntity.getId().toHexString();
+                this.question = pollEntity.getQuestion();
+                this.createdBy = pollEntity.getCreatedBy();
+                this.creationDateTime = pollEntity.getCreationDateTime();
+                this.expirationDateTime = pollEntity.getExpirationDateTime();
+                this.tags = tags;
+                this.options = optionResponseDTO;
+                this.hasUserVotedForThisPoll = hasUserVotedForThisPoll;
+                this.optionIdVotedFor = optionIdVotedFor;
         }
 
 }

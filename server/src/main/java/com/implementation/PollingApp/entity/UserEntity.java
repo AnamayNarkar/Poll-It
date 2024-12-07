@@ -2,15 +2,15 @@ package com.implementation.PollingApp.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-// import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 
+import java.util.Map;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Vector;
 
 @Document(collection = "users")
@@ -36,7 +36,7 @@ public class UserEntity {
 
         private Vector<ObjectId> createdPolls;
 
-        private Vector<ObjectId> votedPolls;
+        private Map<ObjectId, ObjectId> votedPolls;
 
         private Vector<ObjectId> followedTags;
 
@@ -47,7 +47,7 @@ public class UserEntity {
                 this.roles = roles;
                 this.joinDate = new Date();
                 this.createdPolls = new Vector<>();
-                this.votedPolls = new Vector<>();
+                this.votedPolls = new HashMap<>();
                 this.followedTags = new Vector<>();
         }
 }

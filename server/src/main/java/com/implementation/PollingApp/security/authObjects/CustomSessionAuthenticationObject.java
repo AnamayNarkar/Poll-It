@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.security.auth.Subject;
 
-import org.bson.types.ObjectId;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -16,8 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
-import java.util.Vector;
 
 @Data
 @AllArgsConstructor

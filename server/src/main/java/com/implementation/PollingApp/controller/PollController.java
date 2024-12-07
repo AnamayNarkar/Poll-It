@@ -1,13 +1,9 @@
 package com.implementation.PollingApp.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-// import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.implementation.PollingApp.dto.OptionResponseDTO;
 import com.implementation.PollingApp.dto.PollEntryDTO;
 import com.implementation.PollingApp.dto.PollResponseDTO;
 import com.implementation.PollingApp.security.authObjects.CustomSessionAuthenticationObject;
@@ -16,13 +12,9 @@ import com.implementation.PollingApp.util.ApiResponse;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
-// import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-// import java.util.List;
 
 @RestController
 @RequestMapping("/api/poll")

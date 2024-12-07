@@ -29,7 +29,7 @@ public class FeedController {
                 return ResponseEntity.ok(new ApiResponse<UserDataWithFollowedTagsDTO>(feedService.getUserData(authentication.getSessionValueEntity()), "User data fetched successfully"));
         }
 
-        @GetMapping("/getHomeFeed/{limit}")
+        @GetMapping("/home/{limit}")
         public ResponseEntity<ApiResponse<List<PollResponseDTO>>> getHomeFeed(@PathVariable Integer limit) {
                 CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
                 return ResponseEntity.ok(new ApiResponse<List<PollResponseDTO>>(feedService.getHomeFeed(authentication.getSessionId(), authentication.getSessionValueEntity(), limit), "Home feed fetched successfully"));
