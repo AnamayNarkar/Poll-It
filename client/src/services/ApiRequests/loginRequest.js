@@ -2,7 +2,7 @@ import axios from "axios";
 
 const loginRequest = async (loginFormData) => {
     try {
-        const response = await axios.post("http://localhost:3000/api/user/login", loginFormData, { withCredentials: true });
+        const response = await axios.post("http://localhost:3000/api/auth/login", loginFormData, { withCredentials: true });
         if (response.status < 200 || response.status >= 300) {
             throw new Error(response.data.message);
         }

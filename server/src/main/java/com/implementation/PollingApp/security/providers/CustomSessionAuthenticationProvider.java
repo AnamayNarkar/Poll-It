@@ -23,14 +23,18 @@ public class CustomSessionAuthenticationProvider implements AuthenticationProvid
                 SessionValueEntity sve = sessionUtils.getUserSession(ca.getRequest());
 
                 if (sve == null) {
-                        CustomSessionAuthenticationObject failedAuth = new CustomSessionAuthenticationObject(null, null, null, null);
+                        CustomSessionAuthenticationObject failedAuth = new CustomSessionAuthenticationObject(null, null, null);
                         failedAuth.setAuthenticated(false);
                         return failedAuth;
                 }
 
-                CustomSessionAuthenticationObject authenticatedObject = new CustomSessionAuthenticationObject(ca.getRequest(), sve.getId(), sve.getUsername(), sve.getRoles());
+                String sessionId = sessionUtils.getSessionIdFromRequest(ca.getRequest());
 
-                if (authenticatedObject.getRoles().contains("USER")) {
+                CustomSessionAuthenticationObject authenticatedObject = new CustomSessionAuthenticationObject(ca.getRequest(), sessionId, sve);
+
+                // if (authenticatedObject.getRoles().contains("USER")) {
+
+                if (authenticatedObject.getSessionValueEntity().getRoles().contains("USER")) {
                         authenticatedObject.setAuthenticated(true);
                 } else {
                         authenticatedObject.setAuthenticated(false);

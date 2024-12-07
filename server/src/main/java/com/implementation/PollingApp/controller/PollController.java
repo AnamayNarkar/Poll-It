@@ -34,7 +34,7 @@ public class PollController {
         @PostMapping("/createPoll")
         public ResponseEntity<ApiResponse<PollResponseDTO>> createPoll(@RequestBody PollEntryDTO pollEntryDTO) {
                 CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
-                return ResponseEntity.ok(new ApiResponse<PollResponseDTO>(pollService.createPoll(pollEntryDTO, authentication.getUsername()), "Poll created successfully"));
+                return ResponseEntity.ok(new ApiResponse<PollResponseDTO>(pollService.createPoll(authentication.getSessionValueEntity(), pollEntryDTO), "Poll created successfully"));
         }
 
         // @GetMapping("/getAllPollsFromUser")

@@ -5,9 +5,10 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.implementation.PollingApp.service.RedisServiceForSessions;
 import com.implementation.PollingApp.entity.SessionValueEntity;
 import com.implementation.PollingApp.entity.UserEntity;
+import com.implementation.PollingApp.repository.RedisRepositoryForSessions;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SessionUtils {
 
         @Autowired
-        private RedisServiceForSessions redisServiceForSessions;
+        private RedisRepositoryForSessions redisRepositoryForSessions;
 
         private String generateSessionId() {
                 return UUID.randomUUID().toString();
@@ -45,27 +46,28 @@ public class SessionUtils {
                 return request.getCookies();
         }
 
-        private String getSessionIdFromRequest(HttpServletRequest request) {
+        public String getSessionIdFromRequest(HttpServletRequest request) {
                 return getSessionIdFromCookie(getCookiesFromRequest(request));
         }
 
         private void saveSessionValueInRedis(String sessionId, SessionValueEntity sessionValueEntity) {
-                redisServiceForSessions.saveValue(sessionId, sessionValueEntity, 30);
+                redisRepositoryForSessions.saveValue(sessionId, sessionValueEntity, 30);
         }
 
         private SessionValueEntity getSessionValueFromRedis(String sessionId) {
-                return redisServiceForSessions.getValue(sessionId);
+                return redisRepositoryForSessions.getValue(sessionId);
         }
 
         private void deleteSessionValueFromRedis(String sessionId) {
-                redisServiceForSessions.deleteValue(sessionId);
+                redisRepositoryForSessions.deleteValue(sessionId);
+
         }
 
         // Bigger Methods that use the above methods
 
         public void saveUserSession(HttpServletResponse response, UserEntity userEntity) {
                 String sessionId = generateSessionId();
-                SessionValueEntity sessionValueEntity = new SessionValueEntity(userEntity.getId().toHexString(), userEntity.getUsername(), userEntity.getRoles());
+                SessionValueEntity sessionValueEntity = new SessionValueEntity(userEntity.getId().toHexString(), userEntity.getUsername(), userEntity.getRoles(), null);
                 setSessionIdCookie(response, sessionId);
                 saveSessionValueInRedis(sessionId, sessionValueEntity);
         }

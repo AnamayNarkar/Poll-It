@@ -3,6 +3,7 @@ package com.implementation.PollingApp.repository;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -14,12 +15,10 @@ public interface PollRepository extends MongoRepository<PollEntity, ObjectId> {
 
         List<PollEntity> findByCreatedBy(String createdBy);
 
-        @Query(value = "{ 'id' : ?0 }", fields = "{ question: 1, createdBy: 1, creationDateTime: 1, expirationDateTime: 1, options: 1 }")
-        PollEntity findPollWithOptions(ObjectId id);
+        @Query(value = "{ 'tags': ?0 }", sort = "{ '_id': -1 }")
+        List<PollEntity> findLatestPollForThisTag(ObjectId tagId, Pageable pageable);
 
-        @Query(value = "{ 'id' : { $in: ?0 } }", fields = "{ question: 1, createdBy: 1, creationDateTime: 1, expirationDateTime: 1, options: 1 }")
-        List<PollEntity> findMultiplePollsWithOptions(List<ObjectId> ids);
+        @Query(value = "{ 'tags': ?0, '_id': { $lt: ?1 } }", sort = "{ '_id': -1 }")
+        List<PollEntity> findImmediatePollBefore(ObjectId tagId, ObjectId pollId, Pageable pageable);
 
-        @Query(value = "{}", fields = "{ question: 1, createdBy: 1, creationDateTime: 1, expirationDateTime: 1, options: 1 }")
-        List<PollEntity> findAllPollsWithOptions();
 }

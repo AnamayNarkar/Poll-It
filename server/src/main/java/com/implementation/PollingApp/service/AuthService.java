@@ -13,7 +13,7 @@ import com.implementation.PollingApp.dto.UserLoginDTO;
 import com.implementation.PollingApp.dto.UserRegistrationDto;
 
 @Service
-public class UserService {
+public class AuthService {
 
         @Autowired
         private UserRepository userRepository;

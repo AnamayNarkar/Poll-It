@@ -42,5 +42,6 @@ public class PollEntity {
                 this.options = options;
                 this.creationDateTime = new Date();
                 this.expirationDateTime = expirationDateTime;
+                this.tags = tags;
         }
 }

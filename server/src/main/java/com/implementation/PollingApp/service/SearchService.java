@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.implementation.PollingApp.dto.TagWithouPollsDTO;
+import com.implementation.PollingApp.dao.TagWithoutPollsDAO;
+import com.implementation.PollingApp.dto.TagWithoutPollsDTO;
 import com.implementation.PollingApp.dto.UserForDisplayingSearchResultsDTO;
 import com.implementation.PollingApp.repository.TagRepository;
 import com.implementation.PollingApp.repository.UserRepository;
@@ -21,12 +22,15 @@ public class SearchService {
         @Autowired
         private UserRepository userRepository;
 
-        public List<TagWithouPollsDTO> getTagsLike(String searchString) {
+        public List<TagWithoutPollsDTO> getTagsLike(String searchString) {
                 String regex = "^" + searchString;
 
-                List<TagWithouPollsDTO> tags = tagRepository.findByNameLike(regex, PageRequest.of(0, 5));
+                List<TagWithoutPollsDAO> tags = tagRepository.findByNameLike(regex, PageRequest.of(0, 5));
 
-                return tags.stream().sorted((t1, t2) -> Integer.compare(t1.getName().length(), t2.getName().length())).collect(Collectors.toList());
+                List<TagWithoutPollsDTO> tagsWithStringIds = tags.stream().map(tag -> new TagWithoutPollsDTO(tag.getId().toHexString(), tag.getName())).collect(Collectors.toList());
+
+                return tagsWithStringIds.stream().sorted((t1, t2) -> Integer.compare(t1.getName().length(), t2.getName().length())).collect(Collectors.toList());
+
         }
 
         public List<UserForDisplayingSearchResultsDTO> getUsersLike(String searchString) {

@@ -166,7 +166,7 @@ const CreatePollComponent = () => {
                         <option>2</option>
                         <option>3</option>
                         <option>4</option>
-                        <option>5</option>
+                        <option>10</option>
                     </select>
                 </div>
 
@@ -187,7 +187,7 @@ const CreatePollComponent = () => {
                     <div className='createPollComponentBodyAddTagsHeader'>
                         <h3>Add Tags</h3>
                         <img
-                            src='https://github.com/user-attachments/assets/633813f5-1679-4b96-bfca-b8f7c37c1693'
+                            src='https://github.com/user-attachments/assets/bed2c8aa-d4f8-42a9-842e-d9aab92941b1'
                             alt='plus'
                             onClick={() =>
                                 setIsSearchTagsComponentVisible(!isSearchTagsComponentVisible)
@@ -210,11 +210,19 @@ const CreatePollComponent = () => {
                     <input
                         type='date'
                         onChange={(e) =>
-                            createPollFormState.expirationDateTime = `${e.target.value}T23:59:59.999Z`
+                            setCreatePollFormState((prevState) => ({
+                                ...prevState,
+                                expirationDateTime: `${e.target.value}T23:59:59.999Z`,
+                            }))
                         }
-                        value={createPollFormState.expirationDateTime.split('T')[0]}
+                        value={
+                            createPollFormState.expirationDateTime
+                                ? createPollFormState.expirationDateTime.split('T')[0] // Extract YYYY-MM-DD
+                                : ''
+                        }
                     />
                 </div>
+
 
                 <div className='createPollComponentBodySubmitButtonContainer'>
                     <button

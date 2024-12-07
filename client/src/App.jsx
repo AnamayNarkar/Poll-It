@@ -13,13 +13,25 @@ function App() {
       element: <div>Test</div>
     },
     {
-      path: "/home",
-      element: <ProtectedRouteForUser element={<DashboardPage />} />
-    },
-    {
       path: "/auth",
       element: <LoginPage />,
     },
+    {
+      path: "/home",
+      element: <ProtectedRouteForUser element={<DashboardPage feedType="home" />} />
+    },
+    {
+      path: "/popular",
+      element: <ProtectedRouteForUser element={<DashboardPage feedType="popular" />} />
+    },
+    {
+      path: "/u/:usernameParam",
+      element: <ProtectedRouteForUser element={<DashboardPage feedType="user" />} />
+    },
+    {
+      path: "/t/:tagParam",
+      element: <ProtectedRouteForUser element={<DashboardPage feedType="tag" />} />
+    }
 
   ]);
 

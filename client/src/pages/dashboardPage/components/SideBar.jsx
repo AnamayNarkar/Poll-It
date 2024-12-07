@@ -2,64 +2,7 @@ import React from 'react'
 import '../styles/SideBarStyles.css'
 
 
-const SideBar = () => {
-
-    const tagsYouFollowSampleData = [
-        {
-            name: 'React',
-            id: 1
-        },
-
-        {
-            name: 'Node.js',
-            id: 2
-        },
-
-        {
-            name: 'Express.js',
-            id: 3
-        },
-
-        {
-            name: 'MongoDB',
-            id: 4
-        },
-
-        {
-            name: 'JavaScript',
-            id: 5
-        },
-
-        {
-            name: 'Python',
-            id: 6
-        },
-
-        {
-            name: 'Java',
-            id: 7
-        },
-        {
-            name: 'C++',
-            id: 8
-        },
-        {
-            name: 'C#',
-            id: 9
-        }, {
-            name: 'Ruby',
-            id: 10
-        }, {
-            name: 'Ruby on Rails',
-            id: 11
-        }, {
-            name: 'Django',
-            id: 12
-        }, {
-            name: 'Flask',
-            id: 13
-        }
-    ]
+const SideBar = ({ followedTags }) => {
 
     return (
         <div className='sideBarContainer'>
@@ -77,7 +20,7 @@ const SideBar = () => {
                 </div>
                 <div className='tagsYouFollowList'>
                     {
-                        tagsYouFollowSampleData.map((tag) => {
+                        followedTags?.map(tag => {
                             return (
                                 <div key={tag.id} className='tagYouFollowIndividual'>
                                     <h5>{tag.name}</h5>

@@ -133,8 +133,9 @@
 }
 
 .createPollComponentBodyAddTagsHeader > img {
-  height: 100%;
+  height: 60%;
   width: auto;
+  cursor: pointer;
 }
 
 .addedTags {

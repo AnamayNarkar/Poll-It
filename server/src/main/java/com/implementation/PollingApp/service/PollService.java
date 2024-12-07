@@ -15,6 +15,7 @@ import com.implementation.PollingApp.dto.PollEntryDTO;
 import com.implementation.PollingApp.dto.PollResponseDTO;
 import com.implementation.PollingApp.entity.OptionEntity;
 import com.implementation.PollingApp.entity.PollEntity;
+import com.implementation.PollingApp.entity.SessionValueEntity;
 import com.implementation.PollingApp.entity.TagEntity;
 import com.implementation.PollingApp.entity.UserEntity;
 import com.implementation.PollingApp.entity.VoteEntity;
@@ -46,7 +47,7 @@ public class PollService {
         @Autowired
         private TagRepository tagRepository;
 
-        public PollResponseDTO createPoll(PollEntryDTO pollEntryDTO, String username) {
+        public PollResponseDTO createPoll(SessionValueEntity sve, PollEntryDTO pollEntryDTO) {
                 try {
 
                         if (pollEntryDTO.getQuestion().length() < 1 || pollEntryDTO.getQuestion().length() > 200) {
@@ -62,9 +63,9 @@ public class PollService {
                                 // a sample expiration date toenter injson format is "2021-12-31T23:59:59.999Z"
                         }
 
-                        UserEntity user = userRepository.findByUsername(username);
+                        UserEntity user = userRepository.findByUsername(sve.getUsername());
                         if (user == null) {
-                                throw new ResourceNotFoundException("User " + username + " not found");
+                                throw new ResourceNotFoundException("User " + sve.getUsername() + " not found");
                         }
 
                         Vector<ObjectId> listOfObjectIdsOfAllTags = pollEntryDTO.getTags().stream().map((singleTagWithoutPollsDTO) -> new ObjectId(singleTagWithoutPollsDTO.getId())).collect(Collectors.toCollection(Vector::new));
@@ -85,7 +86,7 @@ public class PollService {
 
                         Vector<OptionResponseDTO> allOptionResponseDTOs = allOptionEntities.stream().map((optionEntity) -> new OptionResponseDTO(optionEntity.getId().toHexString(), optionEntity.getOption(), optionEntity.getVoteCount())).collect(Collectors.toCollection(Vector::new));
 
-                        PollEntity poll = new PollEntity(pollEntryDTO.getQuestion(), username, listOfObjectIdsOfAllOptions, pollEntryDTO.getExpirationDateTime(), listOfObjectIdsOfAllTags);
+                        PollEntity poll = new PollEntity(pollEntryDTO.getQuestion(), sve.getUsername(), listOfObjectIdsOfAllOptions, pollEntryDTO.getExpirationDateTime(), listOfObjectIdsOfAllTags);
 
                         pollRepository.save(poll);
 
@@ -133,56 +134,6 @@ public class PollService {
                         throw e;
                 } catch (Exception e) {
                         throw new InternalServerErrorException("Error while fetching polls");
-                }
-        }
-
-        public OptionResponseDTO vote(String pollId, String optionId, String username) {
-                try {
-                        PollEntity poll = pollRepository.findById(new ObjectId(pollId)).orElseThrow(() -> new ResourceNotFoundException("Poll not found"));
-
-                        if (poll.getExpirationDateTime() == null || poll.getExpirationDateTime().before(new java.util.Date())) {
-                                throw new PollExpirationException("Poll has expired");
-                        }
-
-                        UserEntity user = userRepository.findByUsername(username);
-                        if (user == null) {
-                                throw new ResourceNotFoundException("User " + username + " not found");
-                        }
-
-                        if (user.getVotedPolls().contains(new ObjectId(pollId))) {
-                                throw new CannotVoteException("User " + username + " has already voted forthis poll");
-                        }
-
-                        if (user.getCreatedPolls().contains(new ObjectId(pollId))) {
-                                throw new CannotVoteException("User " + username + " cannot vote for a pollcreated by them");
-                        }
-
-                        OptionEntity option = optionRepository.findById(new ObjectId(optionId)).orElseThrow(() -> new ResourceNotFoundException("Optionnot found"));
-
-                        VoteEntity vote = new VoteEntity(option.getId(), username);
-
-                        voteRepository.save(vote);
-
-                        option.setVoteCount(option.getVoteCount() + 1);
-
-                        option.getVotes().add(vote.getId());
-
-                        optionRepository.save(option);
-
-                        user.getVotedPolls().add(new ObjectId(pollId));
-
-                        userRepository.save(user);
-
-                        return new OptionResponseDTO(option.getId().toHexString(), option.getOption(), option.getVoteCount());
-
-                } catch (ResourceNotFoundException e) {
-                        throw e;
-                } catch (CannotVoteException e) {
-                        throw e;
-                } catch (PollExpirationException e) {
-                        throw e;
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Error while casting vote");
                 }
         }
 }

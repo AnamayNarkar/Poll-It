@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.implementation.PollingApp.dto.TagWithouPollsDTO;
+import com.implementation.PollingApp.dto.TagWithoutPollsDTO;
 import com.implementation.PollingApp.service.TagService;
 import com.implementation.PollingApp.util.ApiResponse;
 
@@ -22,7 +22,7 @@ public class TagController {
         private TagService tagService;
 
         @PostMapping("/createTag/{name}")
-        ResponseEntity<ApiResponse<TagWithouPollsDTO>> createTag(@PathVariable String name) {
-                return ResponseEntity.ok(new ApiResponse<TagWithouPollsDTO>(tagService.createTag(name), "Tag created successfully"));
+        ResponseEntity<ApiResponse<TagWithoutPollsDTO>> createTag(@PathVariable String name) {
+                return ResponseEntity.ok(new ApiResponse<TagWithoutPollsDTO>(tagService.createTag(name), "Tag created successfully"));
         }
 }

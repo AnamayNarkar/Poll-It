@@ -1,5 +1,6 @@
 package com.implementation.PollingApp.entity;
 
+import java.util.Map;
 import java.util.Vector;
 
 import lombok.AllArgsConstructor;
@@ -9,9 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SessionValueEntity {
-        private String id;
-        private String username;
-        private Vector<String> roles;
-        private String feedStateRedisKey;
+public class FeedValueEntity {
+        private Vector<String> followedTags;
+        private Map<String, String> feedState;
 }

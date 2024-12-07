@@ -11,7 +11,7 @@ const ProtectedRouteForUser = ({ element }) => {
     useEffect(() => {
         const checkUser = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/api/user/verifyUser", { withCredentials: true });
+                const response = await axios.get("http://localhost:3000/api/auth/verifyUser", { withCredentials: true });
                 if (response.status >= 200 && response.status < 300) {
                     setIsAuthenticated(true);
                 }

@@ -5,14 +5,15 @@ import ContentFeed from './ContentFeed'
 import SideBarRight from './SideBarRight'
 import CreatePollComponent from './CreatePollComponent'
 
-const MainContent = () => {
+const MainContent = ({ followedTags, feedType, param }) => {
 
     const [feedOverCreatePoll, setFeedOverCreatePoll] = React.useState(true);
 
     return (
         <div className='mainContentContainer' style={{ display: 'flex', flexDirection: 'row', height: '90%', width: '100%', padding: '0', margin: '0' }}>
-            <SideBar />
-            {feedOverCreatePoll ? <ContentFeed /> : <CreatePollComponent />}
+            <SideBar followedTags={followedTags} />
+            {feedOverCreatePoll ? <ContentFeed feedType={feedType} param={param} followedTags={followedTags} />
+                : <CreatePollComponent />}
             <SideBarRight feedOverCreatePoll={feedOverCreatePoll} setFeedOverCreatePoll={setFeedOverCreatePoll} />
         </div>
     )

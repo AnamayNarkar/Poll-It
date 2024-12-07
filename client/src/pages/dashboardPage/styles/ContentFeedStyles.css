@@ -8,4 +8,21 @@
   gap: 20px;
   border-right: 1px solid grey;
   /* background-color: antiquewhite; */
+  overflow-y: scroll;
+}
+
+.contentFeedContainer::-webkit-scrollbar {
+  width: 10px;
+}
+
+.contentFeedContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.contentFeedContainer::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.contentFeedContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

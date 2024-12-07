@@ -5,13 +5,15 @@ import java.util.Vector;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class PollEntryDTO {
 
         String question;
         Vector<String> options;
         Date expirationDateTime;
-        Vector<TagWithouPollsDTO> tags;
+        Vector<TagWithoutPollsDTO> tags;
 }

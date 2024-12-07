@@ -1,50 +1,48 @@
 package com.implementation.PollingApp.security.authObjects;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.security.auth.Subject;
 
+import org.bson.types.ObjectId;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+
+import com.implementation.PollingApp.entity.SessionValueEntity;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Vector;
 
-@AllArgsConstructor
-@Setter
-@Getter
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomSessionAuthenticationObject implements Authentication {
 
         private boolean authentication;
 
         private HttpServletRequest request;
 
-        private String id;
+        private String sessionId;
 
-        private String username;
-
-        private Vector<String> roles;
+        private SessionValueEntity sessionValueEntity;
 
         // constructor
         public CustomSessionAuthenticationObject(HttpServletRequest request) {
                 this.request = request;
-                this.id = null;
-                this.username = null;
-                this.roles = null;
+                this.sessionId = null;
+                this.sessionValueEntity = null;
         }
 
-        public CustomSessionAuthenticationObject(HttpServletRequest request, String id, String username, Vector<String> roles) {
+        public CustomSessionAuthenticationObject(HttpServletRequest request, String sessionId, SessionValueEntity sessionValueEntity) {
                 this.request = request;
-                this.id = id;
-                this.username = username;
-                this.roles = roles;
+                this.sessionId = sessionId;
+                this.sessionValueEntity = sessionValueEntity;
         }
 
         public HttpServletRequest getRequest() {
@@ -61,11 +59,10 @@ public class CustomSessionAuthenticationObject implements Authentication {
                 this.authentication = isAuthenticated;
         }
 
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-                return new ArrayList<>(); // Or return null
-        }
-
         // not needed for now
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+                return new ArrayList<>();
+        }
 
         @Override
         public Object getCredentials() {

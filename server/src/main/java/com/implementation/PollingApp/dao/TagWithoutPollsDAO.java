@@ -1,4 +1,4 @@
-package com.implementation.PollingApp.dto;
+package com.implementation.PollingApp.dao;
 
 import org.bson.types.ObjectId;
 
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TagWithouPollsDTO {
-
-    private String id;
+public class TagWithoutPollsDAO {
+    private ObjectId id;
     private String name;
-
 }

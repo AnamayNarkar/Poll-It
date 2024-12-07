@@ -1,4 +1,4 @@
-package com.implementation.PollingApp.service;
+package com.implementation.PollingApp.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -9,12 +9,12 @@ import java.util.concurrent.TimeUnit;
 import com.implementation.PollingApp.entity.SessionValueEntity;
 
 @Service
-public class RedisServiceForSessions {
+public class RedisRepositoryForSessions {
 
         private final RedisTemplate<String, SessionValueEntity> redisTemplate;
 
         @Autowired
-        public RedisServiceForSessions(RedisTemplate<String, SessionValueEntity> redisTemplate) {
+        public RedisRepositoryForSessions(RedisTemplate<String, SessionValueEntity> redisTemplate) {
                 this.redisTemplate = redisTemplate;
         }
 
@@ -29,4 +29,10 @@ public class RedisServiceForSessions {
         public void deleteValue(String key) {
                 redisTemplate.delete(key);
         }
+
+        public void updateValue(String key, SessionValueEntity value) {
+                Long remainingTtl = redisTemplate.getExpire(key);
+                redisTemplate.opsForValue().set(key, value, remainingTtl, TimeUnit.MINUTES);
+        }
+
 }

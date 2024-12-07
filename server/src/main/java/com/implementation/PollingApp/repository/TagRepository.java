@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.domain.Pageable;
 
-import com.implementation.PollingApp.dto.TagWithouPollsDTO;
+import com.implementation.PollingApp.dao.TagWithoutPollsDAO;
 import com.implementation.PollingApp.entity.TagEntity;
 
 public interface TagRepository extends MongoRepository<TagEntity, ObjectId> {
@@ -17,15 +17,15 @@ public interface TagRepository extends MongoRepository<TagEntity, ObjectId> {
     List<TagEntity> findAllByNameIn(List<String> names);
 
     @Query(value = "{ 'name': { $in: ?0 } }", fields = "{ 'pollIds': 0 }")
-    List<TagWithouPollsDTO> findAllByNameWithoutPollIdsIn(List<String> names);
+    List<TagWithoutPollsDAO> findAllByNameWithoutPollIdsIn(List<String> names);
 
     @Query(value = "{ 'id': { $in: ?0 } }", fields = "{ 'pollIds': 0 }")
-    List<TagWithouPollsDTO> findAllByIdWithoutPollIdsIn(List<ObjectId> ids);
+    List<TagWithoutPollsDAO> findAllByIdWithoutPollIdsIn(List<ObjectId> ids);
 
     @Query(value = "{ 'name': ?0 }", fields = "{ 'pollIds': 0 }")
-    TagWithouPollsDTO findTagByNameWithoutPollIds(String name);
+    TagWithoutPollsDAO findTagByNameWithoutPollIds(String name);
 
     @Query(value = "{ 'name': { $regex: ?0, $options: 'i' } }", fields = "{ '_id': 1, 'name': 1 }")
-    List<TagWithouPollsDTO> findByNameLike(String regex, Pageable pageable);
+    List<TagWithoutPollsDAO> findByNameLike(String regex, Pageable pageable);
 
 }
