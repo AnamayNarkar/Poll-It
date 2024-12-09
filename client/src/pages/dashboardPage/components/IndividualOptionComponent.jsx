@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/IndividualOptionComponentStyles.css';
 
 const IndividualOptionComponent = ({
@@ -9,6 +9,17 @@ const IndividualOptionComponent = ({
     percentOfTotalVotes,
     isThisTheOptionUserVotedFor
 }) => {
+
+    const [renderPercentage, setRenderPercentage] = useState(0);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setRenderPercentage(percentOfTotalVotes);
+        }, 100);
+
+        return () => clearTimeout(timeout);
+    }, [percentOfTotalVotes]);
+
     return toShowResults ? (
         <div className="individualOptionContainerForResults">
             {isThisTheOptionUserVotedFor ? (
@@ -21,10 +32,10 @@ const IndividualOptionComponent = ({
                 <div className="optionStatsForResults">
                     <div
                         className="optionVotePercentageBar"
-                        style={{ width: `${percentOfTotalVotes}%` }}
+                        style={{ width: `${renderPercentage}%` }}
                     ></div>
+                    <div className="percentageText">{`${renderPercentage.toFixed(1)}%`}</div>
                 </div>
-                <div className="optionVoteCount">{voteCount}</div>
             </div>
         </div>
     ) : (

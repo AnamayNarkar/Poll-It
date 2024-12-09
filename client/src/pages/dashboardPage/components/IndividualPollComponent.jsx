@@ -9,21 +9,13 @@ const IndividualPollComponent = ({ poll }) => {
     );
     const [toShowResults, setToShowResults] = useState(false);
 
-    console.log(poll);
-    console.log(poll.expirationDateTime);
-    console.log(new Date().toISOString());
-    console.log(poll.expirationDateTime < new Date().toISOString());
-    console.log(poll.hasUserVotedForThisPoll);
-
     useEffect(() => {
         if (
             poll.expirationDateTime < new Date().toISOString() || poll.hasUserVotedForThisPoll
         ) {
-
             setToShowResults(true);
         }
     }, [poll]);
-
 
     async function castVote(option) {
         const response = await voteForPoll(poll.id, option.id);

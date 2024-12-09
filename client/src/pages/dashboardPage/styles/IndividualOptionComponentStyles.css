@@ -31,12 +31,6 @@
   font-family: "Lato", sans-serif;
 }
 
-.optionStatsForHiddenResults {
-  height: 20px;
-  width: 100%;
-  display: flex;
-}
-
 .individualOptionContainerForResults {
   height: fit-content;
   width: 100%;
@@ -85,6 +79,8 @@
   border-radius: 10px;
   overflow: hidden;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .optionVotePercentageBar {
@@ -92,6 +88,14 @@
   background-color: orange;
   border-radius: 10px;
   transition: width 1s ease-in-out;
+}
+
+.percentageText {
+  position: absolute;
+  right: 5px;
+  font-size: 0.9rem;
+  font-family: "Lato", sans-serif;
+  color: white;
 }
 
 .optionVoteCount {
