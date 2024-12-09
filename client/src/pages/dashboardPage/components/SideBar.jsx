@@ -23,7 +23,7 @@ const SideBar = ({ followedTags }) => {
                         followedTags?.map(tag => {
                             return (
                                 <div key={tag.id} className='tagYouFollowIndividual'>
-                                    <h5>{tag.name}</h5>
+                                    <h5>t/{tag.name}</h5>
                                 </div>
                             )
                         })

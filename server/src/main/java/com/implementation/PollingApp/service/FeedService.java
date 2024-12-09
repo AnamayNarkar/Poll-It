@@ -101,7 +101,9 @@ public class FeedService {
 
                                         if (!feedValueEntity.getSentPostIds().contains(pollId)) {
 
-                                                if (!processedPollIds.contains(pollId) && !user.getVotedPolls().containsKey(poll.getId())) {
+                                                // if (!processedPollIds.contains(pollId) &&
+                                                // !user.getVotedPolls().containsKey(poll.getId())) {
+                                                if (!processedPollIds.contains(pollId)) {
                                                         processedPollIds.add(pollId);
 
                                                         feedValueEntity.getFeedState().put(tagHex, pollId);
@@ -112,7 +114,12 @@ public class FeedService {
                                                         List<TagWithoutPollsDAO> tagWithoutPollsDAOs = tagRepository.findAllByIdWithoutPollIdsIn(poll.getTags());
                                                         List<TagWithoutPollsDTO> tagWithoutPollsDTOs = tagWithoutPollsDAOs.stream().map(tagDAO -> new TagWithoutPollsDTO(tagDAO.getId().toHexString(), tagDAO.getName())).collect(Collectors.toList());
 
-                                                        homeFeed.add(new PollResponseDTO(poll, optionResponseDTOs, tagWithoutPollsDTOs));
+                                                        // Extract variables for readability
+                                                        boolean hasUserVoted = user.getVotedPolls().containsKey(poll.getId());
+                                                        String votedOptionId = hasUserVoted ? user.getVotedPolls().get(poll.getId()).toHexString() : null;
+
+                                                        // Add the PollResponseDTO to homeFeed
+                                                        homeFeed.add(new PollResponseDTO(poll, optionResponseDTOs, tagWithoutPollsDTOs, hasUserVoted, votedOptionId));
                                                         feedValueEntity.getSentPostIds().add(pollId);
 
                                                         pollsAdded++;

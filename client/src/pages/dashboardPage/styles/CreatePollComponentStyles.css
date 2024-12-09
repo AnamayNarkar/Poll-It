@@ -1,6 +1,6 @@
 .createPollComponentContainer {
   height: 100%;
-  width: 66%;
+  width: 100%;
   border-right: 1px solid grey;
   overflow-y: scroll;
   scrollbar-width: none;
@@ -98,6 +98,7 @@
   justify-content: flex-end;
   align-items: center;
   margin-top: 0.7%;
+  margin-bottom: 1%;
 }
 
 .createPollComponentBodySubmitButtonContainer > button {

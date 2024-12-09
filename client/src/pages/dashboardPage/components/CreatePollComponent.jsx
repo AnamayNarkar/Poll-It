@@ -154,6 +154,7 @@ const CreatePollComponent = () => {
                             })
                         }
                         value={createPollFormState.question}
+                        maxLength={200}
                     />
                 </div>
 

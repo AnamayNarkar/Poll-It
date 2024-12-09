@@ -8,6 +8,7 @@ const OptionsFieldInCreatePollComponent = ({ id, value, onChange }) => {
             className='optionsFieldInCreatePollComponent'
             value={value}
             onChange={(e) => onChange(e.target.value)}
+            maxLength={100}
         />
     );
 };

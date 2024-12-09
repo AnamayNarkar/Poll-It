@@ -1,0 +1,7 @@
+.middlePartOfThePage {
+  height: 100%;
+  width: 64%;
+  overflow-y: auto;
+  border-right: 1px solid grey;
+  overflow-x: hidden;
+}

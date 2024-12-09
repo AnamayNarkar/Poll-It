@@ -10,7 +10,6 @@ const DashboardPage = ({ feedType }) => {
 
     const [userData, setUserData] = React.useState({});
 
-    // for destory is not a function error
     const fetchUserData = async () => {
         const userData = await fetchUserDataRequest();
         setUserData(userData.data);

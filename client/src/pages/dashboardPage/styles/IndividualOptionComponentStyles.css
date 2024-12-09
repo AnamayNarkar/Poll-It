@@ -1,0 +1,102 @@
+.individualOptionContainerForHiddenResults {
+  height: fit-content;
+  width: 100%;
+  padding: 1%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.selectOptionCircleForHiddenResults {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  border: 1px solid whitesmoke;
+}
+
+.optionNameAndStatsForHiddenResults {
+  width: 93%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.individualOptionNameForHiddenResults {
+  margin: 0;
+  font-size: 1.01rem;
+  font-weight: 400;
+  color: white;
+  font-family: "Lato", sans-serif;
+}
+
+.optionStatsForHiddenResults {
+  height: 20px;
+  width: 100%;
+  display: flex;
+}
+
+.individualOptionContainerForResults {
+  height: fit-content;
+  width: 100%;
+  padding: 1%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: not-allowed;
+}
+
+.selectOptionCircleForResults {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  border: 1px solid whitesmoke;
+}
+
+.selectedOptionCircleForResults {
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background-color: orange;
+  border: 1px solid whitesmoke;
+}
+
+.optionNameAndStatsForResults {
+  width: 93%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.individualOptionNameForResults {
+  margin: 0;
+  font-size: 1.01rem;
+  font-weight: 400;
+  color: white;
+  font-family: "Lato", sans-serif;
+}
+
+.optionStatsForResults {
+  height: 20px;
+  width: 100%;
+  background-color: rgba(255, 165, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.optionVotePercentageBar {
+  height: 100%;
+  background-color: orange;
+  border-radius: 10px;
+  transition: width 1s ease-in-out;
+}
+
+.optionVoteCount {
+  font-family: "Lato", sans-serif;
+  font-size: 1rem;
+  color: azure;
+  margin-left: 1%;
+}
