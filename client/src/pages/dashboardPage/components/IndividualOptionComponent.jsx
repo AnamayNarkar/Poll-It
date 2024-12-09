@@ -7,7 +7,8 @@ const IndividualOptionComponent = ({
     castVote,
     voteCount,
     percentOfTotalVotes,
-    isThisTheOptionUserVotedFor
+    isThisTheOptionUserVotedFor,
+    isVotingDisabled
 }) => {
 
     const [renderPercentage, setRenderPercentage] = useState(0);
@@ -41,7 +42,12 @@ const IndividualOptionComponent = ({
     ) : (
         <div
             className="individualOptionContainerForHiddenResults"
-            onClick={() => castVote(option)}
+            onClick={() => {
+                if (!isVotingDisabled) {
+                    castVote(option);
+                }
+            }}
+            style={{ pointerEvents: isVotingDisabled ? 'none' : 'auto' }}
         >
             <div className="selectOptionCircleForHiddenResults"></div>
             <div className="optionNameAndStatsForHiddenResults">

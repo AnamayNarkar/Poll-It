@@ -8,6 +8,7 @@ const IndividualPollComponent = ({ poll }) => {
         poll.options.reduce((acc, option) => acc + option.voteCount, 0)
     );
     const [toShowResults, setToShowResults] = useState(false);
+    const [isVotingDisabled, setIsVotingDisabled] = useState(false);
 
     useEffect(() => {
         if (
@@ -18,19 +19,26 @@ const IndividualPollComponent = ({ poll }) => {
     }, [poll]);
 
     async function castVote(option) {
-        const response = await voteForPoll(poll.id, option.id);
-        if (response.status >= 200 && response.status < 300) {
-            poll.options.forEach((pollOption) => {
-                if (pollOption.id === option.id) {
-                    option.voteCount += 1;
-                }
-            });
-            setTotalVotes(totalVotes + 1);
-            poll.hasUserVotedForThisPoll = true;
-            poll.optionIdVotedFor = option.id;
-            setToShowResults(true);
-        } else {
+        setIsVotingDisabled(true);
+        try {
+            const response = await voteForPoll(poll.id, option.id);
+            if (response.status >= 200 && response.status < 300) {
+                poll.options.forEach((pollOption) => {
+                    if (pollOption.id === option.id) {
+                        option.voteCount += 1;
+                    }
+                });
+                setTotalVotes(totalVotes + 1);
+                poll.hasUserVotedForThisPoll = true;
+                poll.optionIdVotedFor = option.id;
+                setToShowResults(true);
+            } else {
+                window.alert('Error casting vote');
+            }
+        } catch (error) {
             window.alert('Error casting vote');
+        } finally {
+            setIsVotingDisabled(false);
         }
     }
 
@@ -60,6 +68,7 @@ const IndividualPollComponent = ({ poll }) => {
                         isThisTheOptionUserVotedFor={
                             poll.optionIdVotedFor === option.id
                         }
+                        isVotingDisabled={isVotingDisabled}
                     />
                 ))}
             </div>
