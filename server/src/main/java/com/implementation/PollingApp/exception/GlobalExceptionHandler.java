@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.implementation.PollingApp.exception.custom.InternalServerErrorException;
 import com.implementation.PollingApp.exception.custom.ResourceNotFoundException;
+import com.implementation.PollingApp.exception.custom.SessionNotFoundException;
 import com.implementation.PollingApp.util.ApiResponse;
 import com.implementation.PollingApp.exception.custom.ValidationException;
 import com.implementation.PollingApp.exception.custom.InvalidSessionException;
@@ -73,6 +74,12 @@ public class GlobalExceptionHandler {
         public ResponseEntity<ApiResponse<Object>> handleTagException(TagException ex) {
                 ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+
+        @ExceptionHandler(SessionNotFoundException.class)
+        public ResponseEntity<ApiResponse<Object>> handleSessionNotFoundException(SessionNotFoundException ex) {
+                ApiResponse<Object> response = new ApiResponse<>(null, ex.getMessage());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
 
 }

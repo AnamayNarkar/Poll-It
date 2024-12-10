@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import '../styles/RegistrationForm.css'
-import registrationRequest from '../../../services/ApiRequests/registrationRequest';
+import { registrationRequest } from '../../../services/ApiRequests/authRequests';
 import { useNavigate } from 'react-router-dom';
 
 const RegistrationForm = ({ setIsLoginFormCustom }) => {

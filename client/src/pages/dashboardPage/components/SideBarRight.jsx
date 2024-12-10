@@ -1,5 +1,6 @@
 import React from 'react'
 import '../styles/SideBarRightStyles.css'
+import { logoutRequest } from '../../../services/ApiRequests/authRequests';
 
 const SideBarRight = ({ feedOverCreatePoll, setFeedOverCreatePoll }) => {
 
@@ -22,7 +23,10 @@ const SideBarRight = ({ feedOverCreatePoll, setFeedOverCreatePoll }) => {
                 </div>
                 <div className='logoutFieldContainer'>
                     <div className='oneMoreContainerForHoverEffect'>
-                        <h4>Logout</h4>
+                        <h4 onClick={() => {
+                            logoutRequest();
+                        }}>
+                            Logout</h4>
                     </div>
                 </div>
             </div>

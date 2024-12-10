@@ -4,7 +4,7 @@ import SideBar from './SideBar';
 import ContentFeed from './ContentFeed';
 import SideBarRight from './SideBarRight';
 import CreatePollComponent from './CreatePollComponent';
-import getContentFeedRequest from '../../../services/ApiRequests/getContentFeedRequest';
+import getContentFeedRequest from '../../../services/ApiRequests/FeedRequest';
 
 const MainContent = ({ followedTags, feedType, param }) => {
     const [contentFeed, setContentFeed] = useState([]);

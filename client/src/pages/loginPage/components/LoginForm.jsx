@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '../styles/LoginForm.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import loginRequest from '../../../services/ApiRequests/loginRequest';
+import { loginRequest } from '../../../services/ApiRequests/authRequests';
 
 const LoginForm = ({ setIsLoginFormCustom }) => {
 
