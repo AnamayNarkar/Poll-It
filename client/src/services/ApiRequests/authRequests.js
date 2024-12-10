@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const loginRequest = async (loginFormData) => {
     try {
@@ -30,7 +31,7 @@ const registrationRequest = async (registrationFormData) => {
 const logoutRequest = async () => {
     try {
         const response = await axios.post("http://localhost:3000/api/auth/logout", {}, { withCredentials: true });
-        window.location.href = '/auth';
+        window.location.reload();
     } catch (error) {
         window.alert("Error logging out");
         return error.response;

@@ -32,6 +32,7 @@ const CreateTagsContainer = () => {
                     className='inputForCreateTags'
                     value={tagName}
                     onChange={(e) => setTagName(e.target.value)}
+                    maxLength={20}
                 />
                 <button className='buttonForCreateTags' onClick={handleCreateTag}>
                     Create

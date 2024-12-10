@@ -182,7 +182,7 @@ public class FeedService {
                         List<OptionResponseDTO> optionResponseDTOs = poll.getOptions().stream().map(optionId -> optionRepository.findByIdWithoutVotes(optionId)).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
                         List<TagWithoutPollsDAO> tagWithoutPollsDAOs = tagRepository.findAllByIdWithoutPollIdsIn(poll.getTags());
                         List<TagWithoutPollsDTO> tagWithoutPollsDTOs = tagWithoutPollsDAOs.stream().map(tag -> new TagWithoutPollsDTO(tag.getId().toHexString(), tag.getName())).collect(Collectors.toList());
-                        UserEntity user = userRepository.findByUsername(poll.getCreatedBy());
+                        UserEntity user = userRepository.findByUsername(sve.getUsername());
                         boolean hasUserVoted = user.getVotedPolls().containsKey(poll.getId());
                         String votedOptionId = hasUserVoted ? user.getVotedPolls().get(poll.getId()).toHexString() : null;
                         return new PollResponseDTO(poll, optionResponseDTOs, tagWithoutPollsDTOs, hasUserVoted, votedOptionId);
@@ -211,7 +211,7 @@ public class FeedService {
                         List<OptionResponseDTO> optionResponseDTOs = poll.getOptions().stream().map(optionId -> optionRepository.findByIdWithoutVotes(optionId)).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
                         List<TagWithoutPollsDAO> tagWithoutPollsDAOs = tagRepository.findAllByIdWithoutPollIdsIn(poll.getTags());
                         List<TagWithoutPollsDTO> tagWithoutPollsDTOs = tagWithoutPollsDAOs.stream().map(tag -> new TagWithoutPollsDTO(tag.getId().toHexString(), tag.getName())).collect(Collectors.toList());
-                        UserEntity createdByUser = userRepository.findByUsername(poll.getCreatedBy());
+                        UserEntity createdByUser = userRepository.findByUsername(sve.getUsername());
                         boolean hasUserVoted = createdByUser.getVotedPolls().containsKey(poll.getId());
                         String votedOptionId = hasUserVoted ? createdByUser.getVotedPolls().get(poll.getId()).toHexString() : null;
                         return new PollResponseDTO(poll, optionResponseDTOs, tagWithoutPollsDTOs, hasUserVoted, votedOptionId);

@@ -28,6 +28,7 @@ const SideBar = ({ followedTags }) => {
                             return (
                                 <div key={tag.id} className='tagYouFollowIndividual' onClick={() => {
                                     navigate(`/t/${tag.name}`);
+                                    window.location.reload();
                                 }}>
                                     <h5>t/{tag.name}</h5>
                                 </div>

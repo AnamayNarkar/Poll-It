@@ -11,9 +11,8 @@ const IndividualPollComponent = ({ poll }) => {
     const [isVotingDisabled, setIsVotingDisabled] = useState(false);
 
     useEffect(() => {
-        if (
-            poll.expirationDateTime < new Date().toISOString() || poll.hasUserVotedForThisPoll
-        ) {
+        console.log(poll);
+        if (new Date() > new Date(poll.expirationDateTime) || poll.hasUserVotedForThisPoll) {
             setToShowResults(true);
         }
     }, [poll]);
@@ -45,12 +44,16 @@ const IndividualPollComponent = ({ poll }) => {
     return (
         <div className="individualPollContainer">
             <div className="tagsForPoll">
-                {poll.tags.map((tag) => (
-                    <span key={tag.id} className="individualTagForPoll">
-                        {`t/${tag.name}`}
-                    </span>
-                ))}
+                <div style={{ width: 'fit-content', height: 'fit-content', display: 'flex', gap: '5px' }}>
+                    {poll.tags.map((tag) => (
+                        <span key={tag.id} className="individualTagForPoll">
+                            {`t/${tag.name}`}
+                        </span>
+                    ))}
+                </div>
+                <span className='creatorOfPoll'>by u/{poll.createdBy}</span>
             </div>
+
             <h3>{poll.question}</h3>
             <div className="optionContainer">
                 {poll.options.map((option) => (

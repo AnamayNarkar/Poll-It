@@ -12,6 +12,7 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
     const [feedOverCreatePoll, setFeedOverCreatePoll] = useState(true);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
+    const [searchedUserData, setSearchedUserData] = useState({});
     const limit = 4;
 
     const fetchFeed = useCallback(
@@ -52,10 +53,31 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
     }, [isLoading, hasMore, page, feedType, param, fetchFeed]);
 
     useEffect(() => {
+
+        if (feedType === "home" && followedTags.length === 0) {
+            return;
+        }
+
         setPage(0);
         setContentFeed([]);
         fetchFeed(feedType, param, 0, limit);
-    }, [feedType, param, fetchFeed]);
+
+        if (feedType === "user") {
+            getContentFeedRequest("justBasicUserDataWhenSearched", param).then((response) => {
+                if (response.status >= 200 && response.status < 300) {
+                    setSearchedUserData(response.data.data);
+                    console.log(searchedUserData);
+                } else {
+                    if (response.status === 404) {
+                        window.alert("User not found");
+                    } else {
+                        window.alert("Failed to fetch user data. Please try again later.");
+                    }
+                }
+            });
+        }
+
+    }, []);
 
     useEffect(() => {
         const middlePartElement = document.querySelector('.middlePartOfThePage');
@@ -85,6 +107,7 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
                         param={param}
                         isLoading={isLoading}
                         setFollowedTags={setFollowedTags}
+                        searchedUserData={searchedUserData}
                     />
                 ) : (
                     <CreatePollComponent />

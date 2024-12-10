@@ -10,8 +10,10 @@ const TopSearchBarResultComponent = ({ result, typeOfSearch }) => {
         <div className='singularSearchResultContainer' onClick={() => {
             if (typeOfSearch === 'tag') {
                 navigate(`/t/${result.name}`);
+                window.location.reload();
             } else if (typeOfSearch === 'user') {
                 navigate(`/u/${result.username}`);
+                window.location.reload();
             }
         }}>
             <div className='searchResultName' >

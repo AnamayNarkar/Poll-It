@@ -22,10 +22,10 @@ const SideBarRight = ({ feedOverCreatePoll, setFeedOverCreatePoll }) => {
                     </div>
                 </div>
                 <div className='logoutFieldContainer'>
-                    <div className='oneMoreContainerForHoverEffect'>
-                        <h4 onClick={() => {
-                            logoutRequest();
-                        }}>
+                    <div className='oneMoreContainerForHoverEffect' onClick={() => {
+                        logoutRequest();
+                    }}>
+                        <h4>
                             Logout</h4>
                     </div>
                 </div>

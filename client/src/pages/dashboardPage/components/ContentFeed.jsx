@@ -4,10 +4,8 @@ import IndividualPollComponent from './IndividualPollComponent';
 import getContentFeedRequest from '../../../services/ApiRequests/FeedRequest';
 import followOrUnfollowTagsRequest from '../../../services/ApiRequests/followOrUnfollowTagsRequest';
 
-const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isLoading, setFollowedTags }) => {
+const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isLoading, setFollowedTags, searchedUserData }) => {
     const [page, setPage] = useState(1);
-
-    const [searchedUserData, setSearchedUserData] = useState({});
 
     const followOrUnfollowTag = async (tagName) => {
         try {
@@ -29,25 +27,6 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
         }
     }
 
-    useEffect(() => {
-
-        if (feedType === "user") {
-            getContentFeedRequest("justBasicUserDataWhenSearched", param).then((response) => {
-                if (response.status >= 200 && response.status < 300) {
-                    setSearchedUserData(response.data.data);
-                    console.log(searchedUserData);
-                } else {
-                    if (response.status === 404) {
-                        window.alert("User not found");
-                    } else {
-                        window.alert("Failed to fetch user data. Please try again later.");
-                    }
-                }
-            });
-        }
-
-    }, []);
-
     return (
         <div className='contentFeedContainer'>
             {feedType === 'home' && followedTags.length === 0 ? (
@@ -67,7 +46,7 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                         }}>
                             <h2 style={{
                                 color: 'white',
-                                fontFamily: 'Parkinsans ',
+                                fontFamily: "'Lato', sans-serif",
                                 margin: '0',
                                 fontSize: '1.5rem',
                                 marginLeft: '50px',
@@ -78,11 +57,11 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                             }}
                                 style={{
                                     backgroundColor: 'transparent',
-                                    border: 'none',
+                                    // border: 'none',
                                     color: 'white',
                                     fontSize: '1.5rem',
                                     marginRight: '50px',
-                                    fontFamily: 'Parkinsans',
+                                    fontFamily: "'Parkinsans', sans-serif",
                                     borderRadius: '10px',
                                     border: '1px solid #3a3a3a',
                                     cursor: 'pointer',
@@ -101,7 +80,10 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                             {contentFeed.map((poll, index) => (
                                 <IndividualPollComponent key={index} poll={poll} />
                             ))}
-                            {isLoading && <h2 style={{ color: 'white' }}>Loading...</h2>}
+                            {isLoading && <h2 style={{
+                                color: 'white'
+                                , fontFamily: 'Parkinsans sans-serif', textAlign: 'center'
+                            }}>Loading...</h2>}
                         </>
                     ) : (
                         <h2>No content available. Check back later!</h2>

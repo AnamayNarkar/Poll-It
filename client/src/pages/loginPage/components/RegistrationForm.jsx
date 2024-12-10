@@ -45,8 +45,8 @@ const RegistrationForm = ({ setIsLoginFormCustom }) => {
 
             <form className='registrationForm'>
                 <input type='email' name='email' placeholder='Email' className='registrationFormInput' onChange={handleRegistrationFormChange} maxLength='50' />
-                <input type='text' name='username' placeholder='Username' className='registrationFormInput' onChange={handleRegistrationFormChange} maxLength='20' />
-                <input type='password' name='password' placeholder='Password' className='registrationFormInput' onChange={handleRegistrationFormChange} maxLength='20' />
+                <input type='text' name='username' placeholder='Username' className='registrationFormInput' onChange={handleRegistrationFormChange} maxLength='25' />
+                <input type='password' name='password' placeholder='Password' className='registrationFormInput' onChange={handleRegistrationFormChange} maxLength='25' />
                 <button type='submit' className='registrationFormButton' onClick={handleRegistrationFormSubmit}>Register</button>
             </form>
 

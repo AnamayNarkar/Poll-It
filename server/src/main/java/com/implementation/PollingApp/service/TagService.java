@@ -70,8 +70,6 @@ public class TagService {
                                 }
                                 redisRepositoryForFeed.updateValue(feedStateRedisKey, feedValueEntity);
                         }
-                } else {
-                        throw new TagException("Feed state key is null");
                 }
 
                 return new TagWithoutPollsDTO(tag.getId().toHexString(), tag.getName());

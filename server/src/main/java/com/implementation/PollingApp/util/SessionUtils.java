@@ -90,17 +90,24 @@ public class SessionUtils {
                 if (sessionId != null) {
                         SessionValueEntity sve = redisRepositoryForSessions.getValue(sessionId);
                         if (sve != null) {
-                                if (redisRepositoryForFeed.getValue(sve.getFeedStateRedisKey()) != null) {
-                                        redisRepositoryForFeed.deleteValue(sve.getFeedStateRedisKey());
-                                }
-                        }
+                                String feedStateKey = sve.getFeedStateRedisKey();
 
-                        deleteSessionValueFromRedis(sessionId);
-                        Cookie cookie = new Cookie("SESSION_ID", null);
-                        cookie.setHttpOnly(true);
-                        cookie.setPath("/");
-                        cookie.setMaxAge(0);
-                        response.addCookie(cookie);
+                                if (feedStateKey != null) {
+                                        if (redisRepositoryForFeed.getValue(feedStateKey) != null) {
+                                                System.out.println(1);
+                                                redisRepositoryForFeed.deleteValue(feedStateKey);
+                                                System.out.println(2);
+                                        }
+                                } else {
+                                        System.out.println("Warning: feedStateRedisKey is null, cannot delete value from Redis.");
+                                }
+                                deleteSessionValueFromRedis(sessionId);
+                                Cookie cookie = new Cookie("SESSION_ID", null);
+                                cookie.setHttpOnly(true);
+                                cookie.setPath("/");
+                                cookie.setMaxAge(0);
+                                response.addCookie(cookie);
+                        }
                 } else {
                         throw new InternalServerErrorException("Error logging out user");
                 }
