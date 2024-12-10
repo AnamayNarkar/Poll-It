@@ -82,8 +82,6 @@ public class FeedService {
                                 String tagHex = feedValueEntity.getFollowedTags().get(followedTagsPointer);
                                 ObjectId tag = new ObjectId(tagHex);
 
-                                System.out.println("Current feed state for " + tagRepository.findById(tag).get().getName() + ": " + feedValueEntity.getFeedState().get(tagHex));
-
                                 List<PollEntity> listOfPolls;
                                 if (feedValueEntity.getFeedState().get(tagHex) != null) {
                                         listOfPolls = pollRepository.findImmediatePollBefore(tag, new ObjectId(feedValueEntity.getFeedState().get(tagHex)), PageRequest.of(0, 1));
@@ -95,11 +93,6 @@ public class FeedService {
                                         PollEntity poll = listOfPolls.get(0);
                                         String pollId = poll.getId().toHexString();
 
-                                        System.out.println("Processing tag: " + tagRepository.findById(tag).get().getName());
-                                        System.out.println("Found poll: " + poll.getQuestion());
-                                        System.out.println("Poll ID: " + pollId);
-                                        System.out.println("Already processed: " + processedPollIds.contains(pollId));
-
                                         if (!feedValueEntity.getSentPostIds().contains(pollId)) {
 
                                                 // if (!processedPollIds.contains(pollId) &&
@@ -108,7 +101,6 @@ public class FeedService {
                                                         processedPollIds.add(pollId);
 
                                                         feedValueEntity.getFeedState().put(tagHex, pollId);
-                                                        System.out.println("Updated feed state for " + tagRepository.findById(tag).get().getName() + " to: " + pollId);
 
                                                         List<OptionResponseDTO> optionResponseDTOs = poll.getOptions().stream().map(optionId -> optionRepository.findByIdWithoutVotes(optionId)).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
 
@@ -147,6 +139,8 @@ public class FeedService {
                         sve = new SessionValueEntity(sve.getId(), sve.getUsername(), sve.getRoles(), redisKey);
                         redisRepositoryForSessions.updateValue(sessionKey, sve);
                 }
+
+                System.out.println("sending home feed to user" + sve.getUsername());
 
                 return homeFeed;
         }

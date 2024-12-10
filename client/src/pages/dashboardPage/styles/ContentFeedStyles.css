@@ -26,3 +26,9 @@
 .contentFeedContainer::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.tagSearchTopBarToFollow {
+  height: 10%;
+  width: 100%;
+  background-color: antiquewhite;
+}
