@@ -35,4 +35,10 @@ public class FeedController {
                 return ResponseEntity.ok(new ApiResponse<List<PollResponseDTO>>(feedService.getHomeFeed(authentication.getSessionId(), authentication.getSessionValueEntity(), limit), "Home feed fetched successfully"));
         }
 
+        @GetMapping("/tag/{tagName}/{page}/{limit}")
+        public ResponseEntity<ApiResponse<List<PollResponseDTO>>> getTagFeed(@PathVariable String tagName, @PathVariable Integer page, @PathVariable Integer limit) {
+                CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
+                return ResponseEntity.ok(new ApiResponse<List<PollResponseDTO>>(feedService.getTagFeed(authentication.getSessionId(), authentication.getSessionValueEntity(), tagName, page, limit), "Tag feed fetched successfully"));
+        }
+
 }

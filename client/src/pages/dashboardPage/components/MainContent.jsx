@@ -23,13 +23,11 @@ const MainContent = ({ followedTags, feedType, param }) => {
     }
 
     useEffect(() => {
-
-        console.log("in useEff")
-        console.log(followedTags + " " + feedType + " " + param);
-        const response = fetchFeed(feedType, param, 1, 1).then((response) => {
+        console.log("Fetching feed for", feedType, param);
+        const response = fetchFeed(feedType, param, 0, 3).then((response) => {
             setContentFeed(response);
         })
-    }, [])
+    }, [feedType, param]);
 
     return (
         <div className='mainContentContainer' style={{ display: 'flex', flexDirection: 'row', height: '90%', width: '100%', padding: '0', margin: '0' }}>

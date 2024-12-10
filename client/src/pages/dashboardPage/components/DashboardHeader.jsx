@@ -3,6 +3,7 @@ import '../styles/DashboardHeaderStyles.css';
 import TopSearchBarResultComponent from './TopSearchBarResultComponent';
 import searchForTagsRequest from '../../../services/ApiRequests/searchForTagsRequest';
 import searchForUsersRequest from '../../../services/ApiRequests/searchForUsersRequest';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardHeader = () => {
     const [areSearchResultsVisible, setAreSearchResultsVisible] = useState(false);
@@ -11,6 +12,7 @@ const DashboardHeader = () => {
     const searchInputRef = useRef(null);
     const [searchString, setSearchString] = useState('');
     const [debouncedSearchString, setDebouncedSearchString] = useState('');
+    const navigate = useNavigate();
 
     const fetchTags = async (searchQuery) => {
         try {
