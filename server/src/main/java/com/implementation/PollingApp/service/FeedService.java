@@ -20,6 +20,7 @@ import com.implementation.PollingApp.dto.OptionResponseDTO;
 import com.implementation.PollingApp.dto.PollResponseDTO;
 import com.implementation.PollingApp.dto.TagWithoutPollsDTO;
 import com.implementation.PollingApp.dto.UserDataWithFollowedTagsDTO;
+import com.implementation.PollingApp.dto.UserWhenSearchedDTO;
 import com.implementation.PollingApp.entity.FeedValueEntity;
 import com.implementation.PollingApp.entity.PollEntity;
 import com.implementation.PollingApp.entity.SessionValueEntity;
@@ -168,6 +169,35 @@ public class FeedService {
                         UserEntity user = userRepository.findByUsername(poll.getCreatedBy());
                         boolean hasUserVoted = user.getVotedPolls().containsKey(poll.getId());
                         String votedOptionId = hasUserVoted ? user.getVotedPolls().get(poll.getId()).toHexString() : null;
+                        return new PollResponseDTO(poll, optionResponseDTOs, tagWithoutPollsDTOs, hasUserVoted, votedOptionId);
+                }).collect(Collectors.toList());
+
+                return pollResponseDTOs;
+        }
+
+        public UserWhenSearchedDTO getUserDataForWhenSearched(String sessionKey, SessionValueEntity sve, String username) {
+                UserEntity user = userRepository.findByUsername(username);
+                if (user == null) {
+                        throw new ResourceNotFoundException("User not found");
+                }
+                return new UserWhenSearchedDTO(user.getUsername());
+        }
+
+        public List<PollResponseDTO> getPollsOfUser(String sessionKey, SessionValueEntity sve, String username, Integer page, Integer limit) {
+                UserEntity user = userRepository.findByUsername(username);
+                if (user == null) {
+                        throw new ResourceNotFoundException("User not found");
+                }
+
+                List<PollEntity> polls = pollRepository.findByCreatedBy(user.getUsername(), PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "_id")));
+
+                List<PollResponseDTO> pollResponseDTOs = polls.stream().map(poll -> {
+                        List<OptionResponseDTO> optionResponseDTOs = poll.getOptions().stream().map(optionId -> optionRepository.findByIdWithoutVotes(optionId)).filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList());
+                        List<TagWithoutPollsDAO> tagWithoutPollsDAOs = tagRepository.findAllByIdWithoutPollIdsIn(poll.getTags());
+                        List<TagWithoutPollsDTO> tagWithoutPollsDTOs = tagWithoutPollsDAOs.stream().map(tag -> new TagWithoutPollsDTO(tag.getId().toHexString(), tag.getName())).collect(Collectors.toList());
+                        UserEntity createdByUser = userRepository.findByUsername(poll.getCreatedBy());
+                        boolean hasUserVoted = createdByUser.getVotedPolls().containsKey(poll.getId());
+                        String votedOptionId = hasUserVoted ? createdByUser.getVotedPolls().get(poll.getId()).toHexString() : null;
                         return new PollResponseDTO(poll, optionResponseDTOs, tagWithoutPollsDTOs, hasUserVoted, votedOptionId);
                 }).collect(Collectors.toList());
 

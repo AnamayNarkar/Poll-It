@@ -1,9 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/ContentFeedStyles.css';
 import IndividualPollComponent from './IndividualPollComponent';
+import getContentFeedRequest from '../../../services/ApiRequests/FeedRequest';
 
-const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isLoading }) => {
+const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isLoading, ifFeedTypeIsUserThenUserDataWithAFewPolls }) => {
     const [page, setPage] = useState(1);
+
+    const [searchedUserData, setSearchedUserData] = useState({});
+
+    useEffect(() => {
+
+        if (feedType === "user") {
+            getContentFeedRequest("justBasicUserDataWhenSearched", param).then((response) => {
+                if (response.status >= 200 && response.status < 300) {
+                    setSearchedUserData(response.data.data);
+                } else {
+                    if (response.status === 404) {
+                        window.alert("User not found");
+                    } else {
+                        window.alert("Failed to fetch user data. Please try again later.");
+                    }
+                }
+            });
+        }
+
+    }, []);
 
     return (
         <div className='contentFeedContainer'>
@@ -12,8 +33,13 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
             ) : (
                 <>
                     {feedType === 'tag' && (
-                        <div className='tagSearchTopBarToFollow'>
+                        <div className='tagSearchTopBarToFollow' >
                             <h2>Tag: {param}</h2>
+                        </div>
+                    )}
+                    {feedType === 'user' && (
+                        <div className='userSearchTopBar'>
+                            <h2>{searchedUserData.username}</h2>
                         </div>
                     )}
                     {contentFeed.length > 0 ? (

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.implementation.PollingApp.dto.PollResponseDTO;
 import com.implementation.PollingApp.dto.UserDataWithFollowedTagsDTO;
+import com.implementation.PollingApp.dto.UserWhenSearchedDTO;
 import com.implementation.PollingApp.security.authObjects.CustomSessionAuthenticationObject;
 import com.implementation.PollingApp.service.FeedService;
 import com.implementation.PollingApp.util.ApiResponse;
@@ -40,6 +41,18 @@ public class FeedController {
         public ResponseEntity<ApiResponse<List<PollResponseDTO>>> getTagFeed(@PathVariable String tagName, @PathVariable Integer page, @PathVariable Integer limit) {
                 CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
                 return ResponseEntity.ok(new ApiResponse<List<PollResponseDTO>>(feedService.getTagFeed(authentication.getSessionId(), authentication.getSessionValueEntity(), tagName, page, limit), "Tag feed fetched successfully"));
+        }
+
+        @GetMapping("/userDataWhenSearched/{username}")
+        public ResponseEntity<ApiResponse<UserWhenSearchedDTO>> getUserDataForWhenSearched(@PathVariable String username) {
+                CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
+                return ResponseEntity.ok(new ApiResponse<UserWhenSearchedDTO>(feedService.getUserDataForWhenSearched(authentication.getSessionId(), authentication.getSessionValueEntity(), username), "User data fetched successfully"));
+        }
+
+        @GetMapping("/user/{username}/{page}/{limit}")
+        public ResponseEntity<ApiResponse<List<PollResponseDTO>>> getUserFeed(@PathVariable String username, @PathVariable Integer page, @PathVariable Integer limit) {
+                CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
+                return ResponseEntity.ok(new ApiResponse<List<PollResponseDTO>>(feedService.getPollsOfUser(authentication.getSessionId(), authentication.getSessionValueEntity(), username, page, limit), "User feed fetched successfully"));
         }
 
 }

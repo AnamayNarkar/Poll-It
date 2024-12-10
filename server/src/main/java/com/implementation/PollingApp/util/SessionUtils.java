@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import com.implementation.PollingApp.entity.SessionValueEntity;
 import com.implementation.PollingApp.entity.UserEntity;
 import com.implementation.PollingApp.exception.custom.InternalServerErrorException;
-import com.implementation.PollingApp.exception.custom.SessionNotFoundException;
 import com.implementation.PollingApp.repository.RedisRepositoryForFeed;
 import com.implementation.PollingApp.repository.RedisRepositoryForSessions;
 
@@ -29,23 +28,12 @@ public class SessionUtils {
                 return UUID.randomUUID().toString();
         }
 
-        private String getFeedIdFromSession(SessionValueEntity sve) {
-                if (sve == null) {
-                        throw new SessionNotFoundException("Session value entity is null.");
-                }
-                return sve.getFeedStateRedisKey();
-        }
-
         private void setSessionIdCookie(HttpServletResponse response, String sessionId) {
-                try {
-                        Cookie cookie = new Cookie("SESSION_ID", sessionId);
-                        cookie.setHttpOnly(true);
-                        cookie.setPath("/");
-                        cookie.setMaxAge(30 * 60); // 30 minutes
-                        response.addCookie(cookie);
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Failed to set session ID cookie.");
-                }
+                Cookie cookie = new Cookie("SESSION_ID", sessionId);
+                cookie.setHttpOnly(true);
+                cookie.setPath("/");
+                cookie.setMaxAge(30 * 60); // 30 minutes
+                response.addCookie(cookie);
         }
 
         private String getSessionIdFromCookie(Cookie[] cookies) {
@@ -60,104 +48,69 @@ public class SessionUtils {
         }
 
         private Cookie[] getCookiesFromRequest(HttpServletRequest request) {
-                try {
-                        return request.getCookies();
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Failed to retrieve cookies from request.");
-                }
+                return request.getCookies();
         }
 
         public String getSessionIdFromRequest(HttpServletRequest request) {
-                try {
-                        return getSessionIdFromCookie(getCookiesFromRequest(request));
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Failed to retrieve session ID from request.");
-                }
+                return getSessionIdFromCookie(getCookiesFromRequest(request));
         }
 
         private void saveSessionValueInRedis(String sessionId, SessionValueEntity sessionValueEntity) {
-                try {
-                        redisRepositoryForSessions.saveValue(sessionId, sessionValueEntity, 30);
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Failed to save session value in Redis.");
-                }
+                redisRepositoryForSessions.saveValue(sessionId, sessionValueEntity, 30);
         }
 
         private SessionValueEntity getSessionValueFromRedis(String sessionId) {
-                try {
-                        SessionValueEntity sessionValue = redisRepositoryForSessions.getValue(sessionId);
-                        if (sessionValue == null) {
-                                throw new SessionNotFoundException("Session not found in Redis.");
-                        }
-                        return sessionValue;
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Failed to retrieve session value from Redis.");
-                }
+                return redisRepositoryForSessions.getValue(sessionId);
         }
 
         private void deleteSessionValueFromRedis(String sessionId) {
-                try {
-                        redisRepositoryForSessions.deleteValue(sessionId);
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Failed to delete session value from Redis.");
-                }
+                redisRepositoryForSessions.deleteValue(sessionId);
+
         }
 
+        // Bigger Methods that use the above methods
+
         public void saveUserSession(HttpServletResponse response, UserEntity userEntity) {
-                try {
-                        String sessionId = generateSessionId();
-                        SessionValueEntity sessionValueEntity = new SessionValueEntity(userEntity.getId().toHexString(), userEntity.getUsername(), userEntity.getRoles(), null);
-                        setSessionIdCookie(response, sessionId);
-                        saveSessionValueInRedis(sessionId, sessionValueEntity);
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Failed to save user session.");
-                }
+                String sessionId = generateSessionId();
+                SessionValueEntity sessionValueEntity = new SessionValueEntity(userEntity.getId().toHexString(), userEntity.getUsername(), userEntity.getRoles(), null);
+                setSessionIdCookie(response, sessionId);
+                saveSessionValueInRedis(sessionId, sessionValueEntity);
         }
 
         public SessionValueEntity getUserSession(HttpServletRequest request) {
-                try {
-                        String sessionId = getSessionIdFromRequest(request);
-                        if (sessionId != null) {
-                                return getSessionValueFromRedis(sessionId);
-                        }
-                        throw new SessionNotFoundException("Session ID not found in request.");
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Failed to retrieve user session.");
+                String sessionId = getSessionIdFromRequest(request);
+                if (sessionId != null) {
+                        return getSessionValueFromRedis(sessionId);
                 }
+                return null;
         }
 
         public void clearUserSessionAndRemoveCookie(HttpServletResponse response, HttpServletRequest request) {
-                try {
-                        String sessionId = getSessionIdFromRequest(request);
-                        if (sessionId != null) {
-                                SessionValueEntity sve = redisRepositoryForSessions.getValue(sessionId);
-                                if (sve != null) {
-                                        redisRepositoryForFeed.deleteValue(getFeedIdFromSession(sve));
+                String sessionId = getSessionIdFromRequest(request);
+                if (sessionId != null) {
+                        SessionValueEntity sve = redisRepositoryForSessions.getValue(sessionId);
+                        if (sve != null) {
+                                if (redisRepositoryForFeed.getValue(sve.getFeedStateRedisKey()) != null) {
+                                        redisRepositoryForFeed.deleteValue(sve.getFeedStateRedisKey());
                                 }
-                                deleteSessionValueFromRedis(sessionId);
-                                Cookie cookie = new Cookie("SESSION_ID", null);
-                                cookie.setHttpOnly(true);
-                                cookie.setPath("/");
-                                cookie.setMaxAge(0);
-                                response.addCookie(cookie);
-                        } else {
-                                throw new SessionNotFoundException("Session ID not found during logout.");
                         }
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Error occurred while logging out user.");
+
+                        deleteSessionValueFromRedis(sessionId);
+                        Cookie cookie = new Cookie("SESSION_ID", null);
+                        cookie.setHttpOnly(true);
+                        cookie.setPath("/");
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+                } else {
+                        throw new InternalServerErrorException("Error logging out user");
                 }
         }
 
         public SessionValueEntity validateSession(HttpServletRequest request) {
-                try {
-                        String sessionId = getSessionIdFromRequest(request);
-                        if (sessionId != null) {
-                                return getSessionValueFromRedis(sessionId);
-                        }
-                        throw new SessionNotFoundException("Session ID not found in request.");
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Failed to validate session.");
+                String sessionId = getSessionIdFromRequest(request);
+                if (sessionId != null) {
+                        return getSessionValueFromRedis(sessionId);
                 }
+                return null;
         }
-
 }

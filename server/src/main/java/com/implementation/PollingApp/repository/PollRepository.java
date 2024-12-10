@@ -15,6 +15,8 @@ public interface PollRepository extends MongoRepository<PollEntity, ObjectId> {
 
         List<PollEntity> findByCreatedBy(String createdBy);
 
+        List<PollEntity> findByCreatedBy(String createdBy, Pageable pageable);
+
         List<PollEntity> findByTags(ObjectId tagId, Pageable pageable);
 
         @Query(value = "{ 'tags': ?0 }", sort = "{ '_id': -1 }")

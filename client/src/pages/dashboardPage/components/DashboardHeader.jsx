@@ -5,27 +5,28 @@ import searchForTagsRequest from '../../../services/ApiRequests/searchForTagsReq
 import searchForUsersRequest from '../../../services/ApiRequests/searchForUsersRequest';
 import { useNavigate } from 'react-router-dom';
 
-const DashboardHeader = () => {
+const DashboardHeader = ({ feedType, param }) => {
     const [areSearchResultsVisible, setAreSearchResultsVisible] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
-    const searchResultsContainerRef = useRef(null);
-    const searchInputRef = useRef(null);
     const [searchString, setSearchString] = useState('');
     const [debouncedSearchString, setDebouncedSearchString] = useState('');
+    const [userHasTyped, setUserHasTyped] = useState(false);
+    const searchInputRef = useRef(null);
+    const searchResultsContainerRef = useRef(null);
     const navigate = useNavigate();
 
-    const fetchTags = async (searchQuery) => {
+    const fetchTags = async (query) => {
         try {
-            const response = await searchForTagsRequest(searchQuery);
+            const response = await searchForTagsRequest(query);
             setSearchResults(response.data);
         } catch (error) {
             console.error('Error fetching tags:', error);
         }
     };
 
-    const fetchUsers = async (searchQuery) => {
+    const fetchUsers = async (query) => {
         try {
-            const response = await searchForUsersRequest(searchQuery);
+            const response = await searchForUsersRequest(query);
             setSearchResults(response.data);
         } catch (error) {
             console.error('Error fetching users:', error);
@@ -38,13 +39,11 @@ const DashboardHeader = () => {
     };
 
     useEffect(() => {
-        const handler = setTimeout(() => {
+        const timer = setTimeout(() => {
             setDebouncedSearchString(searchString);
         }, 400);
 
-        return () => {
-            clearTimeout(handler);
-        };
+        return () => clearTimeout(timer);
     }, [searchString]);
 
     useEffect(() => {
@@ -77,6 +76,10 @@ const DashboardHeader = () => {
         };
     }, []);
 
+    const placeholderValue = feedType === 'home' || feedType === 'popular' ? '' :
+        feedType === 'tag' ? `t/${param}` :
+            feedType === 'user' ? `u/${param}` : '';
+
     return (
         <div className='dashboardHeaderContainer'>
             <div className='logoAndName'>
@@ -92,18 +95,21 @@ const DashboardHeader = () => {
                     type='text'
                     placeholder='Search'
                     className='searchInput'
-                    onChange={handleInputChange}
                     ref={searchInputRef}
+                    value={userHasTyped ? searchString : placeholderValue}
+                    onChange={(e) => {
+                        setUserHasTyped(true);
+                        handleInputChange(e);
+                    }}
                     onClick={() => {
                         if (!areSearchResultsVisible) setAreSearchResultsVisible(true);
                     }}
-                    value={searchString}
                 />
                 <div className='searchIconContainer'>
                     <img
                         className='searchIcon'
                         src='https://github.com/user-attachments/assets/21503eee-e069-4d5a-9559-836ac5639713'
-                        alt='searchIcon'
+                        alt='search icon'
                     />
                 </div>
                 {areSearchResultsVisible && debouncedSearchString.length > 0 && (
@@ -115,7 +121,7 @@ const DashboardHeader = () => {
                             <TopSearchBarResultComponent
                                 key={result.id}
                                 result={result}
-                                typeOfSearch={debouncedSearchString.startsWith('t/') ? 'tag' : debouncedSearchString.startsWith('u/') ? 'user' : ''}
+                                typeOfSearch={debouncedSearchString.startsWith('t/') ? 'tag' : 'user'}
                             />
                         ))}
                     </div>

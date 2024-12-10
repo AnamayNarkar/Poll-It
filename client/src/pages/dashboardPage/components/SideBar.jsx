@@ -1,13 +1,16 @@
 import React from 'react'
 import '../styles/SideBarStyles.css'
+import { useNavigate } from 'react-router-dom'
 
 const SideBar = ({ followedTags }) => {
+
+    const navigate = useNavigate();
 
     return (
         <div className='sideBarContainer'>
             <div className='homeAndPopular'>
                 <div className='homeOption' onClick={() => {
-                    window.location.href = `/home`;
+                    navigate(`/home`);
                 }}>
                     <h4>Home</h4>
                 </div>
@@ -24,7 +27,7 @@ const SideBar = ({ followedTags }) => {
                         followedTags?.map(tag => {
                             return (
                                 <div key={tag.id} className='tagYouFollowIndividual' onClick={() => {
-                                    window.location.href = `t/${tag.name}`
+                                    navigate(`/t/${tag.name}`);
                                 }}>
                                     <h5>t/{tag.name}</h5>
                                 </div>
