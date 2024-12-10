@@ -6,7 +6,7 @@ import SideBarRight from './SideBarRight';
 import CreatePollComponent from './CreatePollComponent';
 import getContentFeedRequest from '../../../services/ApiRequests/FeedRequest';
 
-const MainContent = ({ followedTags, feedType, param }) => {
+const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
     const [contentFeed, setContentFeed] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [feedOverCreatePoll, setFeedOverCreatePoll] = useState(true);
@@ -84,6 +84,7 @@ const MainContent = ({ followedTags, feedType, param }) => {
                         followedTags={followedTags}
                         param={param}
                         isLoading={isLoading}
+                        setFollowedTags={setFollowedTags}
                     />
                 ) : (
                     <CreatePollComponent />

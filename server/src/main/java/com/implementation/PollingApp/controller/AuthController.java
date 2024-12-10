@@ -33,7 +33,7 @@ public class AuthController {
                 SessionValueEntity sessionValueEntity = sessionUtils.getUserSession(request);
                 if (sessionValueEntity == null) {
                         ApiResponse<String> apiResponse = new ApiResponse<>(null, "User verification failed");
-                        return ResponseEntity.status(401).body(apiResponse);
+                        return ResponseEntity.status(403).body(apiResponse);
                 }
                 ApiResponse<String> apiResponse = new ApiResponse<>(null, "User verified successfully");
                 return ResponseEntity.ok(apiResponse);
