@@ -43,7 +43,7 @@ const MainContent = ({ followedTags, feedType, param }) => {
 
         const middlePartElement = document.querySelector('.middlePartOfThePage');
         const { scrollTop, scrollHeight, clientHeight } = middlePartElement;
-        if (scrollTop + clientHeight >= scrollHeight - 10) {
+        if (scrollTop + clientHeight >= scrollHeight - 1) {
             console.log("fetching")
             const nextPage = page + 1;
             setPage(nextPage);

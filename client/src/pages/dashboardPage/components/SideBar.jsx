@@ -1,13 +1,14 @@
 import React from 'react'
 import '../styles/SideBarStyles.css'
 
-
 const SideBar = ({ followedTags }) => {
 
     return (
         <div className='sideBarContainer'>
             <div className='homeAndPopular'>
-                <div className='homeOption'>
+                <div className='homeOption' onClick={() => {
+                    window.location.href = `/home`;
+                }}>
                     <h4>Home</h4>
                 </div>
                 <div className='popularOption'>
@@ -22,7 +23,9 @@ const SideBar = ({ followedTags }) => {
                     {
                         followedTags?.map(tag => {
                             return (
-                                <div key={tag.id} className='tagYouFollowIndividual'>
+                                <div key={tag.id} className='tagYouFollowIndividual' onClick={() => {
+                                    window.location.href = `t/${tag.name}`
+                                }}>
                                     <h5>t/{tag.name}</h5>
                                 </div>
                             )
@@ -30,9 +33,8 @@ const SideBar = ({ followedTags }) => {
                     }
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
-import '../styles/SideBarStyles.css'
 
 export default SideBar
