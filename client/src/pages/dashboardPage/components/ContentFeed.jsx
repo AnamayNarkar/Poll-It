@@ -31,7 +31,11 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
     return (
         <div className='contentFeedContainer'>
             {feedType === 'home' && followedTags.length === 0 ? (
-                <h1>Follow some tags to see content</h1>
+                <h2 style={{
+                    color: 'white',
+                    fontFamily: 'Parkinsans sans-serif',
+                    textAlign: 'center'
+                }}>Follow some tags to see content</h2>
             ) : (
                 <>
                     {feedType === 'tag' && (
@@ -60,7 +64,7 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                                     color: 'white',
                                     fontSize: '1.5rem',
                                     marginRight: '50px',
-                                    fontFamily: "'Lato', sans-serif",
+                                    fontFamily: "'Parkinsans', sans-serif",
                                     borderRadius: '10px',
                                     border: '1px solid #3a3a3a',
                                     cursor: 'pointer',
@@ -88,22 +92,27 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                             {isLoading && (
                                 <h2 style={{
                                     color: 'white',
-                                    fontFamily: "'Lato', sans-serif",
+                                    fontFamily: 'Parkinsans sans-serif',
                                     textAlign: 'center'
                                 }}>Loading...</h2>
                             )}
+
                         </>
                     ) : (
                         isLoading ? (
                             <h2 style={{
                                 color: 'white',
-                                fontFamily: "'Lato', sans-serif",
+                                fontFamily: 'Parkinsans sans-serif',
                                 textAlign: 'center'
                             }}>
                                 Loading...
                             </h2>
                         ) : (
-                            <h2>No content available. Check back later!</h2>
+                            <h2 style={{
+                                color: 'white',
+                                fontFamily: 'Parkinsans sans-serif',
+                                textAlign: 'center'
+                            }}>No content available. Check back later!</h2>
                         )
                     )}
                 </>

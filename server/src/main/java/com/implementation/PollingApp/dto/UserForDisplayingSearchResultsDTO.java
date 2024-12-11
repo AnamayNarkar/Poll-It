@@ -8,9 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserForDisplayingSearchResultsDTO {
-
         private String username;
-
 }
-
-// ill add profile pic later

@@ -122,6 +122,7 @@ const DashboardHeader = ({ feedType, param }) => {
                                 key={result.id}
                                 result={result}
                                 typeOfSearch={debouncedSearchString.startsWith('t/') ? 'tag' : 'user'}
+                                setAreSearchResultsVisible={setAreSearchResultsVisible}
                             />
                         ))}
                     </div>

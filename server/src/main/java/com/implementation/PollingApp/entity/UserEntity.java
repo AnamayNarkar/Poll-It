@@ -40,6 +40,10 @@ public class UserEntity {
 
         private Vector<ObjectId> followedTags;
 
+        private String profilePictureURL;
+
+        private String bio;
+
         public UserEntity(String username, String email, String password, Vector<String> roles) {
                 this.username = username;
                 this.password = password;
@@ -49,5 +53,7 @@ public class UserEntity {
                 this.createdPolls = new Vector<>();
                 this.votedPolls = new HashMap<>();
                 this.followedTags = new Vector<>();
+                this.profilePictureURL = "https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png";
+                this.bio = "";
         }
 }

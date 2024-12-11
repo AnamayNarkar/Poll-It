@@ -196,7 +196,7 @@ public class FeedService {
                 if (user == null) {
                         throw new ResourceNotFoundException("User not found");
                 }
-                return new UserWhenSearchedDTO(user.getUsername());
+                return new UserWhenSearchedDTO(user.getUsername(), user.getProfilePictureURL(), user.getBio());
         }
 
         public List<PollResponseDTO> getPollsOfUser(String sessionKey, SessionValueEntity sve, String username, Integer page, Integer limit) {

@@ -80,7 +80,7 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
             });
         }
 
-    }, [followedTags, feedType, param, fetchFeed]);
+    }, [feedType]);
 
     useEffect(() => {
         const middlePartElement = document.querySelector('.middlePartOfThePage');
