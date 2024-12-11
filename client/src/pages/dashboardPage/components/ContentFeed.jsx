@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/ContentFeedStyles.css';
 import IndividualPollComponent from './IndividualPollComponent';
-import getContentFeedRequest from '../../../services/ApiRequests/FeedRequest';
 import followOrUnfollowTagsRequest from '../../../services/ApiRequests/followOrUnfollowTagsRequest';
 
 const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isLoading, setFollowedTags, searchedUserData }) => {
@@ -25,7 +24,9 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
         } catch (error) {
             window.alert('Error following/unfollowing tag');
         }
-    }
+    };
+
+    const string = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa doloribus quis repellendus quibusdam repudiandae minus numquam vero similique id! Ut quasi rem debitis magni ipsam dolore exercitationem accusantium. Amet, similique?";
 
     return (
         <div className='contentFeedContainer'>
@@ -50,18 +51,16 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                                 margin: '0',
                                 fontSize: '1.5rem',
                                 marginLeft: '50px',
-                            }}
-                            >t/{param}</h2>
-                            <button onClick={() => {
-                                followOrUnfollowTag(param);
-                            }}
+                            }}>
+                                t/{param}
+                            </h2>
+                            <button onClick={() => followOrUnfollowTag(param)}
                                 style={{
                                     backgroundColor: 'transparent',
-                                    // border: 'none',
                                     color: 'white',
                                     fontSize: '1.5rem',
                                     marginRight: '50px',
-                                    fontFamily: "'Parkinsans', sans-serif",
+                                    fontFamily: "'Lato', sans-serif",
                                     borderRadius: '10px',
                                     border: '1px solid #3a3a3a',
                                     cursor: 'pointer',
@@ -72,7 +71,13 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                     )}
                     {feedType === 'user' && (
                         <div className='userSearchTopBar'>
-                            <h2>{searchedUserData.username}</h2>
+                            <div className="userDataWhenSearchedLeftPart">
+                                <img className='userDataWhenSearchedProfilePic' src='https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png' />
+                            </div>
+                            <div className='userDataWhenSearchedRightPart'>
+                                <h2 className='userDataWhenSearchedUsername'>u/{searchedUserData.username}</h2>
+                                <p className='userDataWhenSearchedBio'>{string}</p>
+                            </div>
                         </div>
                     )}
                     {contentFeed.length > 0 ? (
@@ -80,13 +85,26 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                             {contentFeed.map((poll, index) => (
                                 <IndividualPollComponent key={index} poll={poll} />
                             ))}
-                            {isLoading && <h2 style={{
-                                color: 'white'
-                                , fontFamily: 'Parkinsans sans-serif', textAlign: 'center'
-                            }}>Loading...</h2>}
+                            {isLoading && (
+                                <h2 style={{
+                                    color: 'white',
+                                    fontFamily: "'Lato', sans-serif",
+                                    textAlign: 'center'
+                                }}>Loading...</h2>
+                            )}
                         </>
                     ) : (
-                        <h2>No content available. Check back later!</h2>
+                        isLoading ? (
+                            <h2 style={{
+                                color: 'white',
+                                fontFamily: "'Lato', sans-serif",
+                                textAlign: 'center'
+                            }}>
+                                Loading...
+                            </h2>
+                        ) : (
+                            <h2>No content available. Check back later!</h2>
+                        )
                     )}
                 </>
             )}

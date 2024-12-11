@@ -33,8 +33,14 @@ const logoutRequest = async () => {
         const response = await axios.post("http://localhost:3000/api/auth/logout", {}, { withCredentials: true });
         window.location.reload();
     } catch (error) {
-        window.alert("Error logging out");
-        return error.response;
+
+        if (error.response.status === 403) {
+            window.alert("Your session has expired. Please log in again.");
+            window.location.href = "/auth";
+        } else {
+            window.alert("error logging out");
+            return error.response;
+        }
     }
 }
 

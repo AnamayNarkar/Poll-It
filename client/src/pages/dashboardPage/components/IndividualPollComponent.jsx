@@ -2,8 +2,12 @@ import React, { useEffect, useState } from 'react';
 import '../styles/IndividualPollComponentStyles.css';
 import IndividualOptionComponent from './IndividualOptionComponent.jsx';
 import voteForPoll from '../../../services/ApiRequests/voteForPollRequest.js';
+import { useNavigate } from 'react-router-dom'
 
 const IndividualPollComponent = ({ poll }) => {
+
+    const navigate = useNavigate();
+
     const [totalVotes, setTotalVotes] = useState(
         poll.options.reduce((acc, option) => acc + option.voteCount, 0)
     );
@@ -46,12 +50,12 @@ const IndividualPollComponent = ({ poll }) => {
             <div className="tagsForPoll">
                 <div style={{ width: 'fit-content', height: 'fit-content', display: 'flex', gap: '5px' }}>
                     {poll.tags.map((tag) => (
-                        <span key={tag.id} className="individualTagForPoll">
+                        <span key={tag.id} className="individualTagForPoll" onClick={() => { navigate(`/t/${tag.name}`) }}>
                             {`t/${tag.name}`}
                         </span>
                     ))}
                 </div>
-                <span className='creatorOfPoll'>by u/{poll.createdBy}</span>
+                <span className='creatorOfPoll' onClick={() => { navigate(`/u/${poll.createdBy}`) }}>by u/{poll.createdBy}</span>
             </div>
 
             <h3>{poll.question}</h3>

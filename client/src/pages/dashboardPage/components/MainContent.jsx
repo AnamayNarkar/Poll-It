@@ -55,8 +55,11 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
     useEffect(() => {
 
         if (feedType === "home" && followedTags.length === 0) {
+            console.log("no followed tags")
             return;
         }
+
+        console.log(followedTags)
 
         setPage(0);
         setContentFeed([]);
@@ -77,7 +80,7 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
             });
         }
 
-    }, []);
+    }, [followedTags, feedType, param, fetchFeed]);
 
     useEffect(() => {
         const middlePartElement = document.querySelector('.middlePartOfThePage');

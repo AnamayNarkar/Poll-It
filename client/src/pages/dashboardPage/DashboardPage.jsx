@@ -7,16 +7,14 @@ import fetchUserDataRequest from '../../services/ApiRequests/fetchUserDataReques
 const DashboardPage = ({ feedType }) => {
 
     const { usernameParam, tagParam } = useParams();
-
     const [userData, setUserData] = React.useState({});
+    const [followedTags, setFollowedTags] = useState([]);
 
     const fetchUserData = async () => {
-        const userData = await fetchUserDataRequest();
-        setUserData(userData.data);
-        setFollowedTags(userData.data.followedTags);
+        const response = await fetchUserDataRequest();
+        setUserData(response.data.data);
+        setFollowedTags([...response.data.data.followedTags]);
     }
-
-    const [followedTags, setFollowedTags] = useState([]);
 
     useEffect(() => {
         fetchUserData();

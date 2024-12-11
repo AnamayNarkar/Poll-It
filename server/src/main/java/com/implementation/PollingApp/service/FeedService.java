@@ -200,6 +200,7 @@ public class FeedService {
         }
 
         public List<PollResponseDTO> getPollsOfUser(String sessionKey, SessionValueEntity sve, String username, Integer page, Integer limit) {
+
                 UserEntity user = userRepository.findByUsername(username);
                 if (user == null) {
                         throw new ResourceNotFoundException("User not found");
