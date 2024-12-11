@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import '../styles/MainContentStyles.css';
 import SideBar from './SideBar';
 import ContentFeed from './ContentFeed';
@@ -14,6 +14,7 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
     const [hasMore, setHasMore] = useState(true);
     const [searchedUserData, setSearchedUserData] = useState({});
     const limit = 4;
+    const initialFetchDone = useRef(false);
 
     const fetchFeed = useCallback(
         async (feedType, param, currentPage, limit, isLoadMore = false) => {
@@ -54,6 +55,8 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
 
     useEffect(() => {
 
+        setFeedOverCreatePoll(true);
+
         if (feedType === "home" && followedTags.length === 0) {
             console.log("no followed tags")
             return;
@@ -80,13 +83,20 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
             });
         }
 
-    }, [feedType]);
+    }, [feedType, param, limit, fetchFeed, followedTags]);
 
     useEffect(() => {
         const middlePartElement = document.querySelector('.middlePartOfThePage');
         middlePartElement.addEventListener('scroll', handleScroll);
         return () => middlePartElement.removeEventListener('scroll', handleScroll);
     }, [handleScroll]);
+
+    useEffect(() => {
+        if (!initialFetchDone.current && followedTags.length > 0) {
+            fetchFeed(feedType, param, page, limit);
+            initialFetchDone.current = true;
+        }
+    }, [fetchFeed, feedType, param, page, limit, followedTags]);
 
     return (
         <div
@@ -111,6 +121,7 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
                         isLoading={isLoading}
                         setFollowedTags={setFollowedTags}
                         searchedUserData={searchedUserData}
+                        hasMore={hasMore}
                     />
                 ) : (
                     <CreatePollComponent />

@@ -3,7 +3,7 @@ import '../styles/ContentFeedStyles.css';
 import IndividualPollComponent from './IndividualPollComponent';
 import followOrUnfollowTagsRequest from '../../../services/ApiRequests/followOrUnfollowTagsRequest';
 
-const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isLoading, setFollowedTags, searchedUserData }) => {
+const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isLoading, setFollowedTags, searchedUserData, hasMore }) => {
     const [page, setPage] = useState(1);
 
     const followOrUnfollowTag = async (tagName) => {
@@ -96,7 +96,13 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                                     textAlign: 'center'
                                 }}>Loading...</h2>
                             )}
-
+                            {!hasMore && (<h2 style={{
+                                color: 'white',
+                                fontFamily: 'Parkinsans sans-serif',
+                                textAlign: 'center'
+                            }}>
+                                No more content available. Check back later!
+                            </h2>)}
                         </>
                     ) : (
                         isLoading ? (
