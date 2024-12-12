@@ -27,9 +27,49 @@
   background: #555;
 }
 
+.followTagsMessage {
+  color: white;
+  font-family: "Parkinsans", sans-serif;
+  text-align: center;
+}
+
+.loadingMessage,
+.noMoreContentMessage,
+.noContentMessage {
+  color: white;
+  font-family: "Parkinsans", sans-serif;
+  text-align: center;
+}
+
+/* Tag search bar styles */
 .tagSearchTopBarToFollow {
-  height: 20%;
+  background-color: rgb(60, 60, 55);
+  height: 50px;
   width: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.tagTitle {
+  color: white;
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  font-size: 1.5rem;
+  margin-left: 50px;
+}
+
+.followButton {
+  background-color: transparent;
+  color: white;
+  font-size: 1.5rem;
+  margin-right: 50px;
+  font-family: "Parkinsans", sans-serif;
+  border-radius: 10px;
+  border: 1px solid #3a3a3a;
+  cursor: pointer;
 }
 
 .userSearchTopBar {
@@ -41,13 +81,11 @@
   justify-content: flex-start;
   align-items: center;
   gap: 20px;
-  /* background-color: #f1f1f1; */
 }
 
 .userDataWhenSearchedLeftPart {
   height: auto;
   min-width: 16%;
-  /* background-color: #888; */
   margin: 0%;
   padding: 0%;
 }
@@ -62,7 +100,6 @@
 .userDataWhenSearchedRightPart {
   height: fit-content;
   min-width: 80%;
-  /* background-color: aqua; */
   margin: 0%;
   padding: 0%;
 }

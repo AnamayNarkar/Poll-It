@@ -5,7 +5,10 @@ import searchForTagsRequest from '../../../services/ApiRequests/searchForTagsReq
 import searchForUsersRequest from '../../../services/ApiRequests/searchForUsersRequest';
 import { useNavigate } from 'react-router-dom';
 
-const DashboardHeader = ({ feedType, param }) => {
+const DashboardHeader = ({ feedType, param, userData }) => {
+
+    const navigate = useNavigate();
+
     const [areSearchResultsVisible, setAreSearchResultsVisible] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
     const [searchString, setSearchString] = useState('');
@@ -13,7 +16,6 @@ const DashboardHeader = ({ feedType, param }) => {
     const [userHasTyped, setUserHasTyped] = useState(false);
     const searchInputRef = useRef(null);
     const searchResultsContainerRef = useRef(null);
-    const navigate = useNavigate();
 
     const fetchTags = async (query) => {
         try {
@@ -76,6 +78,9 @@ const DashboardHeader = ({ feedType, param }) => {
         };
     }, []);
 
+    console.log("yellloo")
+    console.log(userData);
+
     const placeholderValue = feedType === 'home' || feedType === 'popular' ? '' :
         feedType === 'tag' ? `t/${param}` :
             feedType === 'user' ? `u/${param}` : '';
@@ -130,9 +135,10 @@ const DashboardHeader = ({ feedType, param }) => {
             </div>
             <div className='profileIcon'>
                 <img
-                    src='https://github.com/user-attachments/assets/66ffe0b4-47fc-4344-a575-2627f4f9be6a'
+                    src={userData.profilePictureURL}
                     alt='profile'
                     className='profileImage'
+                    onClick={() => navigate(`/u/${userData.username}`)}
                 />
             </div>
         </div>

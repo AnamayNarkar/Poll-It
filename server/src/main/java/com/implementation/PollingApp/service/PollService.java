@@ -126,9 +126,13 @@ public class PollService {
                                 throw new PollExpirationException("Poll has expired");
                         }
 
+                        poll.setTotalVoteCount(poll.getTotalVoteCount() + 1);
+
                         OptionEntity option = optionRepository.findById(new ObjectId(optionId)).orElseThrow(() -> new ResourceNotFoundException("Option not found"));
 
                         VoteEntity vote = new VoteEntity(new ObjectId(optionId), sve.getUsername());
+
+                        pollRepository.save(poll);
 
                         voteRepository.save(vote);
 
@@ -153,35 +157,4 @@ public class PollService {
 
         }
 
-        // public List<PollResponseDTO> getAllPollsFromUser(String username) {
-        // try {
-        // UserEntity userEntity = userRepository.findByUsername(username);
-        // if (userEntity == null) {
-        // throw new ResourceNotFoundException(username + " not found");
-        // }
-
-        // List<PollEntity> polls = pollRepository.findByCreatedBy(username);
-        // List<PollResponseDTO> finalResponse = new Vector<>();
-
-        // for (PollEntity poll : polls) {
-        // List<OptionResponseDTO> options = new Vector<>();
-        // for (ObjectId optionId : poll.getOptions()) {
-        // OptionResponseDTO optionResponseDTO =
-        // optionRepository.findByIdWithoutVotes(optionId).orElseThrow(() -> new
-        // ResourceNotFoundException("Option with ID " + optionId + " not found"));
-        // options.add(optionResponseDTO);
-        // }
-        // finalResponse.add(new PollResponseDTO(poll.getId().toHexString(),
-        // poll.getQuestion(), poll.getCreatedBy(), poll.getCreationDateTime(),
-        // poll.getExpirationDateTime(), options,
-        // }
-
-        // return finalResponse.isEmpty() ? Collections.emptyList() : finalResponse;
-
-        // } catch (ResourceNotFoundException e) {
-        // throw e;
-        // } catch (Exception e) {
-        // throw new InternalServerErrorException("Error while fetching polls");
-        // }
-        // }
 }

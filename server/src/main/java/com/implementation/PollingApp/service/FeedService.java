@@ -166,7 +166,7 @@ public class FeedService {
                 UserEntity user = userRepository.findByUsername(sve.getUsername());
                 List<TagWithoutPollsDAO> tagWithouPollsDAO = tagRepository.findAllByIdWithoutPollIdsIn(user.getFollowedTags());
                 List<TagWithoutPollsDTO> tagsWithStringIds = tagWithouPollsDAO.stream().map(tag -> new TagWithoutPollsDTO(tag.getId().toHexString(), tag.getName())).collect(Collectors.toList());
-                return new UserDataWithFollowedTagsDTO(user.getId().toHexString(), user.getUsername(), tagsWithStringIds);
+                return new UserDataWithFollowedTagsDTO(user.getId().toHexString(), user.getUsername(), tagsWithStringIds, user.getProfilePictureURL());
         }
 
         public List<PollResponseDTO> getTagFeed(String sessionKey, SessionValueEntity sve, String tagName, Integer page, Integer limit) {

@@ -30,6 +30,12 @@ public class PollEntity {
 
         private Vector<ObjectId> tags;
 
+        private Integer totalVoteCount;
+
+        private Vector<ObjectId> comments;
+
+        private Integer totalCommentCount;
+
         public PollEntity(String question, String createdBy, Vector<ObjectId> options, Date expirationDateTime, Vector<ObjectId> tags) {
 
                 if (tags.size() == 0 || tags.size() > 3) {
@@ -43,5 +49,7 @@ public class PollEntity {
                 this.creationDateTime = new Date();
                 this.expirationDateTime = expirationDateTime;
                 this.tags = tags;
+                this.totalVoteCount = 0;
+                this.totalCommentCount = 0;
         }
 }

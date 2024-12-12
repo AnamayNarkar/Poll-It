@@ -13,8 +13,7 @@ public class UserDataWithFollowedTagsDTO {
 
         private String id;
         private String username;
-        // private String profilePictureLink;
-
         private List<TagWithoutPollsDTO> followedTags;
+        private String profilePictureURL;
 
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import '../styles/SideBarStyles.css'
 import { useNavigate } from 'react-router-dom'
 
-const SideBar = ({ followedTags }) => {
+const SideBar = ({ followedTags, isFeedOverCreatePoll, setIsFeedOverCreatePoll }) => {
 
     const navigate = useNavigate();
 
@@ -10,7 +10,11 @@ const SideBar = ({ followedTags }) => {
         <div className='sideBarContainer'>
             <div className='homeAndPopular'>
                 <div className='homeOption' onClick={() => {
-                    navigate(`/home`);
+                    if (window.location.pathname === '/home') {
+                        setIsFeedOverCreatePoll(true);
+                    } else {
+                        navigate(`/home`);
+                    }
                 }}>
                     <h4>Home</h4>
                 </div>

@@ -32,6 +32,10 @@ public class PollResponseDTO {
 
         private String optionIdVotedFor;
 
+        private Integer totalVoteCount;
+
+        private Integer totalCommentCount;
+
         public PollResponseDTO(PollEntity pollEntity, List<OptionResponseDTO> optionResponseDTO, List<TagWithoutPollsDTO> tags) {
                 this.id = pollEntity.getId().toHexString();
                 this.question = pollEntity.getQuestion();
@@ -42,6 +46,8 @@ public class PollResponseDTO {
                 this.options = optionResponseDTO;
                 this.hasUserVotedForThisPoll = false;
                 this.optionIdVotedFor = null;
+                this.totalVoteCount = pollEntity.getTotalVoteCount();
+                this.totalCommentCount = pollEntity.getTotalCommentCount();
         }
 
         public PollResponseDTO(PollEntity pollEntity, List<OptionResponseDTO> optionResponseDTO, List<TagWithoutPollsDTO> tags, Boolean hasUserVotedForThisPoll, String optionIdVotedFor) {
@@ -54,6 +60,8 @@ public class PollResponseDTO {
                 this.options = optionResponseDTO;
                 this.hasUserVotedForThisPoll = hasUserVotedForThisPoll;
                 this.optionIdVotedFor = optionIdVotedFor;
+                this.totalVoteCount = pollEntity.getTotalVoteCount();
+                this.totalCommentCount = pollEntity.getTotalCommentCount();
         }
 
 }

@@ -16,6 +16,8 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
     const limit = 4;
     const initialFetchDone = useRef(false);
 
+    const [areFollowedTagsLoaded, setAreFollowedTagsLoaded] = useState(false);
+
     const fetchFeed = useCallback(
         async (feedType, param, currentPage, limit, isLoadMore = false) => {
             try {
@@ -54,6 +56,10 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
     }, [isLoading, hasMore, page, feedType, param, fetchFeed]);
 
     useEffect(() => {
+        setAreFollowedTagsLoaded(true);
+    }, [followedTags])
+
+    useEffect(() => {
 
         setFeedOverCreatePoll(true);
 
@@ -83,7 +89,7 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
             });
         }
 
-    }, [feedType, param, limit, fetchFeed, followedTags]);
+    }, [feedType, param, areFollowedTagsLoaded]);
 
     useEffect(() => {
         const middlePartElement = document.querySelector('.middlePartOfThePage');
@@ -110,7 +116,7 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
                 margin: '0',
             }}
         >
-            <SideBar followedTags={followedTags} />
+            <SideBar followedTags={followedTags} setIsFeedOverCreatePoll={setFeedOverCreatePoll} isFeedOverCreatePoll={feedOverCreatePoll} />
             <div className='middlePartOfThePage'>
                 {feedOverCreatePoll ? (
                     <ContentFeed
