@@ -9,10 +9,10 @@ import com.implementation.PollingApp.util.ApiResponse;
 @RestController
 public class HealthCheckController {
 
-        @GetMapping("/")
-        public ResponseEntity<ApiResponse<Object>> healthCheckRequest() {
-                ApiResponse<Object> response = new ApiResponse<>(null, "Journal App is up and running");
-                return ResponseEntity.ok(response);
-        }
+    @GetMapping("/")
+    public ResponseEntity<ApiResponse<Object>> healthCheckRequest() {
+        ApiResponse<Object> response = new ApiResponse<>(null, "Journal App is up and running");
+        return ResponseEntity.ok(response);
+    }
 
 }

@@ -15,16 +15,16 @@ import com.implementation.PollingApp.security.providers.CustomSessionAuthenticat
 @AllArgsConstructor
 public class CustomSessionAuthenticationManager implements AuthenticationManager {
 
-        @Autowired
-        private CustomSessionAuthenticationProvider provider;
+    @Autowired
+    private CustomSessionAuthenticationProvider provider;
 
-        @Override
-        public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-                if (provider.supports(authentication.getClass())) {
-                        var testvar = provider.authenticate(authentication);
-                        return testvar;
-                }
-
-                throw new BadCredentialsException("Oh No!");
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        if (provider.supports(authentication.getClass())) {
+            var testvar = provider.authenticate(authentication);
+            return testvar;
         }
+
+        throw new BadCredentialsException("Oh No!");
+    }
 }

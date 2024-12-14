@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class StartupMessageConfig {
 
-        private final int port;
+    private final int port;
 
-        public StartupMessageConfig(@Value("${server.port}") int port) {
-                this.port = port;
-        }
+    public StartupMessageConfig(@Value("${server.port}") int port) {
+        this.port = port;
+    }
 
-        @EventListener(ApplicationReadyEvent.class)
-        public void doSomethingAfterStartup() {
-                System.out.println("Server running on port " + port);
-        }
+    @EventListener(ApplicationReadyEvent.class)
+    public void doSomethingAfterStartup() {
+        System.out.println("Server running on port " + port);
+    }
 }

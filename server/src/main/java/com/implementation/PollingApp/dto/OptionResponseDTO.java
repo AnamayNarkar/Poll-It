@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OptionResponseDTO {
-        String id;
+    String id;
 
-        private String option;
+    private String option;
 
-        private int voteCount;
+    private int voteCount;
 }

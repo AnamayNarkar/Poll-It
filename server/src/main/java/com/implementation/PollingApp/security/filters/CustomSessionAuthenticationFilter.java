@@ -18,20 +18,20 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class CustomSessionAuthenticationFilter extends OncePerRequestFilter {
 
-        @Autowired
-        private CustomSessionAuthenticationManager manager;
+    @Autowired
+    private CustomSessionAuthenticationManager manager;
 
-        @Override
-        protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-                var authenticationObject = new CustomSessionAuthenticationObject(request);
+        var authenticationObject = new CustomSessionAuthenticationObject(request);
 
-                var authenticationResult = manager.authenticate(authenticationObject);
+        var authenticationResult = manager.authenticate(authenticationObject);
 
-                if (authenticationResult.isAuthenticated()) {
-                        SecurityContextHolder.getContext().setAuthentication(authenticationResult);
-                }
-
-                filterChain.doFilter(request, response);
+        if (authenticationResult.isAuthenticated()) {
+            SecurityContextHolder.getContext().setAuthentication(authenticationResult);
         }
+
+        filterChain.doFilter(request, response);
+    }
 }

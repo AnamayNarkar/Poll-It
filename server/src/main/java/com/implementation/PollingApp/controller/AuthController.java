@@ -22,44 +22,44 @@ import jakarta.servlet.http.HttpServletRequest;
 @RequestMapping("/api/auth/")
 public class AuthController {
 
-        @Autowired
-        private AuthService authService;
+    @Autowired
+    private AuthService authService;
 
-        @Autowired
-        public SessionUtils sessionUtils;
+    @Autowired
+    public SessionUtils sessionUtils;
 
-        @GetMapping("/verifyUser")
-        public ResponseEntity<ApiResponse<String>> verifyUser(HttpServletRequest request) {
-                SessionValueEntity sessionValueEntity = sessionUtils.getUserSession(request);
-                if (sessionValueEntity == null) {
-                        ApiResponse<String> apiResponse = new ApiResponse<>(null, "User verification failed");
-                        return ResponseEntity.status(403).body(apiResponse);
-                }
-                ApiResponse<String> apiResponse = new ApiResponse<>(null, "User verified successfully");
-                return ResponseEntity.ok(apiResponse);
+    @GetMapping("/verifyUser")
+    public ResponseEntity<ApiResponse<String>> verifyUser(HttpServletRequest request) {
+        SessionValueEntity sessionValueEntity = sessionUtils.getUserSession(request);
+        if (sessionValueEntity == null) {
+            ApiResponse<String> apiResponse = new ApiResponse<>(null, "User verification failed");
+            return ResponseEntity.status(403).body(apiResponse);
         }
+        ApiResponse<String> apiResponse = new ApiResponse<>(null, "User verified successfully");
+        return ResponseEntity.ok(apiResponse);
+    }
 
-        @PostMapping("/register")
-        public ResponseEntity<ApiResponse<UserEntity>> registerUser(@RequestBody UserRegistrationDto userDto, HttpServletResponse response) {
-                UserEntity userEntity = authService.createUser(userDto);
-                sessionUtils.saveUserSession(response, userEntity);
-                ApiResponse<UserEntity> apiResponse = new ApiResponse<>(userEntity, "User created successfully");
-                return ResponseEntity.ok(apiResponse);
-        }
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse<UserEntity>> registerUser(@RequestBody UserRegistrationDto userDto, HttpServletResponse response) {
+        UserEntity userEntity = authService.createUser(userDto);
+        sessionUtils.saveUserSession(response, userEntity);
+        ApiResponse<UserEntity> apiResponse = new ApiResponse<>(userEntity, "User created successfully");
+        return ResponseEntity.ok(apiResponse);
+    }
 
-        @PostMapping("/login")
-        public ResponseEntity<ApiResponse<UserEntity>> loginUser(@RequestBody UserLoginDTO userDto, HttpServletResponse response) {
-                UserEntity userEntity = authService.loginUser(userDto);
-                sessionUtils.saveUserSession(response, userEntity);
-                ApiResponse<UserEntity> apiresponse = new ApiResponse<>(userEntity, "User logged in successfully");
-                return ResponseEntity.ok(apiresponse);
-        }
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<UserEntity>> loginUser(@RequestBody UserLoginDTO userDto, HttpServletResponse response) {
+        UserEntity userEntity = authService.loginUser(userDto);
+        sessionUtils.saveUserSession(response, userEntity);
+        ApiResponse<UserEntity> apiresponse = new ApiResponse<>(userEntity, "User logged in successfully");
+        return ResponseEntity.ok(apiresponse);
+    }
 
-        @PostMapping("/logout")
-        public ResponseEntity<ApiResponse<String>> logoutUser(HttpServletResponse response, HttpServletRequest request) {
-                sessionUtils.clearUserSessionAndRemoveCookie(response, request);
-                ApiResponse<String> apiResponse = new ApiResponse<>(null, "User logged out successfully");
-                return ResponseEntity.ok(apiResponse);
-        }
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<String>> logoutUser(HttpServletResponse response, HttpServletRequest request) {
+        sessionUtils.clearUserSessionAndRemoveCookie(response, request);
+        ApiResponse<String> apiResponse = new ApiResponse<>(null, "User logged out successfully");
+        return ResponseEntity.ok(apiResponse);
+    }
 
 }

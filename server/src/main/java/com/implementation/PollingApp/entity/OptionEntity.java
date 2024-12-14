@@ -15,18 +15,18 @@ import lombok.NoArgsConstructor;
 @Document(collection = "options")
 public class OptionEntity {
 
-        ObjectId id;
+    ObjectId id;
 
-        private String option;
+    private String option;
 
-        private int voteCount;
+    private int voteCount;
 
-        Vector<ObjectId> votes;
+    Vector<ObjectId> votes;
 
-        public OptionEntity(String option) {
-                this.id = new ObjectId();
-                this.option = option;
-                this.voteCount = 0;
-                this.votes = new Vector<>();
-        }
+    public OptionEntity(String option) {
+        this.id = new ObjectId();
+        this.option = option;
+        this.voteCount = 0;
+        this.votes = new Vector<>();
+    }
 }

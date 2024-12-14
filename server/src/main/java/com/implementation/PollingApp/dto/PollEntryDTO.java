@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PollEntryDTO {
 
-        String question;
-        Vector<String> options;
-        Date expirationDateTime;
-        Vector<TagWithoutPollsDTO> tags;
+    String question;
+    Vector<String> options;
+    Date expirationDateTime;
+    Vector<TagWithoutPollsDTO> tags;
 }

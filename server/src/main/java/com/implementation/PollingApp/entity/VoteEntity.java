@@ -16,20 +16,20 @@ import lombok.NoArgsConstructor;
 @Document(collection = "votes")
 public class VoteEntity {
 
-        @Id
-        private ObjectId id;
+    @Id
+    private ObjectId id;
 
-        private ObjectId optionId;
+    private ObjectId optionId;
 
-        private String username;
+    private String username;
 
-        private Date creationDateTime;
+    private Date creationDateTime;
 
-        public VoteEntity(ObjectId optionId, String username) {
-                this.id = new ObjectId();
-                this.optionId = optionId;
-                this.username = username;
-                this.creationDateTime = new Date();
-        }
+    public VoteEntity(ObjectId optionId, String username) {
+        this.id = new ObjectId();
+        this.optionId = optionId;
+        this.username = username;
+        this.creationDateTime = new Date();
+    }
 
 }

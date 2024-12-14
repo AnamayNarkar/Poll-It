@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ApiResponse<T> {
-        private Optional<T> data;
-        private String message;
+    private Optional<T> data;
+    private String message;
 
-        public ApiResponse(T data, String message) {
-                this.data = Optional.ofNullable(data);
-                this.message = message;
-        }
+    public ApiResponse(T data, String message) {
+        this.data = Optional.ofNullable(data);
+        this.message = message;
+    }
 }

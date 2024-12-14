@@ -11,11 +11,11 @@ import com.implementation.PollingApp.dto.UserForDisplayingSearchResultsDTO;
 import com.implementation.PollingApp.entity.UserEntity;
 
 public interface UserRepository extends MongoRepository<UserEntity, ObjectId> {
-        UserEntity findByUsername(String username);
+    UserEntity findByUsername(String username);
 
-        UserEntity findByEmail(String email);
+    UserEntity findByEmail(String email);
 
-        @Query(value = "{ 'username': { $regex: ?0, $options: 'i' } }", fields = "{ 'username': 1 }")
-        List<UserForDisplayingSearchResultsDTO> findByNameLike(String name, Pageable pageable);
+    @Query(value = "{ 'username': { $regex: ?0, $options: 'i' } }", fields = "{ 'username': 1 }")
+    List<UserForDisplayingSearchResultsDTO> findByNameLike(String name, Pageable pageable);
 
 }

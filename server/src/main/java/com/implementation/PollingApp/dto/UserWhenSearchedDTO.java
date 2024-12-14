@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserWhenSearchedDTO {
-        private String username;
-        private String profilePictureURL;
-        private String bio;
+    private String username;
+    private String profilePictureURL;
+    private String bio;
 }

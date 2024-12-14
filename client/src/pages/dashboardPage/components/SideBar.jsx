@@ -18,8 +18,15 @@ const SideBar = ({ followedTags, isFeedOverCreatePoll, setIsFeedOverCreatePoll }
                 }}>
                     <h4>Home</h4>
                 </div>
-                <div className='popularOption'>
-                    <h4>Popular</h4>
+                <div className='popularOption' onClick={() => {
+                    if (window.location.pathname === '/popular') {
+                        setIsFeedOverCreatePoll(true);
+                    } else {
+                        navigate(`/popular`);
+                    }
+                }}>
+                    <h4>
+                        Popular</h4>
                 </div>
             </div>
             <div className='tagsYouFollow'>

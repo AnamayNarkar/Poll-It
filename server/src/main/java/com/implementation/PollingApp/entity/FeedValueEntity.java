@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FeedValueEntity {
-        private List<String> followedTags;
-        private Map<String, String> feedState;
-        private Set<String> sentPostIds;
+    private List<String> followedTags;
+    private Map<String, String> feedState;
+    private Set<String> sentPostIds;
 }

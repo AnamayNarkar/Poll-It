@@ -1,5 +1,6 @@
 package com.implementation.PollingApp.repository;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -24,5 +25,8 @@ public interface PollRepository extends MongoRepository<PollEntity, ObjectId> {
 
         @Query(value = "{ 'tags': ?0, '_id': { $lt: ?1 } }", sort = "{ '_id': -1 }")
         List<PollEntity> findImmediatePollBefore(ObjectId tagId, ObjectId pollId, Pageable pageable);
+
+        @Query(value = "{ 'creationDateTime': { $gte: ?0 } }", sort = "{ 'totalVoteCount': -1 }")
+        List<PollEntity> findPopularPollsByDateRange(Instant startDate, Pageable pageable);
 
 }

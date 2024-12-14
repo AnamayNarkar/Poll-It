@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDataWithFollowedTagsDTO {
 
-        private String id;
-        private String username;
-        private List<TagWithoutPollsDTO> followedTags;
-        private String profilePictureURL;
+    private String id;
+    private String username;
+    private List<TagWithoutPollsDTO> followedTags;
+    private String profilePictureURL;
 
 }

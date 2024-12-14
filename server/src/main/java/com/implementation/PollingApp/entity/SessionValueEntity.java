@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SessionValueEntity {
-        private String id;
-        private String username;
-        private Vector<String> roles;
-        private String feedStateRedisKey;
+    private String id;
+    private String username;
+    private Vector<String> roles;
+    private String feedStateRedisKey;
 }

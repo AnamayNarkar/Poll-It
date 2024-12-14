@@ -18,42 +18,42 @@ import java.util.Vector;
 @NoArgsConstructor
 public class UserEntity {
 
-        @Id
-        private ObjectId id;
+    @Id
+    private ObjectId id;
 
-        @Indexed(unique = true)
-        private String username;
+    @Indexed(unique = true)
+    private String username;
 
-        @Indexed(unique = true)
-        private String email;
+    @Indexed(unique = true)
+    private String email;
 
-        // @JsonIgnore
-        private String password;
+    // @JsonIgnore
+    private String password;
 
-        private Vector<String> roles;
+    private Vector<String> roles;
 
-        private Date joinDate;
+    private Date joinDate;
 
-        private Vector<ObjectId> createdPolls;
+    private Vector<ObjectId> createdPolls;
 
-        private Map<ObjectId, ObjectId> votedPolls;
+    private Map<ObjectId, ObjectId> votedPolls;
 
-        private Vector<ObjectId> followedTags;
+    private Vector<ObjectId> followedTags;
 
-        private String profilePictureURL;
+    private String profilePictureURL;
 
-        private String bio;
+    private String bio;
 
-        public UserEntity(String username, String email, String password, Vector<String> roles) {
-                this.username = username;
-                this.password = password;
-                this.email = email;
-                this.roles = roles;
-                this.joinDate = new Date();
-                this.createdPolls = new Vector<>();
-                this.votedPolls = new HashMap<>();
-                this.followedTags = new Vector<>();
-                this.profilePictureURL = "https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png";
-                this.bio = "";
-        }
+    public UserEntity(String username, String email, String password, Vector<String> roles) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+        this.joinDate = new Date();
+        this.createdPolls = new Vector<>();
+        this.votedPolls = new HashMap<>();
+        this.followedTags = new Vector<>();
+        this.profilePictureURL = "https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png";
+        this.bio = "";
+    }
 }

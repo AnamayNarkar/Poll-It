@@ -85,7 +85,8 @@ const IndividualPollComponent = ({ poll }) => {
                     {new Date(poll.expirationDateTime) > new Date()
                         ? `Expires on ${new Date(poll.expirationDateTime).toDateString()} `
                         : 'Poll has expired'}
-                </span>            </div>
+                </span>
+            </div>
             <div className='bottomBarInPollComponent'>
                 <div className="bottomBarComponent" style={{
                     color: 'white',

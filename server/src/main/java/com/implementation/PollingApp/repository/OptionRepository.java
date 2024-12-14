@@ -9,6 +9,6 @@ import com.implementation.PollingApp.entity.OptionEntity;
 
 public interface OptionRepository extends MongoRepository<OptionEntity, ObjectId> {
 
-        @Query(value = "{ 'id' : ?0 }", fields = "{ id: 1, option: 1, voteCount: 1 }")
-        Optional<OptionResponseDTO> findByIdWithoutVotes(ObjectId id);
+    @Query(value = "{ 'id' : ?0 }", fields = "{ id: 1, option: 1, voteCount: 1 }")
+    Optional<OptionResponseDTO> findByIdWithoutVotes(ObjectId id);
 }

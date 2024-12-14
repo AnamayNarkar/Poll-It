@@ -18,17 +18,17 @@ import com.implementation.PollingApp.util.ApiResponse;
 @RequestMapping("/api/search/")
 public class SearchController {
 
-        @Autowired
-        private SearchService searchService;
+    @Autowired
+    private SearchService searchService;
 
-        @GetMapping("/getTagsLike/{name}")
-        ResponseEntity<ApiResponse<List<TagWithoutPollsDTO>>> getTagsLike(@PathVariable String name) {
-                return ResponseEntity.ok(new ApiResponse<List<TagWithoutPollsDTO>>(searchService.getTagsLike(name), "Tags fetched successfully"));
-        }
+    @GetMapping("/getTagsLike/{name}")
+    ResponseEntity<ApiResponse<List<TagWithoutPollsDTO>>> getTagsLike(@PathVariable String name) {
+        return ResponseEntity.ok(new ApiResponse<List<TagWithoutPollsDTO>>(searchService.getTagsLike(name), "Tags fetched successfully"));
+    }
 
-        @GetMapping("/getUsersLike/{name}")
-        ResponseEntity<ApiResponse<List<UserForDisplayingSearchResultsDTO>>> getUsersLike(@PathVariable String name) {
-                return ResponseEntity.ok(new ApiResponse<List<UserForDisplayingSearchResultsDTO>>(searchService.getUsersLike(name), "Users fetched successfully"));
-        }
+    @GetMapping("/getUsersLike/{name}")
+    ResponseEntity<ApiResponse<List<UserForDisplayingSearchResultsDTO>>> getUsersLike(@PathVariable String name) {
+        return ResponseEntity.ok(new ApiResponse<List<UserForDisplayingSearchResultsDTO>>(searchService.getUsersLike(name), "Users fetched successfully"));
+    }
 
 }

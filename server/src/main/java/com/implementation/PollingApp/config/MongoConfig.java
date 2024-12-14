@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class MongoConfig {
 
-        @Bean
-        public PlatformTransactionManager transactionManager(MongoDatabaseFactory dbFactory) {
-                return new MongoTransactionManager(dbFactory);
-        }
+    @Bean
+    public PlatformTransactionManager transactionManager(MongoDatabaseFactory dbFactory) {
+        return new MongoTransactionManager(dbFactory);
+    }
 }

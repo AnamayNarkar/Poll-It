@@ -17,18 +17,18 @@ import com.implementation.PollingApp.util.ApiResponse;
 @RequestMapping("/api/tag")
 public class TagController {
 
-        @Autowired
-        private TagService tagService;
+    @Autowired
+    private TagService tagService;
 
-        @PostMapping("/createTag/{name}")
-        ResponseEntity<ApiResponse<TagWithoutPollsDTO>> createTag(@PathVariable String name) {
-                return ResponseEntity.ok(new ApiResponse<TagWithoutPollsDTO>(tagService.createTag(name), "Tag created successfully"));
-        }
+    @PostMapping("/createTag/{name}")
+    ResponseEntity<ApiResponse<TagWithoutPollsDTO>> createTag(@PathVariable String name) {
+        return ResponseEntity.ok(new ApiResponse<TagWithoutPollsDTO>(tagService.createTag(name), "Tag created successfully"));
+    }
 
-        @PostMapping("/followOrUnfollowTag/{name}")
-        ResponseEntity<ApiResponse<TagWithoutPollsDTO>> followOrUnfollowTag(@PathVariable String name) {
-                CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
-                return ResponseEntity.ok(new ApiResponse<TagWithoutPollsDTO>(tagService.followOrUnfollowTag(authentication.getSessionValueEntity(), name), "Tag followed/unfollowed successfully"));
-        }
+    @PostMapping("/followOrUnfollowTag/{name}")
+    ResponseEntity<ApiResponse<TagWithoutPollsDTO>> followOrUnfollowTag(@PathVariable String name) {
+        CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok(new ApiResponse<TagWithoutPollsDTO>(tagService.followOrUnfollowTag(authentication.getSessionValueEntity(), name), "Tag followed/unfollowed successfully"));
+    }
 
 }

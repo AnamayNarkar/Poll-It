@@ -15,108 +15,108 @@ import com.implementation.PollingApp.dto.UserRegistrationDto;
 @Service
 public class AuthService {
 
-        @Autowired
-        private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-        public UserEntity createUser(UserRegistrationDto userDto) {
-                try {
+    public UserEntity createUser(UserRegistrationDto userDto) {
+        try {
 
-                        System.out.println("Creating user: " + userDto.getUsername());
+            System.out.println("Creating user: " + userDto.getUsername());
 
-                        if (userRepository.findByUsername(userDto.getUsername()) != null) {
-                                throw new ValidationException("Username already exists");
-                        }
+            if (userRepository.findByUsername(userDto.getUsername()) != null) {
+                throw new ValidationException("Username already exists");
+            }
 
-                        if (userRepository.findByEmail(userDto.getEmail()) != null) {
-                                throw new ValidationException("Email already exists");
-                        }
+            if (userRepository.findByEmail(userDto.getEmail()) != null) {
+                throw new ValidationException("Email already exists");
+            }
 
-                        UserEntity userEntity = new UserEntity(userDto.getUsername(), userDto.getEmail(), userDto.getPassword(), new Vector<>(Arrays.asList("USER")));
+            UserEntity userEntity = new UserEntity(userDto.getUsername(), userDto.getEmail(), userDto.getPassword(), new Vector<>(Arrays.asList("USER")));
 
-                        userEntity = userRepository.save(userEntity);
+            userEntity = userRepository.save(userEntity);
 
-                        System.out.println("User created successfully");
+            System.out.println("User created successfully");
 
-                        return userEntity;
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Error creating user: " + e.getMessage());
-                }
+            return userEntity;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Error creating user: " + e.getMessage());
         }
+    }
 
-        public UserEntity loginUser(UserLoginDTO userDto) {
-                try {
-                        UserEntity userEntity = userRepository.findByUsername(userDto.getUsername());
-                        if (userEntity != null && userEntity.getPassword().equals(userDto.getPassword())) {
-                                return userEntity;
-                        } else {
-                                System.out.println("Invalid username or password");
-                                throw new ValidationException("Invalid username or password");
-                        }
-                } catch (ValidationException ve) {
-                        throw ve;
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Error logging in user: " + e.getMessage());
-                }
+    public UserEntity loginUser(UserLoginDTO userDto) {
+        try {
+            UserEntity userEntity = userRepository.findByUsername(userDto.getUsername());
+            if (userEntity != null && userEntity.getPassword().equals(userDto.getPassword())) {
+                return userEntity;
+            } else {
+                System.out.println("Invalid username or password");
+                throw new ValidationException("Invalid username or password");
+            }
+        } catch (ValidationException ve) {
+            throw ve;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Error logging in user: " + e.getMessage());
         }
+    }
 
-        public UserEntity getUser(String username) {
-                try {
-                        UserEntity userEntity = userRepository.findByUsername(username);
-                        if (userEntity != null) {
-                                return userEntity;
-                        } else {
-                                throw new ValidationException("User not found");
-                        }
-                } catch (ValidationException ve) {
-                        throw ve;
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Error retrieving user: " + e.getMessage());
-                }
+    public UserEntity getUser(String username) {
+        try {
+            UserEntity userEntity = userRepository.findByUsername(username);
+            if (userEntity != null) {
+                return userEntity;
+            } else {
+                throw new ValidationException("User not found");
+            }
+        } catch (ValidationException ve) {
+            throw ve;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Error retrieving user: " + e.getMessage());
         }
+    }
 
-        public void deleteUser(String username) {
-                try {
-                        UserEntity userEntity = userRepository.findByUsername(username);
-                        if (userEntity != null) {
-                                userRepository.delete(userEntity);
-                        } else {
-                                throw new ValidationException("User not found, cannot delete");
-                        }
-                } catch (ValidationException ve) {
-                        throw ve;
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Error deleting user: " + e.getMessage());
-                }
+    public void deleteUser(String username) {
+        try {
+            UserEntity userEntity = userRepository.findByUsername(username);
+            if (userEntity != null) {
+                userRepository.delete(userEntity);
+            } else {
+                throw new ValidationException("User not found, cannot delete");
+            }
+        } catch (ValidationException ve) {
+            throw ve;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Error deleting user: " + e.getMessage());
         }
+    }
 
-        public void updateUser(UserLoginDTO userDto) {
-                try {
-                        UserEntity userEntity = userRepository.findByUsername(userDto.getUsername());
-                        if (userEntity != null) {
-                                userEntity.setPassword(userDto.getPassword());
-                                userRepository.save(userEntity);
-                        } else {
-                                throw new ValidationException("User not found, cannot update");
-                        }
-                } catch (ValidationException ve) {
-                        throw ve;
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Error updating user: " + e.getMessage());
-                }
+    public void updateUser(UserLoginDTO userDto) {
+        try {
+            UserEntity userEntity = userRepository.findByUsername(userDto.getUsername());
+            if (userEntity != null) {
+                userEntity.setPassword(userDto.getPassword());
+                userRepository.save(userEntity);
+            } else {
+                throw new ValidationException("User not found, cannot update");
+            }
+        } catch (ValidationException ve) {
+            throw ve;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Error updating user: " + e.getMessage());
         }
+    }
 
-        public Vector<String> getRoles(String username) {
-                try {
-                        UserEntity userEntity = userRepository.findByUsername(username);
-                        if (userEntity != null) {
-                                return userEntity.getRoles();
-                        } else {
-                                throw new ValidationException("User not found");
-                        }
-                } catch (ValidationException ve) {
-                        throw ve;
-                } catch (Exception e) {
-                        throw new InternalServerErrorException("Error retrieving roles: " + e.getMessage());
-                }
+    public Vector<String> getRoles(String username) {
+        try {
+            UserEntity userEntity = userRepository.findByUsername(username);
+            if (userEntity != null) {
+                return userEntity.getRoles();
+            } else {
+                throw new ValidationException("User not found");
+            }
+        } catch (ValidationException ve) {
+            throw ve;
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Error retrieving roles: " + e.getMessage());
         }
+    }
 }
