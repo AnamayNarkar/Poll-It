@@ -1,5 +1,6 @@
 package com.implementation.PollingApp.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,8 @@ import com.implementation.PollingApp.service.PollService;
 import com.implementation.PollingApp.util.ApiResponse;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +46,18 @@ public class PollController {
     public ResponseEntity<ApiResponse<CommentDTO>> addComment(@PathVariable String pollId, @RequestBody CommentRequstDTO commentRequstDTO) {
         CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
         return ResponseEntity.ok(new ApiResponse<CommentDTO>(pollService.addComment(authentication.getSessionValueEntity(), pollId, commentRequstDTO.getComment()), "Comment added successfully"));
+    }
+
+    @GetMapping("/getCommentsForPoll/{pollId}/{page}/{limit}")
+    public ResponseEntity<ApiResponse<List<CommentDTO>>> getCommentsForPoll(@PathVariable String pollId, @PathVariable int page, @PathVariable int limit) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        List<CommentDTO> comments = pollService.getCommentsForPoll(pollId, page, limit);
+        return ResponseEntity.ok(new ApiResponse<>(comments, "Comments fetched successfully"));
     }
 
 }

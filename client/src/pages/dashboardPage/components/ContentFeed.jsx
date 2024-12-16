@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../styles/ContentFeedStyles.css';
 import IndividualPollComponent from './IndividualPollComponent';
 import IndividualCommentComponent from './IndividualCommentComponent';
 import followOrUnfollowTagsRequest from '../../../services/ApiRequests/followOrUnfollowTagsRequest';
 import axiosInstanceWithNoErrorChecks from '../../../services/axiosInstanceWithNoErrorChecks';
 
-const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isLoading, setFollowedTags, searchedUserData, hasMore, comments, userData, setComments }) => {
-
+const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isLoading, setFollowedTags, searchedUserData, hasMore, comments, userData, setComments, isCommentsLoading }) => {
     const followOrUnfollowTag = async (tagName) => {
         try {
             const response = await followOrUnfollowTagsRequest(tagName);
@@ -48,7 +47,6 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
             window.alert('Error Adding Comment');
         }
     }
-
 
     return (
         <div className='contentFeedContainer'>
@@ -106,7 +104,7 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                         <>
                             <div className='enterCommentDiv'>
                                 <img src={userData.profilePictureURL} />
-                                <input placeholder='Enter a comment' value={commentInputState} onChange={handleCommentInputChange} />
+                                <input placeholder='Enter a comment' value={commentInputState} onChange={handleCommentInputChange} maxLength={300} />
                                 <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" transform='rotate(45) translate(-2, 5)' style={{ cursor: 'pointer' }} onClick={handleCommentSubmit}>
                                     <path d="M15.8492 23.3176L21.5486 33.4831C22.247 34.7288 24.0864 34.5765 24.5704 33.2328L33.8622 7.43744C34.3402 6.11038 33.0564 4.82655 31.7293 5.30457L5.93393 14.5964C4.59026 15.0804 4.43794 16.9197 5.68369 17.6182L15.8492 23.3176ZM15.8492 23.3176L19.5943 19.5725" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
@@ -114,9 +112,9 @@ const ContentFeed = ({ contentFeed = [], feedType, followedTags = [], param, isL
                             <div className='allCommentsContainer'>
                                 {comments.map((comment) => (<IndividualCommentComponent key={comment.id} comment={comment} />))}
                             </div>
+                            {isCommentsLoading && <h2 className="loadingMessage">Loading comments...</h2>} {/* Display loading message for comments */}
                         </>
-                    )
-                    }
+                    )}
                 </>
             )}
         </div>

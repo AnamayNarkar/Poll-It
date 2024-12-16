@@ -1,11 +1,14 @@
 package com.implementation.PollingApp.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.implementation.PollingApp.dto.CommentDTO;
@@ -165,14 +168,30 @@ public class PollService {
 
     public CommentDTO addComment(SessionValueEntity sve, String pollId, String comment) {
 
+        if (comment.isEmpty() || comment.length() > 300) {
+            throw new IllegalArgumentException("Invalid comment");
+        }
+        PollEntity poll = pollRepository.findById(new ObjectId(pollId)).orElseThrow(() -> new ResourceNotFoundException("Poll not found"));
+        poll.setTotalCommentCount(poll.getTotalCommentCount() + 1);
+        pollRepository.save(poll);
         CommentEntity commentEntity = new CommentEntity(pollId, sve.getUsername(), comment);
-
         commentRepository.save(commentEntity);
-
         UserEntity user = userRepository.findByUsername(sve.getUsername());
-
         return new CommentDTO(commentEntity.getId().toHexString(), pollId, sve.getUsername(), user.getProfilePictureURL(), comment);
 
+    }
+
+    public List<CommentDTO> getCommentsForPoll(String pollId, int page, int limit) {
+        try {
+            ObjectId pollObjectId = new ObjectId(pollId);
+
+            List<CommentEntity> comments = commentRepository.findAllByPollId(pollObjectId, PageRequest.of(page, limit, Sort.by(Sort.Direction.ASC, "creationDate")));
+
+            return comments.stream().map(comment -> new CommentDTO(comment.getId().toHexString(), comment.getPollId().toHexString(), comment.getUsername(), userRepository.findByUsername(comment.getUsername()).getProfilePictureURL(), // Fetch user's profile picture
+                    comment.getComment())).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Error fetching comments for poll");
+        }
     }
 
 }
