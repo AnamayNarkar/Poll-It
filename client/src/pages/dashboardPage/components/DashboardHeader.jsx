@@ -78,9 +78,6 @@ const DashboardHeader = ({ feedType, param, userData }) => {
         };
     }, []);
 
-    console.log("yellloo")
-    console.log(userData);
-
     const placeholderValue = feedType === 'home' || feedType === 'popular' ? '' :
         feedType === 'tag' ? `t/${param}` :
             feedType === 'user' ? `u/${param}` : '';

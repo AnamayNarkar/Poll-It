@@ -33,7 +33,7 @@ function App() {
       element: <ProtectedRouteForUser element={<DashboardPage feedType="tag" />} />
     },
     {
-      path: "/p/:pollId",
+      path: "/poll/:pollParam",
       element: <ProtectedRouteForUser element={<DashboardPage feedType="poll" />} />
     },
   ]);

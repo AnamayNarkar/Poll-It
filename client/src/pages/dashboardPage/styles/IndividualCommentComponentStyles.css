@@ -1,0 +1,48 @@
+.individualCommentComponent {
+  height: fit-content;
+  width: 96%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.individualCommentComponent > img {
+  height: 40px;
+  width: auto;
+  cursor: pointer;
+}
+
+.individualCommentComponentUsernameAndComment {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.individualCommentComponentUsernameAndComment > .commentUsername {
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-family: "Parkinsans", sans-serif;
+  font-size: 0.923rem;
+  color: azure;
+  cursor: pointer;
+}
+
+.individualCommentComponentUsernameAndComment > .commentContent {
+  margin: 0%;
+  padding: 0%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word; /* Handles older browsers */
+  font-family: "Parkinsans", sans-serif;
+  font-size: 0.8rem;
+  color: azure;
+}

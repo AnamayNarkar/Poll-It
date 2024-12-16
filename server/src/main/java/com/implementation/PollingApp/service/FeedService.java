@@ -1,6 +1,7 @@
 package com.implementation.PollingApp.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -245,6 +246,37 @@ public class FeedService {
         }).collect(Collectors.toList());
 
         return pollResponseDTOs;
+    }
+
+    public List<PollResponseDTO> getSinglePoll(String sessionKey, SessionValueEntity sve, String pollId) {
+        // Validate poll ID
+        if (pollId == null || pollId.isEmpty()) {
+            throw new IllegalArgumentException("Poll ID cannot be null or empty");
+        }
+
+        // Fetch poll by ID
+        PollEntity poll = pollRepository.findById(new ObjectId(pollId)).orElseThrow(() -> new ResourceNotFoundException("Poll not found for the given ID: " + pollId));
+
+        // Fetch the user
+        UserEntity user = userRepository.findByUsername(sve.getUsername());
+        if (user == null) {
+            throw new ResourceNotFoundException("User not found for session");
+        }
+
+        // Check if the user has voted for this poll
+        boolean hasUserVoted = user.getVotedPolls().containsKey(poll.getId());
+        String optionIdVotedFor = hasUserVoted ? user.getVotedPolls().get(poll.getId()).toHexString() : null;
+
+        // Map options to DTOs
+        List<OptionResponseDTO> optionResponseDTOs = poll.getOptions().stream().map(optionId -> optionRepository.findByIdWithoutVotes(optionId)).filter(Optional::isPresent).map(Optional::get).map(option -> new OptionResponseDTO(option.getId(), option.getOption(), option.getVoteCount())).collect(Collectors.toList());
+
+        // Map tags to DTOs
+        List<TagWithoutPollsDTO> tagWithoutPollsDTOs = tagRepository.findAllByIdWithoutPollIdsIn(poll.getTags()).stream().map(tag -> new TagWithoutPollsDTO(tag.getId().toHexString(), tag.getName())).collect(Collectors.toList());
+
+        // Create and return a single-element list containing PollResponseDTO
+        PollResponseDTO pollResponseDTO = new PollResponseDTO(poll, optionResponseDTOs, tagWithoutPollsDTOs, hasUserVoted, optionIdVotedFor);
+
+        return Collections.singletonList(pollResponseDTO); // Return single-element list
     }
 
 }

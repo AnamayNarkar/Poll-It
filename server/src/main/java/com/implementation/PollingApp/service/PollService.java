@@ -8,9 +8,11 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.implementation.PollingApp.dto.CommentDTO;
 import com.implementation.PollingApp.dto.OptionResponseDTO;
 import com.implementation.PollingApp.dto.PollEntryDTO;
 import com.implementation.PollingApp.dto.PollResponseDTO;
+import com.implementation.PollingApp.entity.CommentEntity;
 import com.implementation.PollingApp.entity.OptionEntity;
 import com.implementation.PollingApp.entity.PollEntity;
 import com.implementation.PollingApp.entity.SessionValueEntity;
@@ -21,6 +23,7 @@ import com.implementation.PollingApp.exception.custom.CannotVoteException;
 import com.implementation.PollingApp.exception.custom.InternalServerErrorException;
 import com.implementation.PollingApp.exception.custom.PollExpirationException;
 import com.implementation.PollingApp.exception.custom.ResourceNotFoundException;
+import com.implementation.PollingApp.repository.CommentRepository;
 import com.implementation.PollingApp.repository.OptionRepository;
 import com.implementation.PollingApp.repository.PollRepository;
 import com.implementation.PollingApp.repository.TagRepository;
@@ -44,6 +47,9 @@ public class PollService {
 
     @Autowired
     private TagRepository tagRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     public PollResponseDTO createPoll(SessionValueEntity sve, PollEntryDTO pollEntryDTO) {
         try {
@@ -154,6 +160,18 @@ public class PollService {
             System.out.println(e.getMessage());
             throw new InternalServerErrorException("Error while casting vote");
         }
+
+    }
+
+    public CommentDTO addComment(SessionValueEntity sve, String pollId, String comment) {
+
+        CommentEntity commentEntity = new CommentEntity(pollId, sve.getUsername(), comment);
+
+        commentRepository.save(commentEntity);
+
+        UserEntity user = userRepository.findByUsername(sve.getUsername());
+
+        return new CommentDTO(commentEntity.getId().toHexString(), pollId, sve.getUsername(), user.getProfilePictureURL(), comment);
 
     }
 

@@ -6,20 +6,33 @@ import SideBarRight from './SideBarRight';
 import CreatePollComponent from './CreatePollComponent';
 import getContentFeedRequest from '../../../services/ApiRequests/FeedRequest';
 
-const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
+const MainContent = ({ followedTags, feedType, param, setFollowedTags, userData }) => {
     const [contentFeed, setContentFeed] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [feedOverCreatePoll, setFeedOverCreatePoll] = useState(true);
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const [searchedUserData, setSearchedUserData] = useState({});
+    const [comments, setComments] = useState([{
+        "id": "675fd47a1aa25b421269c7cc",
+        "pollId": "675b616c482ac964b68c60d3",
+        "username": "chicken",
+        "profilePictureURL": "https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png",
+        "comment": "good poll"
+    }]);
     const limit = 4;
     const initialFetchDone = useRef(false);
 
     const [areFollowedTagsLoaded, setAreFollowedTagsLoaded] = useState(false);
 
     const fetchFeed = useCallback(
+
         async (feedType, param, currentPage, limit, isLoadMore = false) => {
+
+            if ((feedType == "tag" || feedType == "user" || feedType == "poll") && !param) {
+                return;
+            }
+
             try {
                 setIsLoading(true);
                 const response = await getContentFeedRequest(feedType, param, currentPage, limit);
@@ -42,13 +55,11 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
     );
 
     const handleScroll = useCallback(() => {
-        console.log("scrolling");
         if (isLoading || !hasMore) return;
 
         const middlePartElement = document.querySelector('.middlePartOfThePage');
         const { scrollTop, scrollHeight, clientHeight } = middlePartElement;
         if (scrollTop + clientHeight >= scrollHeight - 1) {
-            console.log("fetching")
             const nextPage = page + 1;
             setPage(nextPage);
             fetchFeed(feedType, param, nextPage, limit, true);
@@ -64,11 +75,8 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
         setFeedOverCreatePoll(true);
 
         if (feedType === "home" && followedTags.length === 0) {
-            console.log("no followed tags")
             return;
         }
-
-        console.log(followedTags)
 
         setPage(0);
         setContentFeed([]);
@@ -78,7 +86,6 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
             getContentFeedRequest("justBasicUserDataWhenSearched", param).then((response) => {
                 if (response.status >= 200 && response.status < 300) {
                     setSearchedUserData(response.data.data);
-                    console.log(searchedUserData);
                 } else {
                     if (response.status === 404) {
                         window.alert("User not found");
@@ -98,11 +105,24 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
     }, [handleScroll]);
 
     useEffect(() => {
-        if (!initialFetchDone.current && followedTags.length > 0) {
+
+        const shouldFetchFeed = () => {
+            if (initialFetchDone.current) return false;
+            if (feedType === "poll" && param) {
+                return true;
+            }
+            if ((feedType === "home" || feedType === "tag" || feedType === "user") && followedTags.length > 0 && param) {
+                return true;
+            }
+            return false;
+        };
+
+        if (shouldFetchFeed()) {
             fetchFeed(feedType, param, page, limit);
             initialFetchDone.current = true;
         }
     }, [fetchFeed, feedType, param, page, limit, followedTags]);
+
 
     return (
         <div
@@ -128,6 +148,9 @@ const MainContent = ({ followedTags, feedType, param, setFollowedTags }) => {
                         setFollowedTags={setFollowedTags}
                         searchedUserData={searchedUserData}
                         hasMore={hasMore}
+                        comments={comments}
+                        userData={userData}
+                        setComments={setComments}
                     />
                 ) : (
                     <CreatePollComponent />

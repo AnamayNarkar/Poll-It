@@ -80,7 +80,7 @@ public class FeedController {
         return ResponseEntity.ok(new ApiResponse<List<PollResponseDTO>>(feedService.getPollsOfUser(authentication.getSessionId(), authentication.getSessionValueEntity(), username, page, limit), "User feed fetched successfully"));
     }
 
-    @GetMapping("popular/{page}/{limit}")
+    @GetMapping("/popular/{page}/{limit}")
     public ResponseEntity<ApiResponse<List<PollResponseDTO>>> getPopularPolls(@PathVariable Integer page, @PathVariable Integer limit) {
         try {
             Thread.sleep(1000);
@@ -89,6 +89,18 @@ public class FeedController {
         }
         CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
         return ResponseEntity.ok(new ApiResponse<List<PollResponseDTO>>(feedService.getPopularFeed(authentication.getSessionId(), authentication.getSessionValueEntity(), page, limit), "Popular polls fetched successfully"));
+    }
+
+    @GetMapping("/poll/{pollId}")
+    public ResponseEntity<ApiResponse<List<PollResponseDTO>>> getSinglePoll(@PathVariable String pollId) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        CustomSessionAuthenticationObject authentication = (CustomSessionAuthenticationObject) SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok(new ApiResponse<List<PollResponseDTO>>(feedService.getSinglePoll(authentication.getSessionId(), authentication.getSessionValueEntity(), pollId), "Poll fetched successfully"));
+
     }
 
 }

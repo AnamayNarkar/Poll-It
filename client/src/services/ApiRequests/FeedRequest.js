@@ -61,6 +61,17 @@ const getContentFeedRequest = async (feedType, param, page, limit) => {
             }
             return err.response;
         }
+    } else if (feedType == "poll") {
+        try {
+            const response = await axiosInstanceWithNoErrorChecks.get(`/feed/${feedType}/${param}`, {});
+            return response;
+        } catch (err) {
+            if (err.response.status === 403) {
+                window.alert("Your session has expired. Please log in again.");
+                window.location.href = "/auth";
+            }
+            return err.response;
+        }
     }
 }
 
