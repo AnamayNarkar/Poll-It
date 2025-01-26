@@ -1,4 +1,4 @@
-# Polling App - Reddit Inspired
+# Polling App
 
 A dynamic polling application inspired by Reddit, featuring multiple posts with tags, personalized feed management, and multi-page navigation. The app allows users to interact with posts, vote on polls, and enjoy a personalized experience with session management. Built with React for the frontend, Spring Boot for the backend, MongoDB for storage, and Redis for session and personalized feed management.
 
